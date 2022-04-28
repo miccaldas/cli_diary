@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2021-06-23" />
+  <title>Blog Search</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Blog Search</h1>
+<p class="date">2021-06-23</p>
+</header>
+<p>Lately I’ve been mostly playing with this blog.<br />
+I’ve tried several designs, always a compromise between what I want to do and what I can do, to see if I can find a look that invites me to write. In the absence of a clear and quantifiable goal for this blog, my measure of success has got to be something a little more diaphanous, in my case, a layout that makes me want to write in it.<br />
+That always been the difference between long-lived or ephemeral sites that I have had. If it is a design I like, I’ll write much more.<br />
+If you’re reading this, it’ll be obvious to you that I went with a minimalist theme. It was not my first or second choice, but it was clearly the one I felt happier with, given my precarious capacities as a web developer.<br />
+It is, and probably will be for a long time to come, a work in progress.<br />
+For instance, I still can’t design a CSS grid for the theme. I tried it, twice, and ended with monstrous atrocities that I had to kill at birth.<br />
+I haven’t given up yet. Just regrouping.<br />
+For now, the blog looks, approximately as I would like it to look, but the html and CSS behind it are a mess. And that is coming from me, who’s got no great knowledge of the subject and is easily satisfied.<br />
+My goal for this particular endeavour would be to have a solid scaffolding for the blog, based in one recognized CSS method. Could be grid, could be Flexbox. Something standard.<br />
+But clearly, this is something for a later date.<br />
+In what I had, surprisingly, much more success with, was with the backend features of the blog.<br />
+I created a MySQL database to house the metadata for the posts published here, and I was trying to find a way to use it as a search tool.<br />
+I had no idea of how I could do this, until I found the <a href="https://www.w3schools.com/php/php_mysql_select.asp">W3</a> PHP tutorial, especially the part about mysql. What got me right away was how intelligible PHP was. It just felt like something that would not be hard to pick up. So much so that, when looking at how it connects to a MySQL database, I was impressed by how similar to python code it was.<br />
+I was able, with the help of the tutorial, to create a page in the blog where you write your search query, and get a table with results from the db.<br />
+Although, in the interest of full disclosure, the table presentation was not my idea. It was in the tutorial, and I didn’t felt (feel), comfortable enough to make any changes. Here’s what I ended up using:</p>
+<ol type="1">
+<li>I used a post template of the blog to house the php code. Although I think that wouldn’t, in the end, matter very much.<br />
+That is why you’ll see here a header and ‘col.center’ div’s, as well as links to stylesheets that were never used.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;header&quot;</span> <span class="er">style</span><span class="ot">=</span><span class="st">&quot;height:500px;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">col.center</span><span class="kw">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;highlight&quot;</span> <span class="er">style</span><span class="ot">=</span><span class="st">&quot;font-family:&#39;Roboto Condensed, sans-serif&#39;;&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">&quot;preconnect&quot;</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;https://fonts.gstatic.com&quot;</span><span class="kw">&gt;</span>                                                                                                                <span class="kw">&lt;link</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;https://fonts.googleapis.com/css2?family=Inconsolata</span><span class="er">&amp;</span><span class="st">family=JetBrains+Mono:ital,wght@1,500</span><span class="er">&amp;</span><span class="st">display=swap&quot;</span> <span class="er">rel</span><span class="ot">=</span><span class="st">&quot;stylesheet&quot;</span><span class="kw">&gt;</span></span></code></pre></div>
+<ol start="2" type="1">
+<li>Then, as always, I took a detour trying to style php code with CSS. For that mission I found this <a href="https://css-tricks.com/css-variables-with-php/">article</a>, that purported to explain how to do just that. But I was just too dense to understand it. Anyway, here lies the link to CSS stylesheet, and the latter link; in case that anyone smarter than me can make heads or tails of it.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">&quot;stylesheet&quot;</span> <span class="er">type</span><span class="ot">=</span><span class="st">&#39;text/css&#39;</span> <span class="er">href</span><span class="ot">=</span><span class="st">&#39;style.php&#39;</span> <span class="kw">/&gt;</span></span></code></pre></div>
+<ol start="3" type="1">
+<li>I created a page with a search query, where I get the question and send it to another php page for processing. Now with the benefit of hindsight, it’s clear to me that I didn’t had to do it like this. So much so, that, in the end, I end up sending the output back to this page. But at the time I was just trying to make it work by following carefully the examples. But because it worked at first try I just couldn’t be bothered to refine it, and left it as is. At least for now.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;form</span> <span class="er">action</span><span class="ot">=</span><span class="st">&quot;/pages/action_page.php&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;label</span> <span class="er">for</span><span class="ot">=</span><span class="st">&quot;quest&quot;</span><span class="kw">&gt;</span>SEARCH: <span class="kw">&lt;/label&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;input</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;text&quot;</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;quest&quot;</span> <span class="er">name</span><span class="ot">=</span><span class="st">&quot;quest&quot;</span><span class="kw">&gt;&lt;br&gt;&lt;br&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;input</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;submit&quot;</span> <span class="er">value</span><span class="ot">=</span><span class="st">&quot;Submit&quot;</span><span class="kw">&gt;</span></span></code></pre></div>
+<ol start="4" type="1">
+<li>In the other page, I open a php tag, get the result of the search query and keep it in a variable.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;?php</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  $question =  $_GET[&#39;quest&#39;];</span></code></pre></div>
+<ol start="5" type="1">
+<li>Below goes the styling for the table of results, as well as the format for its header. I fought tooth and nail to get these stylings to a CSS file, but I’m totally out of my depth here, and couldn’t make it work. So I stuck with the tutorial example and added one or two personal touches.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>echo &quot;<span class="kw">&lt;table</span> <span class="er">style</span><span class="ot">=</span><span class="st">&#39;border: solid 5px black; border-collapse: collapse; border-radius: 35px; font-family:Roboto Condensed, sans-serif;&#39;</span><span class="kw">&gt;</span>&quot;;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  echo &quot;<span class="kw">&lt;tr&gt;&lt;th&gt;</span>title<span class="kw">&lt;/th&gt;&lt;th&gt;</span>author<span class="kw">&lt;/th&gt;&lt;th&gt;</span>description<span class="kw">&lt;/th&gt;&lt;th&gt;</span>tags<span class="kw">&lt;/th&gt;&lt;th&gt;</span>categories<span class="kw">&lt;/th&gt;&lt;/tr&gt;</span>&quot;;</span></code></pre></div>
+<ol start="6" type="1">
+<li>A class is opened where we’ll define an iterator, more table stylings and it’s structure. I wish I could be more in depth in this commentary, but the guide was scant in details and I haven’t done my due diligence yet.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">class</span> <span class="cn">T</span>ableRows <span class="kw">extends</span> <span class="bu">RecursiveIteratorIterator</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$it</span>) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>          <span class="kw">parent</span>::<span class="bu">__construct</span>(<span class="va">$it</span><span class="ot">,</span> <span class="kw">self</span>::<span class="cn">LEAVES_ONLY</span>)<span class="ot">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">current</span>() {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;&lt;td style=&#39;width:500px;border:5px solid black; text-align: center; padding: 15px; border-radius: 35px;&#39;&gt;&quot;</span> <span class="op">.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">parent</span>::<span class="fu">current</span>()<span class="op">.</span> <span class="st">&quot;&lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> beginChildren() {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;tr&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> endChildren() {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;/tr&gt;&quot;</span> <span class="op">.</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<ol start="7" type="1">
+<li>We then add the login information for the database,</li>
+</ol>
+<pre><code>  $where = &quot;localhost&quot;;
+  $user = &quot;root&quot;;
+  $password = &quot;xxxx&quot;;</code></pre>
+<ol start="8" type="1">
+<li>and connect to it. Again, this code is very similar to the one in Python.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&quot;mysql:host=</span><span class="va">$where</span><span class="st">;dbname=dazed&quot;</span><span class="ot">,</span> <span class="va">$user</span><span class="ot">,</span> <span class="va">$password</span>)<span class="ot">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span> <span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT title, author, description, tags, categories FROM dazed WHERE MATCH(title, author, description, tags, categories)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">                           AGAINST (&#39;</span><span class="va">$question</span><span class="st">&#39; IN NATURAL LANGUAGE MODE)&quot;</span>)<span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_ASSOC</span>)<span class="ot">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="kw">new</span> <span class="cn">T</span>ableRows(<span class="kw">new</span> <span class="bu">RecursiveArrayIterator</span>(<span class="va">$stmt</span>-&gt;fetchAll())) <span class="kw">as</span> <span class="va">$k</span>=&gt;<span class="va">$v</span>) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="va">$v</span><span class="ot">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">catch</span>(<span class="bu">PDOException</span> <span class="va">$e</span>) {</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Connection failed: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="va">$conn</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span>  <span class="st">&quot;&lt;/table&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">?&gt;</span></span></code></pre></div>
+</body>
+</html>

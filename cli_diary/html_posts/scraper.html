@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>scraper</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">scraper</h1>
+<p class="date">2021-08-10 09:34:18</p>
+</header>
+<p>I just wrote a web-scraping tool based on <a href="https://docs.scrapy.org">Scrapy</a>. There was a lot of new things that popped up during the build that I want to register while it’s still fresh in my mind.<br />
+My idea was this, - check what are the steps necessary to have a spider up and running,<br />
+- Turn all steps into python functions,<br />
+- Create a class to host them. It facilitates the communication between the functions,<br />
+- Add the needed information as class instances items.<br />
+In the end it worked pretty well. The build was uneventful and I did what I set out to do. Could it be always like that.<br />
+The app is made from two modules, one that houses the class and does all the heavy lifting, the other, a lighter, simpler file, where you input data to build the instance that’ll become your scraper. I also call the functions from this file.<br />
+Regarding the class, the file is called ‘scraper.py’, and it’s built like this:<br />
+In the __init__ function of the class I define what will be the instances requisites. The items are:<br />
+- Name: Name of the publication. - Project Name: Name for the project folder.I just use ‘name’ and prefix it with ’_info’.<br />
+- Path: Path to your project.<br />
+- Beginning URLs: The pages that you want to scrape first.<br />
+- Content Title: The title that accompanies the news.<br />
+- Content Author: Who wrote the piece.<br />
+- Content Date Altered: When, if when, was the piece revised.<br />
+- Content: The text of the piece.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, project_name, path, start_urls, title, author, date_altered, content):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.project_name <span class="op">=</span> project_name</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.path <span class="op">=</span> path</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.start_urls <span class="op">=</span> start_urls</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.date_altered <span class="op">=</span> date_altered</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> content</span></code></pre></div>
+<p>First we have go to where we want to keep the projects. ‘os.chdir’ is a Python command to change the current working directory. os.mkdir creates a directory.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dislocation1(<span class="va">self</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We head for designated local for the app and create a folder to house it&quot;&quot;&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="st">&quot;/home/mic/python/scraper&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        os.mkdir(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>The next step is to let Scrapy create the project folders and files. For that we are going to use a bash command which forces us to run it through Subprocess. The ‘cwd=path’ part, instructs Subprocess to execute it in the specified folder. While defining ‘path’ we use <a href="https://www.geeksforgeeks.org/formatted-string-literals-f-strings-python/">f-Strings</a>, where we input an ‘f’ in the beginning of the string and envelop a variable name with ‘{}’ to represent their value.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> start_project(<span class="va">self</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Scrapy command to start a project&quot;&quot;&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="ss">f&quot;/home/mic/python/scraper/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;scrapy startproject &quot;</span> <span class="op">+</span> <span class="va">self</span>.name</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>It is now time to start building the spider. For that it’s needed to run another command-line, command. Because of this, the structure of the function is very similar to the former.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> start_spider(<span class="va">self</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Scrapy command to initiate a spider&quot;&quot;&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        project_name <span class="op">=</span> <span class="va">self</span>.project_name</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        paths <span class="op">=</span> <span class="st">&quot;/home/mic/python/scraper/&quot;</span> <span class="op">+</span> project_name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/spiders&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="ss">f&quot;scrapy genspider </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>start_urls<span class="sc">}</span><span class="ss">&quot;</span>  <span class="co"># O nome tem de ser diferente do projecto.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>paths, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>We now need to erase some text from the files and add a new one.<br />
+In this function will do only the erasing.<br />
+We will delete the string “http”, because when we put our URLs, it latches on to them and creates URLs with this format: “http://https://new_url.com”.<br />
+In the text on the file, there’s a class that expects our input, as it only has “pass” as content. We’ll erase it. Because this implies changing a file, and files in Python are immutable, we need to take the following steps:<br />
+1. First we change current working directory to where the file is with os.chdir.<br />
+2. We open it in ‘read’ mode, and create an output file to put the original text, plus the changes we want to make.<br />
+3. We replace “http://” with nothing.<br />
+4. We replace “pass” with nothing.<br />
+5. We write these changes on the output file.<br />
+6. We remove the original file.<br />
+7. We change the output file name to the name of the original file.<br />
+<code>python     def edit_spider_file_clean_file(self):         """Here we clean the spider file a bit. It comes a bit dirty when it is generated by Scrapy"""         os.chdir(f"/{self.path}/{self.project_name}/{self.name}/{self.name}/spiders")         with open(f"{self.name}_info.py", "r") as infile, open(f"{self.name}_output.py", "w") as outfile:             data = infile.read()             data = data.replace("http://", "")             data = data.replace("pass", "")             outfile.write(data)             os.remove(f"{self.name}_info.py")             cmd = f"mv {self.name}_output.py {self.name}_info.py"             subprocess.run(cmd, shell=True)</code></p>
+<p>Then we arrive to the trickiest function to write. We have to insert strings on a file, taking into account that they need to be in particular places on it. This was harder than I thought.<br />
+The first four changes pertain to <a href="https://www.w3.org/TR/xpath20/">Xpath</a> commands, that’ll define what from where in the webpage we’ll be scraping.<br />
+They all take the form of variables and all have the suffix “response.xpath()”, that indicates that we’re seeing something collected from the scraping, the “response” part, encoded in Xpath. The browser’s developer tools lets us choose a CSS element and copy its Xpath address, making the job even easier than using CSS names. They will all be organized as a Python dictionary with the <a href="https://www.w3schools.com/python/ref_func_zip.asp">zip</a> command. If it’s not a dictionary, XML, JSON and some other type of file I cannot remember right now, Scrapy won’t accept it.<br />
+We open the file in writing and execute the commands therein.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">def</span> edit_spider_file_parse_function(<span class="va">self</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We add to the file information regarding the areas of the site we want to target&quot;&quot;&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="ss">f&quot;/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/spiders&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info.py&quot;</span>, <span class="st">&quot;a&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        title = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>title<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        author = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>author<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        date_altered = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>date_altered<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        content = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>content<span class="sc">}</span><span class="ss">&#39;).getall()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        data = zip(title, author, date_altered, content)&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        for item in data:</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            f.write(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;            info = {&#39;title&#39;: i:wtem[0], &#39;author&#39;: item[1], &#39;date_altered&#39;: item[2], &#39;content&#39;: item[3]}&quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        yield info&quot;</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        with open(&#39;content.txt&#39;, &#39;w&#39;) as cont:&quot;</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;            for i in response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>content<span class="sc">}</span><span class="ss">&#39;).getall():&quot;</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;                cont.write(str(i))&quot;</span>)</span></code></pre></div>
+<p>We now change folders with os.chdir(), to get to the settings.py file, and add two settings:<br />
+1. We define the feed format. ‘json’ in this case.<br />
+2. The name of the file that will host the scraped information.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> settings(<span class="va">self</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We add information regarding the format of the output&quot;&quot;&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;settings.py&quot;</span>, <span class="st">&quot;a&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&#39;FEED_FORMAT = &quot;json&quot;&#39;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;FEED_URI = &#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">.json&#39;&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Changes to settings are done&quot;</span>)</span></code></pre></div>
+<p>Now we start, finally, crawling the site. As it’s another command line command, we’ll be using Subprocess again.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> crawl(<span class="va">self</span>):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We initiate the scraping&quot;&quot;&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="va">self</span>.path</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        project_name <span class="op">=</span> <span class="va">self</span>.project_name</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> path <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> project_name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/spiders/&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;scrapy crawl &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;_info&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>We now open the file created on the last step, and check if all was scraped correctly.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> result(<span class="va">self</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Verifying the output file, to see if everything is OK&quot;&quot;&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/spiders/&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;vim &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;.json&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>Here is all the code:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;The objective of this module is to automate the steps to scrape a given publication&quot;&quot;&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrapy</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;spam.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;DEBUG&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;error.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Scraper:</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;This class will be broken in the steps needed to create a scraping campaign. Each step a function.&quot;&quot;&quot;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, project_name, path, start_urls, title, author, date_altered, content):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.project_name <span class="op">=</span> project_name</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.path <span class="op">=</span> path</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.start_urls <span class="op">=</span> start_urls</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.date_altered <span class="op">=</span> date_altered</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> content</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dislocation1(<span class="va">self</span>):</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We head for designated local for the app and create a folder to house it&quot;&quot;&quot;</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="st">&quot;/home/mic/python/scraper&quot;</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        os.mkdir(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> start_project(<span class="va">self</span>):</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Scrapy command to start a project&quot;&quot;&quot;</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="ss">f&quot;/home/mic/python/scraper/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;scrapy startproject &quot;</span> <span class="op">+</span> <span class="va">self</span>.name</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> start_spider(<span class="va">self</span>):</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Scrapy command to initiate a spider&quot;&quot;&quot;</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        project_name <span class="op">=</span> <span class="va">self</span>.project_name</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        paths <span class="op">=</span> <span class="st">&quot;/home/mic/python/scraper/&quot;</span> <span class="op">+</span> project_name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/spiders&quot;</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="ss">f&quot;scrapy genspider </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>start_urls<span class="sc">}</span><span class="ss">&quot;</span>  <span class="co"># O nome tem de ser diferente do projecto.</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>paths, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> edit_spider_file_clean_file(<span class="va">self</span>):</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Here we clean the spider file a bit. It comes a bit dirty when it is generated by Scrapy&quot;&quot;&quot;</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="ss">f&quot;/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/spiders&quot;</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info.py&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> infile, <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_output.py&quot;</span>, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> outfile:</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> infile.read()</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> data.replace(<span class="st">&quot;http://&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> data.replace(<span class="st">&quot;pass&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>            outfile.write(data)</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info.py&quot;</span>)</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>            cmd <span class="op">=</span> <span class="ss">f&quot;mv </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_output.py </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info.py&quot;</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> edit_spider_file_parse_function(<span class="va">self</span>):</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We add to the file information regarding the areas of the site we want to target&quot;&quot;&quot;</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="ss">f&quot;/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/spiders&quot;</span>)</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">_info.py&quot;</span>, <span class="st">&quot;a&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        title = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>title<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        author = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>author<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        date_altered = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>date_altered<span class="sc">}</span><span class="ss">&#39;).extract()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;        content = response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>content<span class="sc">}</span><span class="ss">&#39;).getall()&quot;</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        data = zip(title, author, date_altered, content)&quot;</span>)</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        for item in data:</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>            f.write(</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;            info = {&#39;title&#39;: i:wtem[0], &#39;author&#39;: item[1], &#39;date_altered&#39;: item[2], &#39;content&#39;: item[3]}&quot;</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        yield info&quot;</span>)</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;        with open(&#39;content.txt&#39;, &#39;w&#39;) as cont:&quot;</span>)</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;            for i in response.xpath(&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>content<span class="sc">}</span><span class="ss">&#39;).getall():&quot;</span>)</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;                cont.write(str(i))&quot;</span>)</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> settings(<span class="va">self</span>):</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We add information regarding the format of the output&quot;&quot;&quot;</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        os.chdir(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;settings.py&quot;</span>, <span class="st">&quot;a&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&#39;FEED_FORMAT = &quot;json&quot;&#39;</span>)</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f&quot;FEED_URI = &#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">.json&#39;&quot;</span>)</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Changes to settings are done&quot;</span>)</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> crawl(<span class="va">self</span>):</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;We initiate the scraping&quot;&quot;&quot;</span></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="va">self</span>.path</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>        project_name <span class="op">=</span> <span class="va">self</span>.project_name</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> path <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> project_name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/spiders/&quot;</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;scrapy crawl &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;_info&quot;</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> result(<span class="va">self</span>):</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Verifying the output file, to see if everythng is ok&quot;&quot;&quot;</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="va">self</span>.name</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>project_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">/spiders/&quot;</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">=</span> <span class="st">&quot;vim &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;.json&quot;</span></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>        subprocess.run(cmd, cwd<span class="op">=</span>path, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<hr />
+<h2 id="the-main-function">The Main Function</h2>
+<p>On another file named ‘main_scraper.py’, we define the instances arguments for the class we just saw.<br />
+The last thing to do is run sequentially the functions that were created, to create simple and fast spider bot.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/python3.9</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Main module of the app. Where all functionalities are accessed from&quot;&quot;&quot;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrapy</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> questionary</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scraper <span class="im">import</span> Scraper</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;spam.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;DEBUG&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;error.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Here we start, sequentially, all the steps needed to create a scraping campaign.&quot;&quot;&quot;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    rasoura <span class="op">=</span> Scraper(</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;eco&quot;</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;eco_newspaper&quot;</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;/home/mic/python/scraper&quot;</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;https://eco.sapo.pt/2021/08/10/chineses-obrigam-loja-da-xiaomi-em-portugal-a-desistir-de-pagamentos-com-criptomoedas/&quot;</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;//*[@id=&quot;post-878113&quot;]/div/div[1]/header/h1/text()&#39;</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;//*[@id=&quot;post-878113&quot;]/div/div[1]/header/div[2]/div/div[1]/ul/li[1]/a/text()&#39;</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;//*[@id=&quot;post-878113&quot;]/div/div[1]/header/div[2]/div/div[1]/ul/li[2]&#39;</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;//*[@id=&quot;post-878113&quot;]/div/div[1]/div[1]/p/text()&#39;</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    rasoura.dislocation1()</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    rasoura.start_project()</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    rasoura.start_spider()</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    rasoura.edit_spider_file_clean_file()</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    rasoura.edit_spider_file_parse_function()</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    rasoura.settings()</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    rasoura.crawl()</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    rasoura.result()</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>main()</span></code></pre></div>
+</body>
+</html>

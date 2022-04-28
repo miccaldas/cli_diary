@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="mysql, sqlite, python" />
+  <meta name="description" content="Where the narrator tells the story of how he was wrong, then right, then wrong again." />
+  <title>Changing Storage</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Changing Storage</h1>
+<p class="date">2021-01-27T23:17:41Z</p>
+</header>
+<nav id="TOC" role="doc-toc">
+
+</nav>
+<p>There was an attempt to create a version of the notes and bookmarks apps I created,<br />
+with great suffering I might add, in MySQL.<br />
+I was having problems with SQLite, which I couldn’t understand, now, after much thought, feel exactly the same way.<br />
+More on this later.<br />
+Unfortunately I found out that the other SQL’s I tried, MySQL and PostgreSQL, have the habit of reading the code that passes through them and try to run it.<br />
+Not caring at all that these notes are to be static repositories of my ever-expanding knowledge, not commands to execute.<br />
+I still don’t understand if this behaviour is to be expected, or if my SQL version has a problem in it, (or if I fucked it up somehow). At this moment,<br />
+[2021-01-24 01:00:32],<br />
+I have had, for all of one day, a Stack Overflow question about this issue exactly. Up until now, no one’s biting.<br />
+Stranger still, I only saw this behaviour in the UPDATE command, not in the INSERT command.<br />
+For, instance, if you insert of piece of SQL code through INSERT he will process it without a whimper. If it is a UPDATE command, it will try to run it eagerly.<br />
+As I said, no idea.<br />
+But the app is there, it’s built and it works. Just don’t feed it SQL code.<br />
+Well, all this forced me yo look again to the SQLite app that I was trying to run away from, to see if we could reach an understanding.<br />
+When doing anything that involved actions on data already in the db, it would complain that it had received 7 pieces of information, say, and that it had only 6 columns, as an example, to put it in.<br />
+I agreed with the first part, but had strong misgivings about the second.<br />
+I had very recently changed the db’s structure (and if you’re familiar with SQLite we will know what a palaver it can be.), so I knew that the structure of both tables were correct.<br />
+I say tables because, in SQLite, if you’re going to use full-text search, you’ll need two tables, (actually more), the one where you keep your stuff and a virtual table that maps the content of the main one and it’s used to do the full-text searches.<br />
+So I knew that these two tables had the same structure in terms of column number and type. But still I checked.<br />
+I entered SQLite and punched ‘.schema notes’, ‘notes’ is the name of the main table, and ‘.schema notes_fts’, ‘schema_fts’ is the virtual table’s.<br />
+As I expected they showed the same structure; so this couldn’t be the problem. If the problem wasn’t what the code message said it was, what could it be?<br />
+I started to think that this would require an amount of SQL knowledge that I had not, and, in all honesty, wasn’t totally prepared to go get it.<br />
+Add to this that SQLite communicates in much the same way the Sibyls did in ancient Greece, short, ciphered and mysterious.<br />
+So I gave up on the SQLite version and started the MySQL creation. But that you: already know. When I got back at looking at SQLite version, I had a break-through, if it wasn’t going to tell me what I wanted to know, I could at least, look at how its data was structured, and get my answers there.<br />
+So I dumped the database to a csv file and had a look.<br />
+If not the first, the second thing I thought looking at it, was that SQLite was right. It didn’t have seven columns. For some reason, the command was given to create a table with the seven fields, (and that is what was registered in ‘.schema’; the command, not the reality),<br />
+and didn’t do it.<br />
+I probably should be worried that the db has a facultative approach to my commands, but, in truth, I’m just happy that is a problem I can solve. I recreated the tables and all is working now.</p>
+<h3 id="update">UPDATE</h3>
+<p>Well, it’s now,<br />
+[2021-01-28 01:051:43],<br />
+and now I know that if some of this can be blamed on the database, the great provider of error messages, really came from the Python connector.<br />
+There is a great number of operations that are done quietly in SQLite’s shell, that fail miserably when piped through the connector. I tried to understand a little better the error messages, as they sounded as improbable as as they were irritating, but there doesn’t seem to be anything googlable about Python’s SQLite module.<br />
+Which I find odd but, in a strangely comforting way, expected, for if rationally I know this isn’t true, in my heart of hearts, I know this is done exclusively to get on my nerves.<br />
+Well, “Sheila, take a bow”, your wish was granted!<br />
+You would think that if someone take’s something up as a hobby, this should bring him some peace, some respite from the toils of daily living …<br />
+This as brought me nothing but grief.<br />
+Even when I can finally solve whatever was wrong, I’m, by then, so emotionally depleted that I don’t find it exhilarating. It just means that I can go to bed now. Yay …</p>
+<h3 id="update-1">UPDATE</h3>
+<p>And in the day of our Lord,<br />
+[2021-02-21 20:37:14]<br />
+Something new has turned badly on the SQLite database.<br />
+Now, for some unknown reason, the search function is not working. First it showed no results for notes done after the beginning of January, then, when I tried it again, it would show no results <em>and</em> open the password app. Finally it stabilized in outputting that the database disk was malformed.<br />
+I’ve officially given up on SQLite, and passed my apps to MySQL, which has been, up until now, a much smoother ride.<br />
+Maybe I’ll come back later at this problem, just to understand what in the hell is going wrong. But, for now, I just want my apps working.<br />
+Does it bothers me? Yes it does, mostly because I fear that this might be a symptom of a deeper problem in my computer. But I haven’t seen any anomalous behavior in other programs, so, for now, I’ll leave well enough alone.</p>
+</body>
+</html>

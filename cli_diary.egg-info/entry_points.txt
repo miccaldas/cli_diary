@@ -1,0 +1,5 @@
+[console_scripts]
+deldiary = cli_diary.manage:delete
+newdiary = cli_diary.manage:new
+seediary = cli_diary.visualization:see
+updtdiary = cli_diary.manage:update

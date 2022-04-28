@@ -1,0 +1,61 @@
+2022-04-26T21:43:39.054912+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (22615), thread 'MainThread' (139976444798784):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/blog_posts/blog_view.py", line 36, in <module>
+    blog_view()
+    └ <function blog_view at 0x7f4ecd11c670>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function blog_view at 0x7f4ecd11c550>
+
+  File "/home/mic/python/cli_diary/cli_diary/blog_posts/blog_view.py", line 29, in blog_view
+    tmp.write("Hello")
+    │   └ <method 'write' of '_io.BufferedRandom' objects>
+    └ <_io.BufferedRandom name=5>
+
+TypeError: a bytes-like object is required, not 'str'
+2022-04-26T22:11:19.515696+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (23812), thread 'MainThread' (139800208303936):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/blog_posts/upload.py", line 49, in <module>
+    upload()
+    └ <function upload at 0x7f25c3adc940>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function upload at 0x7f25c3adc820>
+
+  File "/home/mic/python/cli_diary/cli_diary/blog_posts/upload.py", line 43, in upload
+    new_freq0 = [i for i in word_freq_sorted if i[0].startwith("class")]
+                            └ [('span', 100), ('class="line', 96), ('class="line"><span', 24), ('class="keyword">def</span', 18), ('class="function"><span'...
+
+  File "/home/mic/python/cli_diary/cli_diary/blog_posts/upload.py", line 43, in <listcomp>
+    new_freq0 = [i for i in word_freq_sorted if i[0].startwith("class")]
+                 │     │                        └ ('span', 100)
+                 │     └ ('span', 100)
+                 └ ('span', 100)
+
+AttributeError: 'str' object has no attribute 'startwith'
+2022-04-26T23:01:07.942828+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (25442), thread 'MainThread' (140258706802496):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/blog_posts/upload.py", line 80, in <module>
+    upload()
+    └ <function upload at 0x7f9083b8beb0>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function upload at 0x7f9083b8bd90>
+
+  File "/home/mic/python/cli_diary/cli_diary/blog_posts/upload.py", line 33, in upload
+    with open(file, "r") as f:
+              └ 'making_sense_of_a_rss_app.html'
+
+FileNotFoundError: [Errno 2] No such file or directory: 'making_sense_of_a_rss_app.html'

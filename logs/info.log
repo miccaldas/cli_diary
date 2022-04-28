@@ -1,0 +1,320 @@
+2022-04-25T15:20:17.237667+0100 - typer.main - ERROR - An error has been caught in function 'wrapper', process 'MainProcess' (434332), thread 'MainThread' (139989081945920):
+Traceback (most recent call last):
+
+  File "/home/mic/python/cli_diary/cli_diary/new.py", line 33, in <module>
+    typer.run(new)
+    │     │   └ <function new at 0x7f51bd810280>
+    │     └ <function run at 0x7f51bec3c5e0>
+    └ <module 'typer' from '/home/mic/.local/lib/python3.10/site-packages/typer/__init__.py'>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/typer/main.py", line 864, in run
+    app()
+    └ <typer.main.Typer object at 0x7f51bd80caf0>
+  File "/home/mic/.local/lib/python3.10/site-packages/typer/main.py", line 214, in __call__
+    return get_command(self)(*args, **kwargs)
+           │           │      │       └ {}
+           │           │      └ ()
+           │           └ <typer.main.Typer object at 0x7f51bd80caf0>
+           └ <function get_command at 0x7f51bec1bbe0>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7f51befb7ac0>
+           └ <TyperCommand new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7f51bd80e380>
+         │    └ <function Command.invoke at 0x7f51befbc5e0>
+         └ <TyperCommand new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'title': '25-04-2022', 'k1': '', 'k2': ''}
+           │   │      │    │           └ <click.core.Context object at 0x7f51bd80e380>
+           │   │      │    └ <function new at 0x7f51bd812290>
+           │   │      └ <TyperCommand new>
+           │   └ <function Context.invoke at 0x7f51befb72e0>
+           └ <click.core.Context object at 0x7f51bd80e380>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {'title': '25-04-2022', 'k1': '', 'k2': ''}
+                       └ ()
+> File "/home/mic/.local/lib/python3.10/site-packages/typer/main.py", line 500, in wrapper
+    return callback(**use_params)  # type: ignore
+           │          └ {'title': '25-04-2022', 'k1': '', 'k2': ''}
+           └ <function new at 0x7f51bd810280>
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {'title': '25-04-2022', 'k1': '', 'k2': ''}
+           │         └ ()
+           └ <function new at 0x7f51bd810160>
+
+  File "/home/mic/python/cli_diary/cli_diary/new.py", line 29, in new
+    entry = click.edit().rstrip()
+            │     └ <function edit at 0x7f51befb6050>
+            └ <module 'click' from '/home/mic/.local/lib/python3.10/site-packages/click/__init__.py'>
+
+AttributeError: 'NoneType' object has no attribute 'rstrip'
+2022-04-25T17:05:30.893476+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (438139), thread 'MainThread' (139854772836160):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/new.py", line 52, in <module>
+    new()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7f32780c8700>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7f3279883b50>
+           └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7f32780b56c0>
+         │    └ <function Command.invoke at 0x7f3279888670>
+         └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+           │   │      │    │           └ <click.core.Context object at 0x7f32780b56c0>
+           │   │      │    └ <function new at 0x7f32780c8940>
+           │   │      └ <Command new>
+           │   └ <function Context.invoke at 0x7f3279883370>
+           └ <click.core.Context object at 0x7f32780b56c0>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+                       └ ()
+
+  File "/home/mic/python/cli_diary/cli_diary/new.py", line 35, in new
+    entry = click.edit.rstrip()
+            │     └ <function edit at 0x7f32798820e0>
+            └ <module 'click' from '/home/mic/.local/lib/python3.10/site-packages/click/__init__.py'>
+
+AttributeError: 'function' object has no attribute 'rstrip'
+2022-04-25T17:07:40.977581+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (438221), thread 'MainThread' (139954168244032):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/new.py", line 52, in <module>
+    new()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7f499c7a0700>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7f499df63b50>
+           └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7f499c78d780>
+         │    └ <function Command.invoke at 0x7f499df68670>
+         └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+           │   │      │    │           └ <click.core.Context object at 0x7f499c78d780>
+           │   │      │    └ <function new at 0x7f499c7a09d0>
+           │   │      └ <Command new>
+           │   └ <function Context.invoke at 0x7f499df63370>
+           └ <click.core.Context object at 0x7f499c78d780>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+                       └ ()
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+           │         └ ()
+           └ <function new at 0x7f499c7a0940>
+
+  File "/home/mic/python/cli_diary/cli_diary/new.py", line 35, in new
+    entry = click.edit().rstrip()
+            │     └ <function edit at 0x7f499df620e0>
+            └ <module 'click' from '/home/mic/.local/lib/python3.10/site-packages/click/__init__.py'>
+
+AttributeError: 'NoneType' object has no attribute 'rstrip'
+2022-04-25T17:09:09.331650+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (438353), thread 'MainThread' (140648807311168):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/./new.py", line 52, in <module>
+    new()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7feb58310700>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7feb59ad3b50>
+           └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7feb582fd750>
+         │    └ <function Command.invoke at 0x7feb59ad8670>
+         └ <Command new>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+           │   │      │    │           └ <click.core.Context object at 0x7feb582fd750>
+           │   │      │    └ <function new at 0x7feb583109d0>
+           │   │      └ <Command new>
+           │   └ <function Context.invoke at 0x7feb59ad3370>
+           └ <click.core.Context object at 0x7feb582fd750>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+                       └ ()
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {'title': 'new test', 'k1': 'test', 'k2': 'first'}
+           │         └ ()
+           └ <function new at 0x7feb58310940>
+
+  File "/home/mic/python/cli_diary/cli_diary/./new.py", line 35, in new
+    entry = click.edit().rstrip()
+            │     └ <function edit at 0x7feb59ad20e0>
+            └ <module 'click' from '/home/mic/.local/lib/python3.10/site-packages/click/__init__.py'>
+
+AttributeError: 'NoneType' object has no attribute 'rstrip'
+2022-04-25T18:56:22.607807+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (442592), thread 'MainThread' (140341261285184):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 50, in <module>
+    see()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7fa3bce8a440>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7fa3be81bac0>
+           └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7fa3bce85180>
+         │    └ <function Command.invoke at 0x7fa3be8205e0>
+         └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {}
+           │   │      │    │           └ <click.core.Context object at 0x7fa3bce85180>
+           │   │      │    └ <function see at 0x7fa3bce98e50>
+           │   │      └ <Command see>
+           │   └ <function Context.invoke at 0x7fa3be81b2e0>
+           └ <click.core.Context object at 0x7fa3bce85180>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {}
+                       └ ()
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function see at 0x7fa3bce98dc0>
+
+  File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 29, in see
+    mic_console.color_system = "truecolor"
+    │           └ <property object at 0x7fa3bce82200>
+    └ <console width=168 ColorSystem.TRUECOLOR>
+
+AttributeError: can't set attribute 'color_system'
+2022-04-25T18:59:38.521275+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (442691), thread 'MainThread' (140381268539200):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 50, in <module>
+    see()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7fad0d86a440>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7fad0f1ffac0>
+           └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7fad0d858be0>
+         │    └ <function Command.invoke at 0x7fad0f2045e0>
+         └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {}
+           │   │      │    │           └ <click.core.Context object at 0x7fad0d858be0>
+           │   │      │    └ <function see at 0x7fad0d878e50>
+           │   │      └ <Command see>
+           │   └ <function Context.invoke at 0x7fad0f1ff2e0>
+           └ <click.core.Context object at 0x7fad0d858be0>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {}
+                       └ ()
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function see at 0x7fad0d878dc0>
+
+  File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 29, in see
+    mic_console.color_system = "truecolor"
+    │           └ <property object at 0x7fad0d865bc0>
+    └ <console width=168 ColorSystem.TRUECOLOR>
+
+AttributeError: can't set attribute 'color_system'
+2022-04-25T19:05:10.740056+0100 - __main__ - ERROR - An error has been caught in function '<module>', process 'MainProcess' (442933), thread 'MainThread' (139627164628800):
+Traceback (most recent call last):
+
+> File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 50, in <module>
+    see()
+    └ <function Logger.catch.<locals>.Catcher.__call__.<locals>.catch_wrapper at 0x7efd796e2440>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function BaseCommand.main at 0x7efd7b077ac0>
+           └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7efd796d0d30>
+         │    └ <function Command.invoke at 0x7efd7b07c5e0>
+         └ <Command see>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {}
+           │   │      │    │           └ <click.core.Context object at 0x7efd796d0d30>
+           │   │      │    └ <function see at 0x7efd796f0e50>
+           │   │      └ <Command see>
+           │   └ <function Context.invoke at 0x7efd7b0772e0>
+           └ <click.core.Context object at 0x7efd796d0d30>
+  File "/home/mic/.local/lib/python3.10/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+                       │       └ {}
+                       └ ()
+  File "/home/mic/.local/lib/python3.10/site-packages/snoop/tracer.py", line 157, in simple_wrapper
+    return function(*args, **kwargs)
+           │         │       └ {}
+           │         └ ()
+           └ <function see at 0x7efd796f0dc0>
+
+  File "/home/mic/python/cli_diary/cli_diary/visualization.py", line 38, in see
+    mic_console.print(row[1], justify="center")
+    │           │     └ (2, 'new test', 'This is the third test.', 'new', 'first', datetime.datetime(2022, 4, 25, 17, 6, 29))
+    │           └ <function Console.print at 0x7efd796f04c0>
+    └ <console width=168 ColorSystem.TRUECOLOR>
+
+  File "/home/mic/.local/lib/python3.10/site-packages/rich/console.py", line 1595, in print
+    renderables = self._collect_renderables(
+                  │    └ <function Console._collect_renderables at 0x7efd796f01f0>
+                  └ <console width=168 ColorSystem.TRUECOLOR>
+  File "/home/mic/.local/lib/python3.10/site-packages/rich/console.py", line 1477, in _collect_renderables
+    style = self.get_style(self.style)
+            │    │         │    └ '#3A3845 on bold #F7CCAC'
+            │    │         └ <console width=168 ColorSystem.TRUECOLOR>
+            │    └ <function Console.get_style at 0x7efd796f0160>
+            └ <console width=168 ColorSystem.TRUECOLOR>
+  File "/home/mic/.local/lib/python3.10/site-packages/rich/console.py", line 1403, in get_style
+    raise errors.MissingStyle(
+          │      └ <class 'rich.errors.MissingStyle'>
+          └ <module 'rich.errors' from '/home/mic/.local/lib/python3.10/site-packages/rich/errors.py'>
+
+rich.errors.MissingStyle: Failed to get style '#3A3845 on bold #F7CCAC'; unable to parse 'bold' as background color; 'bold' is not a valid color

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Notes Tag Management Project Notes</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Notes Tag Management Project Notes</h1>
+</header>
+<p>date: 03/09/2021<br />
+title: The Basics</p>
+<p>My objective now is to create a rough sketch of the macro tasks that the<br />
+will entail. So as I not loose track, as I so often do.<br />
+The idea is for the insertion of new tags and the deletion of old ones, be<br />
+totally automatic, having no human participation.<br />
+For this to happen we need:</p>
+<ol type="1">
+<li>Know what the current tags are,<br />
+</li>
+<li>verify all newly inputed tags to see if they are not in our record,<br />
+</li>
+<li>add them to our record if they’re new.<br />
+</li>
+<li>We need to know if someone updates a tag. He could have erased a tag<br />
+or created a new one.<br />
+</li>
+<li>We need to update the file with new content,<br />
+</li>
+<li>also we need to erase it when necessary.<br />
+</li>
+<li>Tags that have 0 connections WILL BE ELIMINATED.</li>
+</ol>
+<p>#####################</p>
+<p>Looking at this, and from the top of my head; two ideas came to me:<br />
+DISCARD THE FILE. It’s not needed, it’s the remnant of an old idea, we<br />
+would be much better served with a database.<br />
+USER GUIDANCE, when choosing the tags:<br />
+- Create a system to tell them if there’s already tags with the same name.</p>
+<p>#####################</p>
+<p>Database Roadmap:</p>
+<pre><code>- Test if everything is OK, when we discard of what, seems, to be  
+  spurious code, since we abandoned the word cloud idea.  
+- Every time that the HP would be called, it would do a database query,  
+  through php, asking for all the tags. That would be what it shows.
+- Maybe is not necessary to build anything vis a vis the database.  
+  Probably the &#39;notes&#39; db is more than the enough. We just need:  
+    tag names,  
+    number of links. To know if they&#39;re dead or not.  </code></pre>
+<p>And I think that’s it for now. I’m going to start on the database, and see<br />
+where we go from there.</p>
+<h3 id="update">UPDATE:</h3>
+<p>I’ve been thinking a little more about it, and there’s nothing we can add,<br />
+at this moment, with these objectives, to the db, that would make any<br />
+difference. What we have to do is create more awareness about the processes<br />
+of the functionalities modules, that’ll give us most of the information<br />
+we need. See entry below, for more on this issue.</p>
+<p class="heading" id="section"></p>
+<p>date: 03/09/2021<br />
+title: Tag Evaluation Structure</p>
+<p>I’m thinking of something along these lines for the verification of the<br />
+tags, at the moment of adding a or updating it.<br />
+I think it can happen one of of three things:</p>
+<pre><code>1. The tag is new. Do nothing. The tag is already in the database,  
+our functions run from information from it. Nothing has to be updated.  
+It should output a &#39;The tag is new&#39; information string.  
+
+2. The tag is known. Do nothing. All the work is done.  
+Even the number of connections is automatically taken care of by  
+the database. Output, &#39;The tag X ha now y connections.&#39;  
+
+3. The tag is similar to other tags. This is more challenging.  
+I still have no idea how to do this.  
+I will take care first of linking the function modules to this new thing  
+we&#39;re doing.  </code></pre>
+<p class="heading" id="section-1"></p>
+<p>date: 04/09/2021<br />
+title: Connect Tag Evaluation to Functionalities Modules</p>
+<p>The tag evaluation class is almost finished, I still have to add a method<br />
+to erase the tag if the connection number gets to 0.<br />
+But, at the moment it can:</p>
+<pre><code>1. Assess if the tag is new.  
+2. Send a message telling the user this.  
+3. Assess if it was already in the database.  
+3. If 3 is positive, send a message to the user, with the updated  
+connections number of tag.  
+4. Verify if the tag inserted is very much like an old tag, using a  
+library called &quot;Fuzzywuzzy&quot;, link in the &#39;bkmks&#39; app. If not, do nothing,  
+if yes, send a message to the user, suggesting him that he might want to 
+replace it.  </code></pre>
+<p>I intend to add today, a link in the functionalities modules to the class that has all the tag evaluation methods.<br />
+I’m thinking that creating a simple variable with a list of the three keywords, that can then be imported to class, will be enough.<br />
+It’ll be also necessary to insert in ‘add.py’, a mechanism that allows the user to see the tag suggestion done by the similarites evaluation method.<br />
+Now that I think about it, this poses a problem, the class can’t be, at the same time, importing from ‘add.py’ and exporting to it.<br />
+I think that the solution is to transform the evaluation function into a separate module.</p>
+<p class="heading" id="section-2"></p>
+<p>date: 07/09/2021 title: Passed fuzzy function to ‘add.py’</p>
+<p>Because of import issues, I did what I didn’t want to do, added the fuzzy function to add.py.<br />
+This didn’t solve anything as I am still unable to make it work, even inside the same file.<br />
+It needs to be debugged.<br />
+Another probable solution would be to turn add,py into a class. But that would certainly bring its own unknown quantity of problems.</p>
+<p class="heading" id="section-3"></p>
+<p>date: 19/09/21 title: Fuzzy function working in ‘add.py’</p>
+<p>I, finally, made the ‘Thefuzz’ library, not ‘fuzzywuzzy’ anymore, working in ‘add.py’. I should’ve bee using the ‘process’ method o f the library, not the default ‘fuzz.ratio’. Or, at least, that is how I made it run.<br />
+I’ve still to add all the other info calls, but, truth be told, I’m kind of scared of touching it after how long it took to make it work just for similar keywords.</p>
+<p class="heading" id="section-4"></p>
+</body>
+</html>

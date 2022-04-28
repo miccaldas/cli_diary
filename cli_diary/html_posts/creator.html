@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>creator</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">creator</h1>
+<p class="date">2021-12-11 02:31:02</p>
+</header>
+<p>I’ve been playing around with PHP lately. As always I’m remaking old projects in new languages and tools.<br />
+The problem with PHP is that lulls you into a false sense of security, everything seems familiar, easy, intuitive, and most of the time it is, but it has its quirks, and an excessive reliance on the familiar and the known, stops you from making progress. As I think I’ve done.<br />
+I created a very simple site that creates passwords. It asks what is the length that you want on you password, and uses a randomness library to choose the characters.<br />
+I used numbers, letters and punctuation marks as the basis of my passwords. I used 93 elements to combine. To manipulate it I turned it into an array, where numbers - sequentially from 0 to 93 - are the keys of the tuple, although I don’t think that there’s tuples in PHP, and the characters are the values. This is particularly useful because the randomness modules for PHP that I found, only deal with numbers. So the user chooses a number that is the length of his password, the PHP module will iterate through the sequence and choose random numbers between 0 and 93. We see what characters those number represent and ‘voilá’, you have a password!<br />
+As I’m sure I already wrote about this here, I’ll try not to repeat myself more than necessary. Nevertheless, working with PHP and HTML created in me some routines that I like to respect. I don’t know how correct it is what I’m going to say but, it is the way that seems to me more adequate to work with projects that have a lot of back and front end work.<br />
+As I seem to gravitate to projects that are centered on the use of databases, that was how I first discovered PHP. And from there I created the following habits: 1. Separate presentation from the build of the app. I use PHP files instead of HTML files because I can inject code to an HTML structure that only serves to house them. My files are very small, as all development is done in modules that are added via PHP inclusions. This creates simple and easy to understand documents, and allows me to use a HTML template that I use as scaffolding for most of my projects. 2. Separate the forms from the HTML and the PHP. Create their own files and include them as insertions, exactly like I do with the PHP code.</p>
+<p>I called the file that builds the passwords, “generator.php”, as you’ll see it does much more than that, and if I’m very aware that that is a very bad coding habit, the truth is that I had a lot of difficulties getting though this, so I cut some corners.<br />
+First I import the array of symbols that looks a bit like this:</p>
+<pre><code>    83 =&gt; &#39;@&#39;,
+    84 =&gt; &#39;[&#39;,
+    85 =&gt; &#39;]&#39;,
+    86 =&gt; &#39;^&#39;,
+    87 =&gt; &#39;_&#39;,
+    88 =&gt; &#39;`&#39;,
+    89 =&gt; &#39;{&#39;,
+    90 =&gt; &#39;|&#39;,
+    91 =&gt; &#39;}&#39;,
+    92 =&gt; &#39;~&#39;,</code></pre>
+<p>My form was very simple, it was just a place where to input a number. I then verify with the function <a href="https://www.php.net/manual/en/function.isset.php">isset</a> if the GET variables are working. Isset verifies if a variable is declared and if it is different than null. This does not save you from problems because, as I discovered myself, if a variable is a string with 0 characters isset acknowledges that is a string, has a set size and accepts it as good. Further down a long road I discovered the function <a href="https://www.php.net/manual/en/function.array-key-exists.php">array_key_exists</a>, which returns true if a key is in an array. As all GET and POST methods are arrays, this helps understand if the variables are there or no.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="kw">require</span> <span class="st">&#39;corrected_list.php&#39;</span><span class="ot">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&#39;length&#39;</span>])) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$length</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;length&#39;</span>]<span class="ot">;</span></span></code></pre></div>
+<p>As I alluded earlier, here we create a counter with the <span class="math inline">$i variable and set it at 0, and while the counter count is lower than the password length, we get key:value from the array, isolate the value and add it, loop by loop, to a new string that'll be the password. ```php  while ($</span>i++ &lt; $length) { $pass = rand(0, 92); <span class="math inline"><em>p</em><em>w</em><em>d</em><sub><em>k</em></sub><em>e</em><em>y</em><em>s</em>[</span>i] = $pass; }</p>
+<pre><code>foreach($pwd_keys as $key =&gt; $key_value)
+{
+    $item = $keys[$key_value];
+    while ($i++ &lt; $length)
+        $results[$i] = $item;
+    $mail .= $item;
+}</code></pre>
+<pre><code>After having isolated the new password in variable, I print it to the site.  
+I also thought that it would be instructive to learn ho to work with emails in
+PHP. So I decided to allow the user to get his new password in the mail. He just
+has to insert a valid email and the new password is sent automatically.  
+This was harder that I expected. I couldn&#39;t figure out how to make the value of
+the password persist, so you can create a password and then decide if you want
+to send it through mail or not. What happened was that the variable was already
+gone when the later step of inserting the email came around. I then tried to
+write the new password to a text file, so I could retrieve it later. But for
+some reason, obviously by an error from my part, whenever I tried to read it, it
+would be erased. It was obvious that I was doing something wrong, but I also
+felt that my error was done earlier and it was decoupling the password creation
+step from the email insertion step. If I could do it all in one go, the problems
+would disappear and I wouldn&#39;t need text files to keep the password value.  
+So in the form for inserting the email, I created an hidden field, identified by
+a name and that would use the password variable as a value for the GET method.  
+As it was integrated in the email form, when I would send it, the two pieces of
+information went in tandem.  
+```php
+    echo &quot;&lt;h1 class=&#39;message&#39;&gt;Your New Password is:&lt;/h1&gt;&quot;;
+    echo &quot;&lt;h1 class=&#39;password&#39;&gt;$mail&lt;/h1&gt;&quot;;
+    echo &quot;&lt;form action=&#39;&#39; method=&#39;get&#39;&gt;&quot;;
+    echo &quot;&lt;input type=&#39;hidden&#39; id=&#39;pwd&#39; name=&#39;pwd&#39; value=$mail&gt;&lt;/input&gt;&quot;;
+    echo &quot;&lt;input type=&#39;email&#39; id=&#39;email&#39; name=&#39;email&#39; placeholder=&#39;Password in Email&#39;&gt;&lt;/input&gt;&quot;;
+    echo &quot;&lt;input type=&#39;submit&#39; value=&#39;Send&#39;&gt;&lt;/input&gt;&quot;;
+    echo &quot;&lt;/form&gt;&quot;;</code></pre>
+<p>The form data was treated in the same page as I wasn’t able to read it successfully from another page. This was for the best, as this was my objective all along. Not having to change pages through the all process.<br />
+I created a function that first verifies if there is a GET method available, if yes, it allocates the values of the variables to new variables, defines a sender email, that I created earlier, when installing the mail server. Which was, oddly, a stress-free experience and went very well. So thank God for small mercies.<br />
+I used PHP’s mail function, using Sendmail supported by a Postfix server.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>     <span class="kw">function</span> mailCreator() {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="va">$_GET</span>) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="va">$to</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;email&quot;</span>]<span class="ot">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="va">$from</span> <span class="op">=</span> <span class="st">&quot;root@constantconstipation.club&quot;</span><span class="ot">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">$message</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;pwd&#39;</span>]<span class="ot">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">$subject</span> <span class="op">=</span> <span class="st">&quot;New Password&quot;</span><span class="ot">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">$headers</span> <span class="op">=</span> <span class="st">&quot;From: &quot;</span> <span class="op">.</span> <span class="va">$from</span><span class="ot">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mail</span>(<span class="va">$to</span><span class="ot">,</span><span class="va">$subject</span><span class="ot">,</span><span class="va">$message</span><span class="ot">,</span><span class="va">$headers</span>)<span class="ot">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;There&#39;s nothing here.&quot;</span><span class="ot">;</span> }<span class="ot">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mailCreator()<span class="ot">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>I should also mention that I had an horrible time with CSS, with everything that could go wrong, going wrong. Code that wouldn’t appear in the browser or it wouldn’t accept the new changes, an hassle.<br />
+Everyday grows my respect and admiration for the people who work with CSS on a daily basis. It’s a capricious, fickle bitch.<br />
+Anyway, here’s the homepage of the site, where most things happen:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;utf-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span><span class="cn">HP</span><span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;viewport&quot;</span> content<span class="op">=</span><span class="st">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;Mclds&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;description&quot;</span> content<span class="op">=</span><span class="st">&quot;Homepage&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span><span class="fu">link</span> rel<span class="op">=</span><span class="st">&quot;stylesheet&quot;</span> type<span class="op">=</span><span class="st">&quot;text/css&quot;</span> href<span class="op">=</span><span class="st">&quot;index.css&quot;</span> media<span class="op">=</span><span class="st">&quot;screen&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;header&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">include</span> <span class="st">&quot;header.php&quot;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;flex-container&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;column_left&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;column_center&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;pwdform_container&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                    <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">require</span> <span class="st">&quot;pwd_form.php&quot;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;pwdaction&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                    <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">require</span> <span class="st">&quot;generator.php&quot;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;column-right&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">include</span> <span class="st">&#39;footer.php&#39;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> https<span class="ot">:</span><span class="co">//tinyurl.com/tonwks2 --&gt;</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( window<span class="op">.</span>history<span class="op">.</span>replaceState ) {</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    window<span class="op">.</span>history<span class="op">.</span>replaceState( <span class="kw">null</span><span class="ot">,</span> <span class="kw">null</span><span class="ot">,</span> window<span class="op">.</span>location<span class="op">.</span>href )<span class="ot">;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>script<span class="op">&gt;</span> <span class="op">&lt;!--</span> https<span class="ot">:</span><span class="co">//tinyurl.com/yyeckra6 --&gt;</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(typeof window<span class="op">.</span>history<span class="op">.</span>pushState <span class="op">==</span> <span class="st">&#39;function&#39;</span>) {</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        window<span class="op">.</span>history<span class="op">.</span>pushState({}<span class="ot">,</span> <span class="st">&quot;Hide&quot;</span><span class="ot">,</span> <span class="st">&quot;https://constantconstipation.club&quot;</span>)<span class="ot">;</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+<p>And here’s the file with all the PHP:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="kw">require</span> <span class="st">&#39;corrected_list.php&#39;</span><span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&#39;length&#39;</span>])) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$length</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;length&#39;</span>]<span class="ot">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$i</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pwd_keys</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$results</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mail</span> <span class="op">=</span> <span class="st">&quot; &quot;</span><span class="ot">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="va">$i</span><span class="op">++</span> <span class="op">&lt;</span> <span class="va">$length</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$pass</span> <span class="op">=</span> <span class="fu">rand</span>(<span class="dv">0</span><span class="ot">,</span> <span class="dv">92</span>)<span class="ot">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$pwd_keys</span>[<span class="va">$i</span>] <span class="op">=</span> <span class="va">$pass</span><span class="ot">;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$pwd_keys</span> <span class="kw">as</span> <span class="va">$key</span> =&gt; <span class="va">$key_value</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">$item</span> <span class="op">=</span> <span class="va">$keys</span>[<span class="va">$key_value</span>]<span class="ot">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> (<span class="va">$i</span><span class="op">++</span> <span class="op">&lt;</span> <span class="va">$length</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            <span class="va">$results</span>[<span class="va">$i</span>] <span class="op">=</span> <span class="va">$item</span><span class="ot">;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">$mail</span> <span class="op">.=</span> <span class="va">$item</span><span class="ot">;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h1 class=&#39;message&#39;&gt;Your New Password is:&lt;/h1&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h1 class=&#39;password&#39;&gt;</span><span class="va">$mail</span><span class="st">&lt;/h1&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;form action=&#39;&#39; method=&#39;get&#39;&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;input type=&#39;hidden&#39; id=&#39;pwd&#39; name=&#39;pwd&#39; value=</span><span class="va">$mail</span><span class="st">&gt;&lt;/input&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;input type=&#39;email&#39; id=&#39;email&#39; name=&#39;email&#39; placeholder=&#39;Password in Email&#39;&gt;&lt;/input&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;input type=&#39;submit&#39; value=&#39;Send&#39;&gt;&lt;/input&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;/form&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>     <span class="kw">function</span> mailCreator() {</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="va">$_GET</span>) {</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>            <span class="va">$to</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;email&quot;</span>]<span class="ot">;</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>            <span class="va">$from</span> <span class="op">=</span> <span class="st">&quot;root@constantconstipation.club&quot;</span><span class="ot">;</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>            <span class="va">$message</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;pwd&#39;</span>]<span class="ot">;</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>            <span class="va">$subject</span> <span class="op">=</span> <span class="st">&quot;New Password&quot;</span><span class="ot">;</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>            <span class="va">$headers</span> <span class="op">=</span> <span class="st">&quot;From: &quot;</span> <span class="op">.</span> <span class="va">$from</span><span class="ot">;</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mail</span>(<span class="va">$to</span><span class="ot">,</span><span class="va">$subject</span><span class="ot">,</span><span class="va">$message</span><span class="ot">,</span><span class="va">$headers</span>)<span class="ot">;</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;There&#39;s nothing here.&quot;</span><span class="ot">;</span> }<span class="ot">;</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    mailCreator()<span class="ot">;</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+<p>I almost forgot, and this is important. In the index.php file there are two small JavaScript scripts that are very useful. One stops the PHP file from being called every time that the page is refreshed and the other deletes the GET information from the pages URL, as it calls it every time there’s a refresh.</p>
+</body>
+</html>

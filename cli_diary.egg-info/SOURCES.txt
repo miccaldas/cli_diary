@@ -1,0 +1,15 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+cli_diary/__init__.py
+cli_diary/manage.py
+cli_diary/visualization.py
+cli_diary.egg-info/PKG-INFO
+cli_diary.egg-info/SOURCES.txt
+cli_diary.egg-info/dependency_links.txt
+cli_diary.egg-info/entry_points.txt
+cli_diary.egg-info/requires.txt
+cli_diary.egg-info/top_level.txt

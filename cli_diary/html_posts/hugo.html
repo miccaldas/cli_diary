@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Uploading to a Hugo Blog</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Uploading to a Hugo Blog</h1>
+<p class="date">2021-01-28T20:23:01Z</p>
+</header>
+This blog has put me in front of some new challenges.<br />
+Well, not really challenges, minor nuisances, in the great big scheme of things … Trifles … puerile pursuits really.<br />
+So, <a href="https://gohugo.io">Hugo</a> the web platform that powers this blog, is web-server agnostic. Much due to the fact that it’s serving static files. So this entails that content production has, more or less, the following workflow: you write what you have to write, put the photos or images that you want in your post and all is right, proper and ready to go.<br />
+When done, you write <code>hugo</code>, just like that, and it will update all the files, creating a folder named ‘public’, where all the new HTML is, ready to be used. What you do with it, it’s totally up to you.<br />
+Want to send it through Apache, Nginx? be my guest. Want to send it to Heroku? It just so happens we have an integration for it!<br />
+Since I only worked with personal blogs or sites, and because no one told me what the best-practices were, and if they did, I didn’t get it, I always worked in the server. I would download all the tools I needed for the site, and did all work from there. I’m a big of command line so, this helped a bit. Whenever something must be done with a GUI tool, editing an image for example, I would work locally and upload it with <a href="https://en.wikipedia.org/wiki/Secure_file_transfer_program">sftp</a>. Which is a wonderful tool, by the way.<br />
+So I never had a mental image of the web framework as a separate entity from the web-server. Also, and this must the real reason,, through sheer incompetence, generally I would have an horrible time trying to setup these frameworks.<br />
+I could never put the web-server working correctly. It could be that the ssl wouldn’t recognize all pages as part of the site, or the homepage was the only one to be served, or a myriad other things, I felt, I had no knowledge or control.<br />
+So I thought, (brilliantly, I know), that if I downloaded the programs to the server folder, it would be already in a place where it should be, I pondered, and would make the whole process a lot simpler. I concluded.<br />
+For some fortuitous reason, probably better explained by the alignment of the stars, or the protection of a beneficent deity, I got one of these frameworks working.So mired in retrospective determinism was I that I assumed that my guess was right, that you should download, build and manage the framework from the web-site folder. Needless to say that all my folders were exposed on the internet, and open to attack, because, why shouldn’t they? If you’re going half-ass a project, aim for the stars I say.<br />
+There’s no more eloquent statement of how perfunctory is the interest of other people in what I have to say, than the fact that I had this sad state of affairs exposed for a year or more on the web, and no one seemed interested in taking advantage of this marvelous opportunity for mischief. So I never questioned this empirical truth for years,<br />
+until the fact that I wasn’t succeeding in installing <a href="https://hexo.io/">hexo</a>, (through no fault of hexo’s, I understood after), made me try to set up the development part in my computer. Just so I could follow the setup instructions to the letter.<br />
+This led me to awesome conclusion that web content and web serving are two different things, never again to be confused.<br />
+So, you have a ‘public folder’ with all your new shiny HTML, what do you need to do?<br />
+You need to, in the root folder of your blog project, write the following:<br />
+
+<pre><code> 
+   sftp username@hostname
+   cd /path/to/server/web-server/folder
+   put -r public
+   chown -R www-data:www-data public
+   bye
+</code></pre>
+<p>The <code>chown</code> command is there because every time that there’s an upload, the files come with my user, and I need the files to be in the server’s user (www-data), so it can access the data.<br />
+There’s also the fact that ownership changing in sftp, requires userid and grpid, it won’t accept a name.<br />
+And if that’s the kind of information you can conjure up on your mind at command; you’re a better man that I.<br />
+This process was ripe for automation, I thought, so I started working.<br />
+For the sake of debugging and what interpreter to use, I partitioned the commands in two parts, one to upload the files, the other to change the file’s ownership. Finally I created a third to call the other two in sequence.<br />
+The first I called it <code>send_hugo.sh</code>:</p>
+<pre><code>  
+ #!/usr/bin/env zsh
+
+ rsync  -av  --delete -e  'ssh -i /home/mic/.ssh/id_rsa' /home/mic/dazed/public \
+ root@45.76.37.62:/var/www/constantconstipation.club/html/ \
+ > /home/mic/cronlogs/hugo.log 2>&
+</code></pre>
+<p>In truth I’m not replacing the files, what I am doing is syncing the development version with the production version. This way only what is changed is sent to the server.<br />
+Note that I sent all output to a ‘hugo.log’ file, so I can know what fresh hell have I dragged myself this time.<br />
+The second is called <code>permissions_hugo.sh</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="co">#!/usr/bin/env python</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="im">from</span> fabric <span class="im">import</span> Connection</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> c <span class="op">=</span> Connection(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    host <span class="op">=</span> <span class="st">&#39;constantconstipation.club&#39;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    user <span class="op">=</span> <span class="st">&#39;root&#39;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    connect_kwargs<span class="op">=</span>{</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;key_filename&#39;</span>: <span class="st">&#39;/home/mic/.ssh/id_rsa&#39;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> c .run(<span class="st">&#39;cd /var/www/constantconstipation.club/html/ &amp;&amp; chown -R </span><span class="ch">\</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st"> www-data:www-data public&#39;</span>)</span></code></pre></div>
+<p>This script uses a Python tool called <a href="https://docs.fabfile.org/en/2.6/index.html">fabric</a>, that allows to send commands to the server from your local computer. It can also send files to the server, but it can’t pass folders recursively. That is another reason why I split the script in two parts. One is best run as the shell and the other as python. Off course I could have made it all in Python, by using <a href="https://docs.python.org/3/library/subprocess.html">subprocess</a> in the first part.<br />
+But laziness prevailed, and I stuck with what was easier.<br />
+Finally, I created an alias in .zshrc for the script that calls the other two in sequence, and now I can do the uploading and ownership setting just by writing <code>upld</code> in the shell.<br />
+You’re probably a worldlier person than I, and may not be very impressed by this setup, but me, having done so little with my life, and understood even less, think it’s pretty nifty.</p>
+</body>
+</html>
