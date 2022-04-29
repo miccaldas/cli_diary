@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PHP-formatter</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Iosevka;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">PHP-formatter</h1>
+</header>
+<p>I just finished a project where I learned a lot of new things and I need to put everything on paper, so I don’t forget.<br />
+I was fiddling around with a website I’m making in PHP and noticed that, in regards to formatting, I had a bit of a problem.<br />
+There are automatic formatters for almost all languages under the sun, but what doesn’t exist, and it’s not surprising, is a formatter for code that is embedded in another language’s file.<br />
+Let me be clearer, I came to PHP because I wanted to make database calls and automate some aspects of my toy sites. That meant, and means, that my code is not heavy-duty PHP. It’s more a lot of HTML interspersed with the occasional PHP.<br />
+The HTML written in a PHP file, although not understood by the latter, it’s still decoded successfully by the browser, which allows for running its code in HTML or PHP files. The same doesn’t happen with PHP. If written in a HTML file, its code will be treated as comment and won’t get run.<br />
+What this means is that you can program front/back end in PHP, but not in HTML, which ends up with people like yours truly, writing everything in files with PHP extensions.<br />
+Another thing that is important to mention is that HTML is ugly. It’s painful to look at, and I, and I imagine a lot more people, have this deep desire to make it look less awful.<br />
+That’s where the formatters come in. Although generally a little bossy and opinionated, they’re nevertheless, an almost-good solution to the problem.<br />
+It never gets pretty, but it is much better than the starting point.<br />
+I found that I had no way to format the HTML I had inside PHP files, and that felt bad.<br />
+But, I thought, if I altered the extension of the file just for a little bit, I could use the formatter, change it back again, and the changes would already been done! Easy. Except that, after a cursory reflexion, it really isn’t. It would be really cumbersome going through that process every time I wanted to format.<br />
+It was then that I decided to automate it.<br />
+Even if it took considerably longer than doing it manually.<br />
+As it did.<br />
+I also took this as an opportunity to try different cli app builders that I had on the backburner as something to try one day. Well, the day had come.<br />
+I wanted to create a class that would encompass all the steps of the process, which are:</p>
+<ol type="1">
+<li>Make a list of all PHP files in the current folder,<br />
+</li>
+<li>Change their extensions from ‘.php’ to ‘.html’,<br />
+</li>
+<li>Open the folders, write a small message and close it back again,<br />
+</li>
+<li>Get the HTML files, already formatted, and change them back to PHP.</li>
+</ol>
+<p>The reasoning behind step 3 is this; I have my formatters running automatically in Vim, every time that a file is saved. So, it only takes opening and closing them to guarantee that the formatting is done. The message is just as an assurance that is really working and that an effort has been made.<br />
+For the cli app build, I first tried <a href="https://typer.tiangolo.com">Typer</a>, which if really cool and complete, I couldn’t make it work in a Class environment.<br />
+The commands wouldn’t work if they shared argument space with things like ‘self’. So I tried <a href="https://google.github.io/python-fire">Fire</a>, and it was love at first site. Not only it supported classes, it was immensely more intuitive, easy and user-friendly. I got the idea that you can’t go do all the things that you can with Typer, but I’m a simple man with simple needs. Fire will suffice.<br />
+I started by creating a folder called ‘html’, to put the files. If it’s mid/large project, it can get messy real quick.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span> <span class="op">=</span> os.getcwd()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       path <span class="op">=</span> <span class="bu">dir</span> <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> <span class="st">&quot;html&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       os.mkdir(path)</span></code></pre></div>
+<p>Then I made a list of all the PHP extension files in the current folder, I’m assuming this will be opened where the content will be.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.php_file_list <span class="op">=</span> []</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       files <span class="op">=</span> os.listdir(os.curdir)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span> <span class="st">&quot;.php&quot;</span> <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>               <span class="va">self</span>.php_file_list.append(<span class="bu">file</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="cf">return</span> <span class="va">self</span>.php_file_list</span></code></pre></div>
+<p>Now, in the file creation step, I had to account for two possible sources of data: one, the user through command line commands, two, our pre-made list that we just seen. If no file list is supplied by the user, the PHP file list is used.<br />
+I tried to maintain the paths relative, although I loathe working with them, so I wouldn’t have to change them each time there’s another project. If this will work, only time will tell.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>flist <span class="op">=</span> <span class="va">self</span>.available_php_files()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       <span class="cf">if</span> files:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           ficheiros <span class="op">=</span> files</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="cf">else</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>           ficheiros <span class="op">=</span> flist</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> ficheiros:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>               <span class="cf">if</span> <span class="st">&quot;.php&quot;</span> <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                   src <span class="op">=</span> <span class="st">&quot;./&quot;</span> <span class="op">+</span> <span class="bu">file</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                   <span class="va">self</span>.dst <span class="op">=</span> <span class="st">&quot;html/&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                   shutil.copy(src, <span class="va">self</span>.dst)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                   <span class="va">self</span>.new_dir <span class="op">=</span> os.listdir(<span class="va">self</span>.dst)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> <span class="va">self</span>.new_dir:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                       infilename <span class="op">=</span> os.path.join(<span class="va">self</span>.dst, <span class="bu">file</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                       newfile <span class="op">=</span> infilename.replace(<span class="st">&quot;.php&quot;</span>, <span class="st">&quot;.html&quot;</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                       os.rename(infilename, newfile)</span></code></pre></div>
+<p>The next step was an interesting one. I had a loop I wanted to run through for every file path in the HTML folder. It would open it, write a message, and close it again.<br />
+But when I tried it, it was iterating through all entries, writing a message for each entry in each file, when what I needed was one message per file.<br />
+So to make it go just one round, I set a counter to zero, defined a while loop that ran only if the counter was below one. It worked pretty well.<br />
+I should also mention that os.listdir(some_folder) will give you a list of all the files in said folder. This might not be too exciting, but it’s the type of things that I’ll forget.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>os.chdir(<span class="va">self</span>.dst)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.curdir <span class="op">=</span> os.getcwd()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       sourcelst <span class="op">=</span> []</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> os.listdir(<span class="va">self</span>.curdir):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           source <span class="op">=</span> <span class="va">self</span>.curdir <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> <span class="bu">file</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>           sourcelst.append(source)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       <span class="kw">def</span> runs(<span class="bu">file</span>):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="cf">with</span> <span class="bu">open</span>(<span class="bu">file</span>, <span class="st">&quot;a&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>               f.write(<span class="st">&quot;&lt;!--This file was automatically formatted.--&gt;&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       run_once <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>       <span class="cf">while</span> run_once <span class="op">&lt;</span> <span class="dv">1</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> sourcelst:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               runs(<span class="bu">file</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>               run_once <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.signed_files <span class="op">=</span> []</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> source <span class="kw">in</span> sourcelst:</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>           <span class="va">self</span>.signed_files.append(source)</span></code></pre></div>
+<p>Now we get the HTML files, copy them to their original folder and there we change the extension back to ‘.php’.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> <span class="va">self</span>.signed_files:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>           src <span class="op">=</span> <span class="bu">file</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           new <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           shutil.copy(src, new)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> os.listdir(new):</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span> <span class="st">&quot;.html&quot;</span> <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>               infilename <span class="op">=</span> os.path.join(new, <span class="bu">file</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>               newfile <span class="op">=</span> infilename.replace(<span class="st">&quot;.html&quot;</span>, <span class="st">&quot;.php&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>               os.rename(infilename, newfile)</span></code></pre></div>
+<p>And lastly a main function that sums up all the steps.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.create_html_folder()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.available_php_files()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.create_files()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.open_write_comment()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.new_php()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="va">self</span>.new_php</span></code></pre></div>
+<p>With the awesomeness of Fire, most of my user interaction woes were resolved.<br />
+All it takes is putting a small snippet of code in the bottom of the class, like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   fire.Fire(PhpFormatter)</span></code></pre></div>
+<p>and all the methods, objects and properties are accessible through this kind of syntax:</p>
+<pre><code>&lt;filename&gt; &lt;method_name&gt; --&lt;properties&gt; &lt;arguments&gt;</code></pre>
+<p>All in all, a fun project.</p>
+</body>
+</html>

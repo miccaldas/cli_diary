@@ -10,6 +10,7 @@ from snoop import pp
 from delete import delete
 from edit import edit
 from new import new
+from search import search
 from see import see
 from update import update
 from view import index, show
@@ -46,7 +47,7 @@ def main():
 
     selection = questionary.select(
         "What do you want to do?",
-        qmark="[X]",
+        qmark=" [X]",
         pointer="»»",
         use_indicator=True,
         style=custom_style_diary,
@@ -54,6 +55,7 @@ def main():
             "View Post",
             "Create Post",
             "Edit Post",
+            "Search Posts",
             "Delete Post",
             "Update Post",
             "See Posts",
@@ -70,6 +72,8 @@ def main():
         new()
     if selection == "Edit Post":
         edit()
+    if selection == "Search Posts":
+        search()
     if selection == "Delete Post":
         delete()
     if selection == "Update Post":

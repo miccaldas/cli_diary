@@ -1,13 +1,6 @@
 ---
 title: "Sqlite Triggers"
-date: 2021-01-28T19:50:33Z
-slug: ""
-description: "How to create triggers fro sqlite3"
-keywords: [sqlite, trigger, triggers]
-draft: false
-tags: [sqlite, triggers]
-math: false
-toc: false
+mainfont: Iosevka
 ---
 
 When creating FTS5 tables in SQLite, one of the thing I tended

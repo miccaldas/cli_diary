@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Converting Markdown Files to HTML</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Iosevka;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Converting Markdown Files to HTML</h1>
+</header>
+<p>Some days ago, when looking for static sites platforms, I encountered this <a href="https://jamstack.org/generators/vite/">guy</a>, who as a very simple but nifty solution for creating static sites. But if I liked that, that was nothing compared to what I liked his <a href="https://git.icyphox.sh/vite/about/">site</a>. I know, I know, what’s there to like?, there is nothing to catch your eye, the solutions are lazy, the design slapdash, and many more things could be said about it. Mostly all bad. But when I look at it, I just see a tremendously cool site, just in the right spot between being consciously stylish, (which, despite what you might’ve heard), is not a bad thing in itself, or becoming a hostage of his own coolness.<br />
+I’ve been looking around this type of solutions because of this blog. Trying to make my mind of what the solution is the best.<br />
+This last week I tried <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://gohugo.io/">Hugo</a>, <a href="https://hexo.io/">Hexo</a>, <a href="https://blog.getpelican.com/">Pelican</a> and <a href="https://middlemanapp.com/">Middleman</a>, although this last one shouldn’t count, as I looked into it at the end of a very heavy set of days and, if I seem to remember I liked it just fine, but it didn’t leave much of an impression in me.<br />
+The one I liked the most was Hexo, followed closely by Hugo. They’re simple tools, that keep to themselves and let you do your work. Although, truth be told, that wasn’t what I liked the most. It might the best, but is not my favourite. That was, by a wide margin, Pelican. It’s so fun to use that I saw myself looking for excuses to do more work on the blog. But the themes are horrible, the development server doesn’t work correctly and … did I already told you about the themes? Yep; not the worst I’ve seen, but all very utilitarian, and I want something that ‘sparks joy’, as they say. It’s just something that you end up spending a lot of time with, and if the workspace is dull, lukewarm, bland, Microsoft Windows feel to it, I won’t be doing this for much longer.<br />
+The one I liked less, again by a wide margin, was Jekyll. In all the platforms I tried, it was relatively easy to migrate my posts from one to another. You would have to adjust for what fields each platform considered relevant to have in the front-matter, but these are details minor.<br />
+But then there’s Jekyll.<br />
+Each post will have to have two dates, one in the file title and another in the front-matter. At least for the default theme. If you import posts that don’t have this structure, the exact date format, or if he doesn’t have in memory the creation of html versions for the md’s you bring, he just won’t render the post.<br />
+I had to copy dates and some other info, faithfully from the example post presented, just to make it accept my posts. On top of that, the process of changing a theme, one of life’s greatest joys, especially in the Jekyll platform, as they have the biggest and best choice of themes I’ve seen; is to say the least, byzantine. It entails deleting files in different places in the computer, find them, alter the Gemfile, updating it and even after all this I had issues changing the themes. Someone was suggesting in a forum that the best way to change a theme in Jekyll, was to push a new git branch and experiment there with the new theme.<br />
+If you don’t understand what is wrong with this mindset, we won’t be seeing eye to eye many times.<br />
+To this I would like to add, and this my considered, calculated, and much reflected position, that Ruby is a stupid language, used exclusively by poo-poo sissy-pants, that sleep with Sailor Moon pillows and who like pop more than rock.<br />
+Please take this position very seriously. I put much thought on this and it is clear that this is a hill where I’ll happily die on.<br />
+But, as always, I digress. What i really wanted to tell was that, as I tried all these options, there was always something that rubbed me the wrong way, it could theme quality, type of information available on the front-matter, what type of plugins there are, etc, etc.<br />
+It soon became clear to me that, as is always and since the dawn of time, if you want something that you really like, you’ll have to build it yourself.<br />
+That is not to say that I feel that I can replace the people behind this products, in terms of polish, quality or just average hygiene. It’s not that. It’s just that a solution that you built, no matter how bare bones, will have always much more emotional value than any other option. At least for me.<br />
+Some years ago, I knew quite a lot more about CSS and html than I know now. I never felt the need to refresh my know-how, basically because it’s not a subject I find very interesting.<br />
+Because of this, I was googling how to add fonts to a site, when it hit me. I already had a great template! Vite’s site was great! In fact I like it so much that my first, and second instinct was to put online his site sources, and just replace his content with my own.<br />
+But then I noticed that his site, at least the version in Github, had all content in markdown form, not html. Well, I don’t know if it’s possible to publish markdown directly in a site, but because I am an extremely lazy person, I just concluded that it was indeed impossible; and with that, nipped a learning opportunity right in the bud. Crisis avoided.<br />
+So I had all this content that was in, apparently, the wrong format. What do? I do the following: 1. I imported os to manipulate files and markdown to change the format,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os <span class="im">import</span> walk</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os <span class="im">import</span> listdir</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> markdown</span></code></pre></div>
+<ol start="2" type="1">
+<li>For some reason I couldn’t get this to work with the code divided in functions, as the normal people do. I don’t know what went wrong but, in the beginning, when I was trying to build this with <a href="https://sultan.readthedocs.io/en/latest/">Sultan</a>, a very cool alternative to subprocess, for some reason, Python would read the imports, where he would freeze in some part of the import of Sultan, and completely ignore all code inside the functions. When I took off the functions and just let the code run free, it started reading it without a problem.<br />
+Again, someone with a more disciplined mind would’ve gone to the bottom of this, if for nothing else, to avoid this type of situations on later dates. But I just cogitated that, now, for magical reasons, probably something to do with the moon, it was working. And that was all good to me.<br />
+If you read any more that one post on this blog, you already might’ve come across the deep disgust with which I see me doing things. This was another of those times.<br />
+</li>
+<li>got the present directory in a variable,</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>directory <span class="op">=</span> os.getcwd()</span></code></pre></div>
+<ol start="4" type="1">
+<li>created a list with all markdown files inside this folder,</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>files_md <span class="op">=</span> [<span class="bu">open</span>(i, <span class="st">&quot;rb&quot;</span>) <span class="cf">for</span> i <span class="kw">in</span> os.listdir(directory) <span class="cf">if</span> i.endswith(<span class="st">&#39;.md&#39;</span>)]</span></code></pre></div>
+<ol start="5" type="1">
+<li>made another list where I kept the same information,, but now in string format,</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>str_files <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> os.listdir(directory) <span class="cf">if</span> i.endswith(<span class="st">&#39;.md&#39;</span>)]</span></code></pre></div>
+<ol start="6" type="1">
+<li>created a variable that keeps the folder where I’ll keep the new created html files,</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> directory <span class="op">+</span> <span class="st">&#39;/&#39;</span> <span class="op">+</span> <span class="st">&#39;html_files&#39;</span></span></code></pre></div>
+<ol start="7" type="1">
+<li>created a list with markdown files in full link, because during a time, I was convinced that might be the reason why whatever it was not working then failed. It later become clear that it was not the case. But I couldn’t be bothered to change it. Because that’s the kind of men I am.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>full_link <span class="op">=</span> []</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> str_files:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="bu">str</span>(directory) <span class="op">+</span> <span class="st">&#39;/&#39;</span> <span class="op">+</span> i</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    full_link.append(a)</span></code></pre></div>
+<ol start="8" type="1">
+<li>And finally I took this from a digital ocean article (where would I be without them?), on how to convert markdown to html. Off course this came only after a unfruitful war with subprocess and Sultan, but it’s done now and let us not speak of it ever again.</li>
+</ol>
+</body>
+</html>

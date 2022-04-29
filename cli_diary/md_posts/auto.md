@@ -1,7 +1,6 @@
 ---
 title: Auto
-date: 2021-06-23 07:44.00
-tags: mysql, blog, html
+mainfont: Iosevka
 ---
 
 I am very sure that I must not be the first person that stopped writing in a blog, because tinkering with it took all the time he had.  

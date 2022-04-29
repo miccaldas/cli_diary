@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>urwid_project</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Iosevka;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">urwid_project</h1>
+</header>
+<p>For no reason in particular, I’ve been playing with a version of the bookmarks app done in <a href="http://urwid.org">Urwid</a>.<br />
+One of the first things that strikes you while using this library is that it is old. The examples have the fit and finish of a 80’s Visual Basic cassette and the library has the clunky, organic charm of a project that grew naturally for many years.<br />
+Urwid has tons of charm.<br />
+And, on top of the charm, there’s the fact that I still can’t grok how <a href="https://github.com/prompt-toolkit/python-prompt-toolkit">Prompt Toolkit</a> actually works.<br />
+So, for now, Urwid is my go-to.<br />
+One thing that doesn’t work in urwid is, making several questions in the same function.<br />
+Because of this, to add a bookmark entry in Urwid, I created six files: * One to insert the title, * another for the comment, * another for the link, * and three more for the tag entries. k1, k2, k3.</p>
+<p>The same happened when I adapted the update function to Urwid. I had to create a file for each of the data points, that are needed to make an update. One for the column, another for the id and another for the update.<br />
+Only now, after it’s done, comes to me that I could have pooled all the add and update functions in two modules. I just had to create different functions for each one, and I would have now much less files.<br />
+But, at the same time, I like the cleanliness of having them distributed by files. It’s easier to isolate and debug.<br />
+Besides Urwid I also imported <a href="https://loguru.readthedocs.io/en/stable/index.html">Loguru</a>, a simple to setup and use logging app; that I intend to install in all my future projects.<br />
+sys is needed for Loguru.<br />
+Here is the example of one such file, ‘add_title.py’:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urwid</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span></code></pre></div>
+<p>Here I define the parameters for Loguru. It has nothing to do with our current subject.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;spam.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;DEBUG&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>logger.add(sys.stderr, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span></code></pre></div>
+<p>First we create a function that defines the exit key as ‘Q’ or ‘q’.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exit_on_q(key):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> key <span class="kw">in</span> (<span class="st">&quot;q&quot;</span>, <span class="st">&quot;Q&quot;</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> urwid.ExitMainLoop()</span></code></pre></div>
+<p>Next we call the QuestionBox class and, inside it, create a function that defines that Urwid will record all keyboard key-presses as input; with the exception of of ‘enter’.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> QuestionBox(urwid.Filler):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;We&#39;ll create a tui window in urwid to ask the question&quot;&quot;&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> keypress(<span class="va">self</span>, size, key):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="op">!=</span> <span class="st">&quot;enter&quot;</span>:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">super</span>(QuestionBox, <span class="va">self</span>).keypress(size, key)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        texto <span class="op">=</span> <span class="st">u&quot;</span><span class="sc">%s</span><span class="st">.</span><span class="ch">\n\n</span><span class="st">PRESS Q TO EXIT.&quot;</span> <span class="op">%</span> edit.edit_text</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.original_widget <span class="op">=</span> urwid.Text(texto, align<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span></code></pre></div>
+<p>We define a color palette for the window.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>palette <span class="op">=</span> [</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;banner&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#ff6f69&quot;</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;streak&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;light red&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;bg&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#ff6f69&quot;</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+<p>We ask for the title name from the user.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>edit <span class="op">=</span> urwid.Edit((<span class="st">&quot;banner&quot;</span>, <span class="st">u&quot;WHAT IS THE TITTLE?</span><span class="ch">\n</span><span class="st">&quot;</span>), align<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span></code></pre></div>
+<p>Create the fill and loop objects:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fill <span class="op">=</span> QuestionBox(edit)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>loop <span class="op">=</span> urwid.MainLoop(fill, palette, unhandled_input<span class="op">=</span>exit_on_q)</span></code></pre></div>
+<p>Set the terminal color for 256.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>loop.screen.set_terminal_properties(colors<span class="op">=</span><span class="dv">256</span>)</span></code></pre></div>
+<p>An <a href="https://tinyurl.com/ye9kwop6">AttrMap</a> decoration is created to wrap the text widget with display attribute ‘streak’. AttrMap widgets allow you to map any display attribute to any other display attribute, but by default they will set the display attribute of everything that does not already have a display attribute. A second AttrMap widget is created to wrap the Filler widget with attribute ‘bg’.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>loop.widget <span class="op">=</span> urwid.AttrMap(fill, <span class="st">&quot;bg&quot;</span>)</span></code></pre></div>
+<p>And, finally, we run the loop.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>loop.run()</span></code></pre></div>
+<p>Since I can’t send the information immediately to the database, as all the data points required are dispersed by three files, I chose to store it in a file, yes, more files, so I could send it later. And by later I mean, after having all the information needed.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&quot;title.txt&quot;</span>, <span class="st">&quot;w&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>f.write(edit.get_edit_text())</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>f.close()</span></code></pre></div>
+<p>The full document:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Adding a new note. Title question&quot;&quot;&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urwid</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;spam.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;DEBUG&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>logger.add(sys.stderr, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exit_on_q(key):</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> key <span class="kw">in</span> (<span class="st">&quot;q&quot;</span>, <span class="st">&quot;Q&quot;</span>):</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> urwid.ExitMainLoop()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> QuestionBox(urwid.Filler):</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;We&#39;ll create a tui window in urwid to ask the question&quot;&quot;&quot;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> keypress(<span class="va">self</span>, size, key):</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="op">!=</span> <span class="st">&quot;enter&quot;</span>:</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">super</span>(QuestionBox, <span class="va">self</span>).keypress(size, key)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>        texto <span class="op">=</span> <span class="st">u&quot;</span><span class="sc">%s</span><span class="st">.</span><span class="ch">\n\n</span><span class="st">PRESS Q TO EXIT.&quot;</span> <span class="op">%</span> edit.edit_text</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.original_widget <span class="op">=</span> urwid.Text(texto, align<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>palette <span class="op">=</span> [</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;banner&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#ff6f69&quot;</span>),</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;streak&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;light red&quot;</span>),</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    (<span class="st">&quot;bg&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#ff6f69&quot;</span>),</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>edit <span class="op">=</span> urwid.Edit((<span class="st">&quot;banner&quot;</span>, <span class="st">u&quot;WHAT IS THE TITTLE?</span><span class="ch">\n</span><span class="st">&quot;</span>), align<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>fill <span class="op">=</span> QuestionBox(edit)</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>loop <span class="op">=</span> urwid.MainLoop(fill, palette, unhandled_input<span class="op">=</span>exit_on_q)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>loop.screen.set_terminal_properties(colors<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>loop.widget <span class="op">=</span> urwid.AttrMap(fill, <span class="st">&quot;bg&quot;</span>)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>loop.run()</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&quot;title.txt&quot;</span>, <span class="st">&quot;w&quot;</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>f.write(edit.get_edit_text())</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>f.close()</span></code></pre></div>
+<hr />
+<p>When I finally ended writing the app, and all the work was, apparently, done, I realized something that it could have been brought to my attention earlier. The Urwid documentation syntax, has a lot of content outside functions. This will be a big problem when importing all the files to the main file.<br />
+Add to this that, because I slavishly/mindlessly copied what I had seen in the documentation, I didn’t use any <code>if __name__ == '__main__':</code> code in any file. This was shaping up to be an import nightmare.<br />
+I really didn’t wanted to refactor all my code, so as to put it inside functions. If for nothing else, because Urwid wouldn’t probably work that way.<br />
+The solution I came up with was, create a python script where I execute all files, in Subprocess, as if they were running in the shell, ‘python &lt;file_name.py&gt;. Let’s see an example. First we define the options on this main.py file. The ’u’ in the beginning of the string defines its content as unicode. This is a definition that is not needed <a href="https://docs.python.org/3/howto/unicode.html">since the birth of python3</a>, but this is how it’s written in Urwid’s documentation; and, because I only knew this after writing the app, it stays in the code until such time as I feel willing to refactor.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> <span class="st">u&quot;Add, See, Search, Delete, Update, Exit&quot;</span>.split()</span></code></pre></div>
+<p>We define a vertical menu with this options.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> menu(title, choices):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> [urwid.Text(title), urwid.Divider()]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> choices:</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        button <span class="op">=</span> urwid.Button(c)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        urwid.connect_signal(button, <span class="st">&quot;click&quot;</span>, item_chosen, c)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        body.append(urwid.AttrMap(button, <span class="va">None</span>, focus_map<span class="op">=</span><span class="st">&quot;reversed&quot;</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> urwid.ListBox(urwid.SimpleFocusListWalker(body))</span></code></pre></div>
+<p>Then we define the choice process.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> item_chosen(button, choice):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> urwid.Text([<span class="st">u&quot;You chose &quot;</span>, choice, <span class="st">u&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    done <span class="op">=</span> urwid.Button(<span class="st">u&quot;OK&quot;</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    urwid.connect_signal(done, <span class="st">&quot;click&quot;</span>, exit_program)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    main.original_widget <span class="op">=</span> urwid.Filler(urwid.Pile([response, urwid.AttrMap(done, <span class="va">None</span>, focus_map<span class="op">=</span><span class="st">&quot;reversed&quot;</span>)]))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    item_chosen.pick <span class="op">=</span> <span class="bu">str</span>(choice[:<span class="op">-</span><span class="dv">1</span>])  <span class="co"># Result comes with trailing comma. This gets rid of it.</span></span></code></pre></div>
+<p>And the conditions for exiting the program.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exit_program(button):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> urwid.ExitMainLoop()</span></code></pre></div>
+<p>Here we define the visual look of the widget.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> urwid.Padding(menu(<span class="st">u&quot;Pythons&quot;</span>, choices), left<span class="op">=</span><span class="dv">2</span>, right<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> urwid.Overlay(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    main,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    urwid.SolidFill(<span class="st">u&quot;</span><span class="ch">\N{MEDIUM SHADE}</span><span class="st">&quot;</span>),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">&quot;center&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>(<span class="st">&quot;relative&quot;</span>, <span class="dv">60</span>),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    valign<span class="op">=</span><span class="st">&quot;middle&quot;</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span>(<span class="st">&quot;relative&quot;</span>, <span class="dv">60</span>),</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    min_width<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    min_height<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>urwid.MainLoop(top, palette<span class="op">=</span>[(<span class="st">&quot;reversed&quot;</span>, <span class="st">&quot;standout&quot;</span>, <span class="st">&quot;&quot;</span>)]).run()</span></code></pre></div>
+<p>And finally we arrive at the main function, where I use subprocess to start the files in python through the shell; thus circumventing the import problem.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Add&quot;</span>:</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_title.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_comment.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_link.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k1.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k2.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k3.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python connections.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;See&quot;</span>:</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python see.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Search&quot;</span>:</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python  search.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Delete&quot;</span>:</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python delete.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Update&quot;</span>:</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_column.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_id.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_update.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python updt_connections.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        sys.exit()</span></code></pre></div>
+<p>The full text:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/python3.9</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Main Module of the App. Where all the commands are accessed from&quot;&quot;&quot;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> urwid</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;spam.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;DEBUG&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>logger.add(sys.stderr, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> <span class="st">u&quot;Add, See, Search, Delete, Update, Exit&quot;</span>.split()</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> menu(title, choices):</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> [urwid.Text(title), urwid.Divider()]</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> choices:</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        button <span class="op">=</span> urwid.Button(c)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>        urwid.connect_signal(button, <span class="st">&quot;click&quot;</span>, item_chosen, c)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>        body.append(urwid.AttrMap(button, <span class="va">None</span>, focus_map<span class="op">=</span><span class="st">&quot;reversed&quot;</span>))</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> urwid.ListBox(urwid.SimpleFocusListWalker(body))</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> item_chosen(button, choice):</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> urwid.Text([<span class="st">u&quot;You chose &quot;</span>, choice, <span class="st">u&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>])</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    done <span class="op">=</span> urwid.Button(<span class="st">u&quot;Ok&quot;</span>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    urwid.connect_signal(done, <span class="st">&quot;click&quot;</span>, exit_program)</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    main.original_widget <span class="op">=</span> urwid.Filler(urwid.Pile([response, urwid.AttrMap(done, <span class="va">None</span>, focus_map<span class="op">=</span><span class="st">&quot;reversed&quot;</span>)]))</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    item_chosen.pick <span class="op">=</span> <span class="bu">str</span>(choice[:<span class="op">-</span><span class="dv">1</span>])  <span class="co"># Result comes with trailing comma. This gets rid of it.</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exit_program(button):</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> urwid.ExitMainLoop()</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> urwid.Padding(menu(<span class="st">u&quot;Pythons&quot;</span>, choices), left<span class="op">=</span><span class="dv">2</span>, right<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> urwid.Overlay(</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>    main,</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>    urwid.SolidFill(<span class="st">u&quot;</span><span class="ch">\N{MEDIUM SHADE}</span><span class="st">&quot;</span>),</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">&quot;center&quot;</span>,</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>(<span class="st">&quot;relative&quot;</span>, <span class="dv">60</span>),</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    valign<span class="op">=</span><span class="st">&quot;middle&quot;</span>,</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span>(<span class="st">&quot;relative&quot;</span>, <span class="dv">60</span>),</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>    min_width<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    min_height<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>urwid.MainLoop(top, palette<span class="op">=</span>[(<span class="st">&quot;reversed&quot;</span>, <span class="st">&quot;standout&quot;</span>, <span class="st">&quot;&quot;</span>)]).run()</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Add&quot;</span>:</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_title.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_comment.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_link.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k1.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k2.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python add_k3.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python connections.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;See&quot;</span>:</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python see.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Search&quot;</span>:</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python  search.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Delete&quot;</span>:</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python delete.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Update&quot;</span>:</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_column.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_id.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python update_update.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>        subprocess.run(<span class="st">&quot;python updt_connections.py&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_chosen.pick <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>        sys.exit()</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
+</body>
+</html>

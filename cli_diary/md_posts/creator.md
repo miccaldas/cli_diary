@@ -1,8 +1,6 @@
 ---
-layout: php
 title: creator
-date: 2021-12-11 02:31:02
-tags: php, html, css
+mainfont: Iosevka
 ---
 
 I've been playing around with PHP lately. As always I'm remaking old projects in

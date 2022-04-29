@@ -1,13 +1,6 @@
 ---
 title: "Things to Do"
-date: 2021-01-27T23:13:37Z
-slug: ""
-description: "Small list of where I'll get frustrated in the future"
-keywords: [books, projects, linux, ml, python]
-draft: false
-tags: [books, projects, linux, ml, python]
-math: false
-toc: false
+mainfont: Iosevka
 ---
 
 I have a tendency to get interested in something and then, with

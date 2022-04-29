@@ -1,7 +1,6 @@
 ---
 title: more tales about RSS
-date: 2021-06-23 08:34:12
-tags: python, RSS
+mainfont: Iosevka
 ---
 
 

@@ -1,7 +1,6 @@
 ---
 title: Blog Search
-date: 2021-06-23
-tags: python, blog, search
+mainfont: Iosevka
 ---
 
 Lately I've been mostly playing with this blog.  

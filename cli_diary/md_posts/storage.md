@@ -1,13 +1,6 @@
 ---
 title: "Changing Storage"
-date: 2021-01-27T23:17:41Z
-slug: ""
-description: "Where the narrator tells the story of how he was wrong, then right, then wrong again."
-keywords: [mysql, sqlite, python]
-draft: false
-tags: [mysql, sqlite, python]
-math: false
-toc: true
+mainfont: Iosevka
 ---
 There was an attempt to create a version of the notes and bookmarks apps I created,  
 with great suffering I might add, in MySQL.  

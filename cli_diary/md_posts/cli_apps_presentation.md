@@ -1,3 +1,8 @@
+   ---
+   title: "Cli Apps Presentation"
+   mainfont: Iosevka
+   ---
+
    This is a cursory presentation of a app, more a collection of scripts really,  
    that I made, so I have a source of information about all the system tools and  
    command-line apps, that so easily are forgotten.  

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>quick_and_easy-part-2</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Iosevka;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">quick_and_easy-part-2</h1>
+</header>
+<p>After the last post, the notes web-app has developed considerably and I would like to document the changes I needed to do.<br />
+Due to the large number of notes, everything in this project has to be automated, to be, in the least, time-efficient.<br />
+That has presented me with a lot of opportunities to deepen my Python knowledge, in order to achieve said automation. At times it has been so vexing and frustrating, that I looked for solutions in shell scripting. Something I know very little about, but where I was fairly certain the solutions to my problems were already found.<br />
+In the end it was more instructional than a great furtherance of my objectives. Most of the found solutions were found with Python, with one or two exceptions, I think.<br />
+That said, I would like very much to know more about shell scripting because, although the syntax is eye-watering, there is a lot of work already done there. The solutions are present and real. You just have to enjoy the fruits of past work.<br />
+Another problem was the inevitable need to interact with code structures like <a href="https://sass-lang.com">SASS</a> and <a href="https://pugjs.org/api/getting-started.html">Pug</a>. Which, even if very enticing, especially Pug, implied that I had to learn a new framework.<br />
+I’m using a lot of pre-built, free-to-use, CSS snippets, made accessible by kind hearted designers, and if that gives me access to better ideas and execution, it makes me also contact with more sophisticated tools.<br />
+In the end, I minimized complexity to the maximum. From SASS I used it exclusively to convert SCSS files, as they were made available, to traditional CSS, which, for now, is what browsers accept.<br />
+I used Pug also to convert a file written in its markup style. But Pug presented a very interesting concept in HTML writing rationalization and simplification. I hope to get back to this, with more time and in more depth.<br />
+For all the work that it created, the Notes Manager app is surprisingly, still, bare-boned. At this moment I’m still ironing out the kinks in site search, and haven’t introduced any other functionality.<br />
+This is also because search made me deviate from what I wanted to do in the beginning, <em>vis a vis</em> databases. I didn’t understood that there was absolutely no reason to presume a simpler, lighter data structure for the web version. This made me look into content tags, search and db structure. And hence the slowness.<br />
+Add to this the fact that you have to standardize and make alterations in around 140 pages, and the time investment doesn’t seem that huge.<br />
+Coming, finally, to the files I created for this project; let’s start with ‘auto.py’, that intends to automate content page creation.<br />
+If you remember, I had exported all note entries in the database to individual text files, to later turn into php or html.<br />
+This, I noticed suitably later, was a mistake.<br />
+I could just as well converted them to php files immediately, which is what I’m using right now, and I would have saved a lot of cumbersome steps.<br />
+I’m using PHP because of its ability to be injected into files, really helps when creating large volume content files. I have seen myself veer away from HTML and head, more and more, to PHP country.<br />
+Some of these design decisions have to do with project structure I created for database oriented, web apps. I intend to do a small post just in that very same subject. Not to get very deeply into this here, I wanted to separate the html part that is viewable to the user, and a php file that would address backend needs.<br />
+I created the pages that would receive php code through a ‘require’ tag. In the end I would have the specific individual note content in a folder, and in another, the display html pages where they will be seen.<br />
+This is how it was structured: —————————————————————————————————–</p>
+<h2 id="auto.py">1 - auto.py</h2>
+<ol type="1">
+<li>Imported <a href="https://docs.python.org/3/library/shutil.html">shutil</a>, to copy files around.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code></pre></div>
+<ol start="2" type="1">
+<li>created a function and determined what and where would be the template file.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> auto():</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    source <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes/index.php&#39;</span></span></code></pre></div>
+<ol start="3" type="1">
+<li>In the beginning, boneheadedly, I thought I would make do only with integer id’s and URLs to identify the content. To do that, I completed a list of all the note id’s I had uploaded to the site. And that was my base.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;number_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span></code></pre></div>
+<ol start="4" type="1">
+<li>I stripped them of newline symbols and organized them in their own rows, and closed the connection to the file.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [(line.strip()).split() <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>f.close()</span></code></pre></div>
+<ol start="5" type="1">
+<li>These id numbers were being outputted by MySQL like this: “‘[6]’”. It was necessary to strip everything that wasn’t the string character from the output.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> number <span class="kw">in</span> numbers:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        numero <span class="op">=</span> <span class="bu">str</span>(number)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        numero <span class="op">=</span> numero[<span class="dv">2</span>:<span class="op">-</span><span class="dv">2</span>]</span></code></pre></div>
+<ol start="6" type="1">
+<li>Defined the URL of the display files to be created.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>destination <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes/&#39;</span> <span class="op">+</span> numero <span class="op">+</span> <span class="st">&#39;-page.php&#39;</span></span></code></pre></div>
+<ol start="7" type="1">
+<li>Copied the file.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>shutil.copyfile(source, destination)</span></code></pre></div>
+<ol start="8" type="1">
+<li>Opened the display pages to read,<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(destination, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> f.readlines()</span></code></pre></div>
+<ol start="9" type="1">
+<li>On line 19 of the file, I inserted a php tag with the note content and its title.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">19</span>] <span class="op">=</span> <span class="st">&quot;&lt;?php require &#39;http://localhost/notes/pages/text1/&quot;</span> <span class="op">+</span> numero <span class="op">+</span> <span class="st">&quot;.php&#39;; ?&gt;&quot;</span></span></code></pre></div>
+<ol start="10" type="1">
+<li>and wrote to it.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(destination, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    f.writelines(data)</span></code></pre></div>
+<p>Full code document:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> auto():</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    source <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes/index.php&#39;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;number_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    numbers <span class="op">=</span> [(line.strip()).split() <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    f.close()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> number <span class="kw">in</span> numbers:</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        numero <span class="op">=</span> <span class="bu">str</span>(number)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        numero <span class="op">=</span> numero[<span class="dv">2</span>:<span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        destination <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes/&#39;</span> <span class="op">+</span> numero <span class="op">+</span> <span class="st">&#39;-page.php&#39;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        shutil.copyfile(source, destination)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(destination, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> f.readlines()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        data[<span class="dv">19</span>] <span class="op">=</span> <span class="st">&quot;&lt;?php require &#39;http://localhost/notes/pages/text1/&quot;</span> <span class="op">+</span> numero <span class="op">+</span> <span class="st">&quot;.php&#39;; ?&gt;&quot;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(destination, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            f.writelines(data)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    auto()</span></code></pre></div>
+<hr />
+<h2 id="html.py">2 - html.py</h2>
+<p>This is a file that has precedence in the process in relation to the last file.<br />
+It’s a script to convert text to html. As I said, a step I didn’t need to take.<br />
+When I said that had looked, and found, shell solutions to my problems, but kept most of the code as Python; this is what I’m talking about: Subprocess.<br />
+1. Import os and subprocess:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span></code></pre></div>
+<ol start="2" type="1">
+<li>Created a python function and used txt2html to convert the files:<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert(filepath):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    cmd <span class="op">=</span> <span class="st">&#39;txt2html --infile &#39;</span> <span class="op">+</span> filepath <span class="op">+</span> <span class="st">&#39; --outfile &#39;</span> <span class="op">+</span> filepath <span class="op">+</span> <span class="st">&#39;.html&#39;</span></span></code></pre></div>
+<ol start="3" type="1">
+<li>called the function through subprocess, as txt2html its not a Python app.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<ol start="4" type="1">
+<li>Defined where the text files were, and iterated through them, creating html files.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span> <span class="op">=</span> <span class="st">&#39;/srv/http/notes/clean&#39;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> os.listdir(<span class="bu">dir</span>):</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    filepath <span class="op">=</span> os.path.join(<span class="bu">dir</span>, filename)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    convert(filepath)</span></code></pre></div>
+<p>Whole code document:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot; Script to convert text files in html. &quot;&quot;&quot;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert(filepath):</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot; First it is defined how to replace the characters and after how to access the files &quot;&quot;&quot;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    cmd <span class="op">=</span> <span class="st">&#39;txt2html --infile &#39;</span> <span class="op">+</span> filepath <span class="op">+</span> <span class="st">&#39; --outfile &#39;</span> <span class="op">+</span> filepath <span class="op">+</span> <span class="st">&#39;.html&#39;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span> <span class="op">=</span> <span class="st">&#39;/srv/http/notes/clean&#39;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> os.listdir(<span class="bu">dir</span>):</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    filepath <span class="op">=</span> os.path.join(<span class="bu">dir</span>, filename)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    convert(filepath)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    convert(filepath)</span></code></pre></div>
+<hr />
+<h2 id="db_upload.py">3 - db_upload.py</h2>
+<p>For some reason I can not remember at this moment, it wasn’t easy to translate the cli notes to web form. I had to go back and forth between the db and the site to get all the data.<br />
+This is, summarily, all the work that was done in the next files presented here.<br />
+In this file we uploaded the tags content to the site, in bunches of three tags per note and their respective ids.<br />
+1. Imported mysql to connect to the database and itertools for grouping the entries.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> zip_longest</span></code></pre></div>
+<ol start="2" type="1">
+<li>As per last time, I opened a file with the entries and cleaned them a bit:<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;tagsaa.csv&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> f.read().splitlines()</span></code></pre></div>
+<ol start="3" type="1">
+<li>Turn them into a python list:<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>string_list <span class="op">=</span> [<span class="st">&#39;8,backblaze,duplicity,backup&#39;</span>, <span class="st">&#39;10,flake8,error,ignore&#39;</span>, <span class="st">&#39;12,cc,card,credit&#39;</span>, <span class="st">&#39;14,backblaze,keys,backups&#39;</span>, <span class="st">&#39;15,umount,mount,unmounting&#39;</span>, <span class="st">&#39;16,numpy,array,append&#39;</span>, <span class="st">&#39;26,openssl,ssl,mail&#39;</span>, <span class="st">&#39;28,bind,keys,bindkeys&#39;</span>, <span class="st">&#39;30,editor,command line,editing&#39;</span>, <span class="st">&#39;32,markdown,line break,notabug&#39;</span>, <span class="st">&#39;34,python,delete,file&#39;</span>, <span class="st">&#39;38,table,tables,sqlite&#39;</span>, <span class="st">&#39;41,dictionary,python,key&#39;</span>, <span class="st">&#39;49,rowid,id,sqlite&#39;</span>, <span class="st">&#39;51,fulltext,sqlite utils,full text&#39;</span>, <span class="st">&#39;55,sqlite-utils,triggers,trigger&#39;</span>, <span class="st">&#39;63,strings,string,python&#39;</span>, <span class="st">&#39;66,string,skip,strings&#39;</span>, <span class="st">&#39;67,dictionary,item,dictionaries&#39;</span>, <span class="st">&#39;68,list,skip,remove&#39;</span>, <span class="st">&#39;74,cmus,player,music&#39;</span>, <span class="st">&#39;78,goaccess,logs,analytics&#39;</span>, <span class="st">&#39;86,mysql,columns,generated&#39;</span>, <span class="st">&#39;88,mysql,last row,rows&#39;</span>, <span class="st">&#39;91,mysql,backup,dump&#39;</span>, <span class="st">&#39;92,epub,web,self-hosted&#39;</span>, <span class="st">&#39;95,xdg-open,default,xdg&#39;</span>, <span class="st">&#39;99,ufw,port,range&#39;</span>, <span class="st">&#39;102,zsh-autosuggestions,zsh,oh-my-zsh&#39;</span>, <span class="st">&#39;103,sudo,password,script&#39;</span>, <span class="st">&#39;108,pip,pip3,python&#39;</span>, <span class="st">&#39;110,white house,market,white&#39;</span>, <span class="st">&#39;116,vim,clipboard,ssh&#39;</span>, <span class="st">&#39;125,user.,group,ps&#39;</span>, <span class="st">&#39;129,arch,source,aur&#39;</span>, <span class="st">&#39;130,indentation,python,unindent&#39;</span>, <span class="st">&#39;133,vim,commentar,comment&#39;</span>, <span class="st">&#39;134,php code sniffer,php,linter&#39;</span>, <span class="st">&#39;136,css,name,selector&#39;</span>, <span class="st">&#39;&#39;</span>]</span></code></pre></div>
+<ol start="4" type="1">
+<li>Cleaned again the content,</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>newlist <span class="op">=</span> [i <span class="cf">for</span> item <span class="kw">in</span> string_list <span class="cf">for</span> i <span class="kw">in</span> item.split(<span class="st">&#39;,&#39;</span>)]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(newlist)</span></code></pre></div>
+<ol start="5" type="1">
+<li>Used the grouper function to chunk the entries together.</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grouper(iterable_obj, count, fillvalue<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> [<span class="bu">iter</span>(iterable_obj)] <span class="op">*</span> count</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zip_longest(<span class="op">*</span>args, fillvalue<span class="op">=</span>fillvalue)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>iterable <span class="op">=</span> newlist</span></code></pre></div>
+<ol start="6" type="1">
+<li>Created a function to insert the grouper content into the site.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert():</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> grouper(iterable, <span class="dv">4</span>, <span class="st">&#39;&#39;</span>):</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&#39;UPDATE notes_web SET k1 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&#39;&quot;, k2 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">2</span>] <span class="op">+</span> <span class="st">&#39;&quot;, k3 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">3</span>] <span class="op">+</span> <span class="st">&#39;&quot; WHERE id = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&#39;&quot;&#39;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            cur.execute(query)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            conn.close()</span></code></pre></div>
+<p>The whole content:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> zip_longest</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;tagsaa.csv&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> f.read().splitlines()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>string_list <span class="op">=</span> [<span class="st">&#39;8,backblaze,duplicity,backup&#39;</span>, <span class="st">&#39;10,flake8,error,ignore&#39;</span>, <span class="st">&#39;12,cc,card,credit&#39;</span>, <span class="st">&#39;14,backblaze,keys,backups&#39;</span>, <span class="st">&#39;15,umount,mount,unmounting&#39;</span>, <span class="st">&#39;16,numpy,array,append&#39;</span>, <span class="st">&#39;26,openssl,ssl,mail&#39;</span>, <span class="st">&#39;28,bind,keys,bindkeys&#39;</span>, <span class="st">&#39;30,editor,command line,editing&#39;</span>, <span class="st">&#39;32,markdown,line break,notabug&#39;</span>, <span class="st">&#39;34,python,delete,file&#39;</span>, <span class="st">&#39;38,table,tables,sqlite&#39;</span>, <span class="st">&#39;41,dictionary,python,key&#39;</span>, <span class="st">&#39;49,rowid,id,sqlite&#39;</span>, <span class="st">&#39;51,fulltext,sqlite utils,full text&#39;</span>, <span class="st">&#39;55,sqlite-utils,triggers,trigger&#39;</span>, <span class="st">&#39;63,strings,string,python&#39;</span>, <span class="st">&#39;66,string,skip,strings&#39;</span>, <span class="st">&#39;67,dictionary,item,dictionaries&#39;</span>, <span class="st">&#39;68,list,skip,remove&#39;</span>, <span class="st">&#39;74,cmus,player,music&#39;</span>, <span class="st">&#39;78,goaccess,logs,analytics&#39;</span>, <span class="st">&#39;86,mysql,columns,generated&#39;</span>, <span class="st">&#39;88,mysql,last row,rows&#39;</span>, <span class="st">&#39;91,mysql,backup,dump&#39;</span>, <span class="st">&#39;92,epub,web,self-hosted&#39;</span>, <span class="st">&#39;95,xdg-open,default,xdg&#39;</span>, <span class="st">&#39;99,ufw,port,range&#39;</span>, <span class="st">&#39;102,zsh-autosuggestions,zsh,oh-my-zsh&#39;</span>, <span class="st">&#39;103,sudo,password,script&#39;</span>, <span class="st">&#39;108,pip,pip3,python&#39;</span>, <span class="st">&#39;110,white house,market,white&#39;</span>, <span class="st">&#39;116,vim,clipboard,ssh&#39;</span>, <span class="st">&#39;125,user.,group,ps&#39;</span>, <span class="st">&#39;129,arch,source,aur&#39;</span>, <span class="st">&#39;130,indentation,python,unindent&#39;</span>, <span class="st">&#39;133,vim,commentar,comment&#39;</span>, <span class="st">&#39;134,php code sniffer,php,linter&#39;</span>, <span class="st">&#39;136,css,name,selector&#39;</span>, <span class="st">&#39;&#39;</span>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>newlist <span class="op">=</span> [i <span class="cf">for</span> item <span class="kw">in</span> string_list <span class="cf">for</span> i <span class="kw">in</span> item.split(<span class="st">&#39;,&#39;</span>)]</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(newlist)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># https://tinyurl.com/yk472wo3</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grouper(iterable_obj, count, fillvalue<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> [<span class="bu">iter</span>(iterable_obj)] <span class="op">*</span> count</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zip_longest(<span class="op">*</span>args, fillvalue<span class="op">=</span>fillvalue)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>iterable <span class="op">=</span> newlist</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert():</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>                host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>                user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>                password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>                database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> grouper(iterable, <span class="dv">4</span>, <span class="st">&#39;&#39;</span>):</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&#39;UPDATE notes_web SET k1 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&#39;&quot;, k2 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">2</span>] <span class="op">+</span> <span class="st">&#39;&quot;, k3 = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">3</span>] <span class="op">+</span> <span class="st">&#39;&quot; WHERE id = &quot;&#39;</span> <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&#39;&quot;&#39;</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query)</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>            cur.execute(query)</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    insert()</span></code></pre></div>
+<hr />
+<h2 id="titles.py">4 - titles.py</h2>
+<p>At some moment in the process, I, finally, understood that the notes titles were a necessity, and I had to import them to this project. This is what I did in this module.<br />
+1. Import MySQL connection to Python.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span></code></pre></div>
+<ol start="2" type="1">
+<li>To compartmentalize and avoid heartbreak, I decided that the cli version and the web version would have their own separate databases, and that was one of my best design decisions to date. I took the entries in the ‘title’ column of the cli app, put them in a list and closed this connection.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        tit_list <span class="op">=</span> []</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        title_list <span class="op">=</span> <span class="st">&quot;&quot;&quot; SELECT ntid, title from notes &quot;&quot;&quot;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        cur.execute(title_list)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        records <span class="op">=</span> cur.fetchall()</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> records:</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>            tit_list.append(row)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span></code></pre></div>
+<ol start="3" type="1">
+<li>After that, I started another MySQL connection, now to my web database, to update it with the new/old content.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(tit_list)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> tit <span class="kw">in</span> tit_list:</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>            answer <span class="op">=</span> [<span class="bu">str</span>(tit[<span class="dv">1</span>]), <span class="bu">int</span>(tit[<span class="dv">0</span>])]</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(answer)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;&quot;&quot; UPDATE notes_web SET title = </span><span class="sc">%s</span><span class="st"> WHERE id = </span><span class="sc">%s</span><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answer)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span></code></pre></div>
+<p>Complete file:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> titles():</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        tit_list <span class="op">=</span> []</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        title_list <span class="op">=</span> <span class="st">&quot;&quot;&quot; SELECT ntid, title from notes &quot;&quot;&quot;</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        cur.execute(title_list)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        records <span class="op">=</span> cur.fetchall()</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> records:</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            tit_list.append(row)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(tit_list)</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> tit <span class="kw">in</span> tit_list:</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>            answer <span class="op">=</span> [<span class="bu">str</span>(tit[<span class="dv">1</span>]), <span class="bu">int</span>(tit[<span class="dv">0</span>])]</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(answer)</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;&quot;&quot; UPDATE notes_web SET title = </span><span class="sc">%s</span><span class="st"> WHERE id = </span><span class="sc">%s</span><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answer)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query)</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>    titles()</span></code></pre></div>
+<hr />
+<h2 id="urls.py">5 - urls.py</h2>
+<p>This files creates and uploads to the database the notes URLs in the site.<br />
+1. I take the display pages already created, extract the URLs and the id’s from their links into two parallel lists, that I posteriorly join into a dictionary, through zip.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes&#39;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> os.listdir(path)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    linques <span class="op">=</span> []</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    ids <span class="op">=</span> []</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        linques.append(<span class="st">&#39;http://localhost/notes/pages/styled_notes/&#39;</span> <span class="op">+</span> <span class="bu">file</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        ids.append(<span class="bu">file</span>[:<span class="op">-</span><span class="dv">9</span>])</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        keys_list <span class="op">=</span> ids</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    values_list <span class="op">=</span> linques</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    zip_iterator <span class="op">=</span> <span class="bu">zip</span>(keys_list, values_list)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    pages <span class="op">=</span> <span class="bu">dict</span>(zip_iterator)</span></code></pre></div>
+<ol start="2" type="1">
+<li>Then I add them to the database.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> pages.items():</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>            answers <span class="op">=</span> [<span class="bu">int</span>(key), value]</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;INSERT IGNORE INTO notes_web (id, url) VALUES(</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)&quot;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answers)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>            conn.close()</span></code></pre></div>
+<p>As always, complete file.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> urls():</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> <span class="st">&#39;/srv/http/notes/pages/styled_notes&#39;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> os.listdir(path)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    linques <span class="op">=</span> []</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    ids <span class="op">=</span> []</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        linques.append(<span class="st">&#39;http://localhost/notes/pages/styled_notes/&#39;</span> <span class="op">+</span> <span class="bu">file</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>        ids.append(<span class="bu">file</span>[:<span class="op">-</span><span class="dv">9</span>])</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        keys_list <span class="op">=</span> ids</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    values_list <span class="op">=</span> linques</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    zip_iterator <span class="op">=</span> <span class="bu">zip</span>(keys_list, values_list)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    pages <span class="op">=</span> <span class="bu">dict</span>(zip_iterator)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>                host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>                user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>                password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>                database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> pages.items():</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>            answers <span class="op">=</span> [<span class="bu">int</span>(key), value]</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;INSERT IGNORE INTO notes_web (id, url) VALUES(</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)&quot;</span></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answers)</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>    urls()</span></code></pre></div>
+<hr />
+<h2 id="update_tags.py">6 - update_tags.py</h2>
+<p>This was a difficult one to get right. For some reason, I wasn’t being able to update the notes tags into the already existent rows. MySQL would start new entries with new content. Which is, dare I say it? ‘No bueno.’<br />
+But I finally got it right, and this is what I did.<br />
+1. Here we open the old cli app database and go looking for the tag information linked to the notes already present in the web app.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;update_tags.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;SELECT ntid, k1, k2, k3 FROM notes.notes WHERE ntid = &quot;</span> <span class="op">+</span> line</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>            cur.execute(query)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>            records <span class="op">=</span> cur.fetchall()</span></code></pre></div>
+<ol start="2" type="1">
+<li>Then we write the content to a file.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> row <span class="kw">in</span> records:</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;tags_list.txt&#39;</span>, <span class="st">&#39;a&#39;</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">1</span>]),</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">2</span>]),</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">3</span>]),</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="bu">str</span>(row[<span class="dv">0</span>]))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            conn.close()</span></code></pre></div>
+<ol start="3" type="1">
+<li>Then I connect to the web app database, open the aforementioned file, turn it into a python list, clean it and group it in parties of four items. One id and three content tags.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;tags_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            content_list <span class="op">=</span> f.readlines()</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        clean_list <span class="op">=</span> []</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> content_list:</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>            clean_list.append(i.strip())</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        final <span class="op">=</span> [clean_list[i <span class="op">*</span> n:(i <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> n] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>((<span class="bu">len</span>(clean_list) <span class="op">+</span> n <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> n)]</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(final)</span></code></pre></div>
+<ol start="4" type="1">
+<li>Finally we pass the items as variables in a SQL query to the web app database, and everything is OK.<br />
+</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">list</span> <span class="kw">in</span> final:</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>            query1 <span class="op">=</span> <span class="st">&quot;UPDATE notes_web SET k1 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&quot;&#39;, k2 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&quot;&#39;, k3 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">2</span>] <span class="op">+</span> <span class="st">&quot;&#39; WHERE id = &quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">3</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query1)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>            cur.execute(query1)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>            conn.close()</span></code></pre></div>
+<p>Full Text:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span>, Error</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_tags():</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>            host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>            user<span class="op">=</span><span class="st">&quot;mic&quot;</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>            password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>            database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>        f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;update_tags.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;SELECT ntid, k1, k2, k3 FROM notes.notes WHERE ntid = &quot;</span> <span class="op">+</span> line</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>            cur.execute(query)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>            records <span class="op">=</span> cur.fetchall()</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> row <span class="kw">in</span> records:</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>                f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;tags_list.txt&#39;</span>, <span class="st">&#39;a&#39;</span>)</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">1</span>]),</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">2</span>]),</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>                f.write(row[<span class="dv">3</span>]),</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="bu">str</span>(row[<span class="dv">0</span>]))</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes_web&quot;</span>)</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;tags_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>            content_list <span class="op">=</span> f.readlines()</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>        clean_list <span class="op">=</span> []</span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> content_list:</span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>            clean_list.append(i.strip())</span>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a>        final <span class="op">=</span> [clean_list[i <span class="op">*</span> n:(i <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> n] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>((<span class="bu">len</span>(clean_list) <span class="op">+</span> n <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> n)]</span>
+<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(final)</span></span>
+<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-46"><a href="#cb35-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">list</span> <span class="kw">in</span> final:</span>
+<span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a>            query1 <span class="op">=</span> <span class="st">&quot;UPDATE notes_web SET k1 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&quot;&#39;, k2 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&quot;&#39;, k3 = &#39;&quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">2</span>] <span class="op">+</span> <span class="st">&quot;&#39; WHERE id = &quot;</span> <span class="op">+</span> <span class="bu">list</span>[<span class="dv">3</span>]</span>
+<span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(query1)</span>
+<span id="cb35-49"><a href="#cb35-49" aria-hidden="true" tabindex="-1"></a>            cur.execute(query1)</span>
+<span id="cb35-50"><a href="#cb35-50" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb35-51"><a href="#cb35-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb35-52"><a href="#cb35-52" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb35-53"><a href="#cb35-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb35-54"><a href="#cb35-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(conn):</span>
+<span id="cb35-55"><a href="#cb35-55" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb35-56"><a href="#cb35-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-57"><a href="#cb35-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-58"><a href="#cb35-58" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a>    update_tags()</span></code></pre></div>
+</body>
+</html>

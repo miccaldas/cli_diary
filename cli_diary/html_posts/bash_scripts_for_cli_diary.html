@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>bash_scripts_for_cli_diary</title>
+  <title>Bash Scripts for Cli Diary</title>
   <style>
     html {
       line-height: 1.5;
@@ -212,15 +212,18 @@
   <![endif]-->
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">Bash Scripts for Cli Diary</h1>
+</header>
 <p>When I started the cli diary project I didn’t have very clear ideas about what I was going to do. Because of this, there were a lot of things I did that ended up in the bin.<br />
 But, although they don’t make part of the finished product, I still learned some interesting things doing them.<br />
 Case in point, because I wanted to access the Python blog posts through the diary, I needed to bulk collect and rename the files. I thought best to work from the html files directly, but the way they were stored by Hexo is by giving the title of the post to the folder housing the html file and name them all ‘index.html’.<br />
 So I needed to name the files proper.<br />
 To do this I built the following script:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">collection</span><span class="op">=</span>/home/mic/python/cli_diary/cli_diary/blog_posts/collection/<span class="pp">*</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="va">collection</span><span class="op">=</span>/home/mic/python/cli_diary/cli_diary/blog_posts/collection/<span class="pp">*</span></span></code></pre></div>
 <p>This is where I stored all the html files. For ease of use I turned it to a variable. Note the use of ’*’ at the end of the link. That tells the shell that we are referencing the files within the folder and not the folder itself.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="va">${collection}</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">name</span><span class="op">=</span><span class="va">$(</span><span class="fu">sed</span> <span class="at">-n</span> <span class="at">-r</span> <span class="st">&quot;s/^.*&lt;p class=</span><span class="dt">\&quot;</span><span class="st">post-title</span><span class="dt">\&quot;</span><span class="st">&gt;(.*)&lt;\x2fp&gt;&lt;\x2fh2&gt;.*$/\1/p1&quot;</span> <span class="va">${file})</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> file <span class="kw">in</span> <span class="va">${collection}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     <span class="va">name</span><span class="op">=</span><span class="va">$(</span><span class="fu">sed</span> <span class="at">-n</span> <span class="at">-r</span> <span class="st">&quot;s/^.*&lt;p class=</span><span class="dt">\&quot;</span><span class="st">post-title</span><span class="dt">\&quot;</span><span class="st">&gt;(.*)&lt;\x2fp&gt;&lt;\x2fh2&gt;.*$/\1/p1&quot;</span> <span class="va">${file})</span></span></code></pre></div>
 <p>Here we iterate through the html files and create a variable from a Sed command.<br />
 To create a variable from a command in bash, you envelop the command with <code>$(...)</code>.<br />
 The post title was defined inside the file as a tag with the class ‘post-title’, I needed to retrieve its value.<br />
@@ -229,17 +232,17 @@ This is what the command does: 1. <code>^.*&lt;p class=\*post-title\*&gt;</code>
 4. <code>\1</code> defines the selection as the group from the previous expression.<br />
 5. <code>p1</code> tells Sed to print the first occurrence of the selection.<br />
 6. <code>${file}</code> defines that the text to be analyzed is the current iterated file.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$name</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$name</span><span class="st">&quot;</span></span></code></pre></div>
 <p>Here we print the result of the ‘name’ variable.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">dash</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$name</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-re</span> <span class="st">&quot;s/ /_/g&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> [:upper:] [:lower:]<span class="va">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> <span class="va">dash</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$name</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-re</span> <span class="st">&quot;s/ /_/g&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> [:upper:] [:lower:]<span class="va">)</span></span></code></pre></div>
 <p>The ‘dash’ variable will define the new titles by piping the printed ‘name’ variable to Sed that will replace all spaces in ‘name’ by ’_’. Finally the result of the Sed command will be piped to tr, that will convert uppercase characters to lowercase.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$dash</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a> <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$dash</span><span class="st">&quot;</span></span></code></pre></div>
 <p>Here we print the result of the ‘dash’ variable.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> <span class="va">${file}</span> new_titles/<span class="st">&quot;</span><span class="va">$dash</span><span class="st">&quot;</span>.html</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">cp</span> <span class="at">-r</span> <span class="va">${file}</span> new_titles/<span class="st">&quot;</span><span class="va">$dash</span><span class="st">&quot;</span>.html</span></code></pre></div>
 <p>Finally we copy the content of the file to a new folder called ‘new_titles’, with the variable ‘dash’ concatenated with ‘.html’ as title.</p>
 <p>As the post files were all in their individual folders, encased in other folders that divided by month, it was needed to concentrate them in one folder, for ease of use.<br />
 For that I used the following script:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/mic/python/cli_diary/cli_diary/blog_posts/2021 <span class="at">-type</span> f <span class="at">-exec</span> cp <span class="at">--backup</span><span class="op">=</span>numbered <span class="at">-t</span> /home/mic/python/cli_diary/cli_diary/blog_posts/collection {} +</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">find</span> /home/mic/python/cli_diary/cli_diary/blog_posts/2021 <span class="at">-type</span> f <span class="at">-exec</span> cp <span class="at">--backup</span><span class="op">=</span>numbered <span class="at">-t</span> /home/mic/python/cli_diary/cli_diary/blog_posts/collection {} +</span></code></pre></div>
 <p>First we define where to start the search. <code>find</code> will search inside all subfolders.<br />
 <code>-type f</code> defines that the objective is files only.<br />
 <code>exec cp</code> executes the copy command.<br />

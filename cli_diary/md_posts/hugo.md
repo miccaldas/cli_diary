@@ -1,7 +1,6 @@
 ---
 title: "Uploading to a Hugo Blog"
-date: 2021-01-28T20:23:01Z
-tags: hugo, blog, scripts
+mainfont: Iosevka
 ---
 
 This blog has put me in front of some new challenges.  

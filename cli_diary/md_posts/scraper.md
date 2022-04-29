@@ -1,7 +1,6 @@
 ---
 title: scraper
-date: 2021-08-10 09:34:18
-tags: python, scraping, web
+mainfont: Iosevka
 ---
 
 I just wrote a web-scraping tool based on [Scrapy](https://docs.scrapy.org).

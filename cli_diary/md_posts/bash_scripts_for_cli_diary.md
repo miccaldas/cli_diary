@@ -1,5 +1,5 @@
 ---
-title:
+title: "Bash Scripts for Cli Diary"
 mainfont: Iosevka
 ---
 
@@ -16,15 +16,15 @@ So I needed to name the files proper.
 To do this I built the following script:  
 
 ```bash
-collection=/home/mic/python/cli_diary/cli_diary/blog_posts/collection/*
+ collection=/home/mic/python/cli_diary/cli_diary/blog_posts/collection/*
 ```
 This is where I stored all the html files. For ease of use I turned it to a
 variable. Note the use of '*' at the end of the link. That tells the shell that
 we are referencing the files within the folder and not the folder itself.
 
 ```bash
-for file in ${collection}; do
-    name=$(sed -n -r "s/^.*<p class=\"post-title\">(.*)<\x2fp><\x2fh2>.*$/\1/p1" ${file})
+ for file in ${collection}; do
+     name=$(sed -n -r "s/^.*<p class=\"post-title\">(.*)<\x2fp><\x2fh2>.*$/\1/p1" ${file})
 ```
 Here we iterate through the html files and create a variable from a Sed command.  
 To create a variable from a command in bash, you envelop the command with
@@ -43,12 +43,12 @@ This is what the command does:
 6. `${file}` defines that the text to be analyzed is the current iterated file.  
 
 ```bash
-echo "$name"
+ echo "$name"
 ```
 Here we print the result of the 'name' variable.
 
 ```bash
-dash=$(echo "$name" | sed -re "s/ /_/g" | tr [:upper:] [:lower:])
+ dash=$(echo "$name" | sed -re "s/ /_/g" | tr [:upper:] [:lower:])
 ```
 The 'dash' variable will define the new titles by piping the printed 'name'
 variable to Sed that will replace all spaces in 'name' by '_'. Finally the
@@ -56,12 +56,12 @@ result of the Sed command will be piped to tr, that will convert uppercase
 characters to lowercase.  
 
 ```bash
-echo "$dash"
+ echo "$dash"
 ```
 Here we print the result of the 'dash' variable.
 
 ```bash
-cp -r ${file} new_titles/"$dash".html
+ cp -r ${file} new_titles/"$dash".html
 ```
 Finally we copy the content of the file to a new folder called 'new_titles',
 with the variable 'dash' concatenated with '.html' as title.  
@@ -72,7 +72,7 @@ of use.
 For that I used the following script:
 
 ```bash
-find /home/mic/python/cli_diary/cli_diary/blog_posts/2021 -type f -exec cp --backup=numbered -t /home/mic/python/cli_diary/cli_diary/blog_posts/collection {} +
+ find /home/mic/python/cli_diary/cli_diary/blog_posts/2021 -type f -exec cp --backup=numbered -t /home/mic/python/cli_diary/cli_diary/blog_posts/collection {} +
 ```
 First we define where to start the search. `find` will search inside all
 subfolders.  

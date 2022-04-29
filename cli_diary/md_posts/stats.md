@@ -1,7 +1,6 @@
 ---
 title: stats
-date: 2021-09-29 16:17:46
-tags: python, notes
+mainfont: Iosevka
 ---
 
 This conversation will be, again, about the notes app, and some minor
