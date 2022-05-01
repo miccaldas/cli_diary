@@ -56,8 +56,15 @@ def delete():
     except Error as e:
         print("Error while connecting to db", e)
 
-    os.remove(f"html_posts/{filename_html}")
-    os.remove(f"md_posts/{filename_md}")
+    if filename_html in os.listdir("html_posts"):
+        os.remove(f"html_posts/{filename_html}")
+    else:
+        pass
+
+    if filename_md in os.listdir("md_posts"):
+        os.remove(f"md_posts/{filename_md}")
+    else:
+        pass
 
     try:
         conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
@@ -69,6 +76,8 @@ def delete():
         conn.close()
     except Error as e:
         print("Error while connecting to db", e)
+
+    return filename_md, filename_html
 
 
 if __name__ == "__main__":

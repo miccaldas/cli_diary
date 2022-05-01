@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Sort Text by Word Frequency With NLTK</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Iosevka;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Sort Text by Word Frequency With NLTK</h1>
+<p class="date">30/04/2022</p>
+</header>
+<p>I found <a href="https://www.nltk.org">NLTK</a>, ‘Natural Language Toolkit’, when I was looking for something to extract keywords from text. Off course at the time I didn’t knew that keyword extraction is called keyword extraction, so I was looking for tag creation which, I found out, is a totally different story, but led me to an article that suggested word frequency analysis as a method to generate keywords. I now know that this is totally inadequate for this purpose but it can have merit on other uses; and for that I’m documenting it here.<br />
+I’ll use as an example, a module I wrote to bulk import the contents of a blog to a database. I wanted something that would automate the creation of tags for the content, so I tried NLTK.</p>
+<p>For each post file I would read its contents, strip it of line break symbols and turn it into a string, as that is the accepted format for NLTK.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="bu">file</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>            da <span class="op">=</span> f.readlines()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            dat <span class="op">=</span> [i.strip() <span class="cf">for</span> i <span class="kw">in</span> da]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> <span class="bu">str</span>(dat)</span></code></pre></div>
+<p>I defined a list of characters to ignore on the text analysis…</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>       badchars <span class="op">=</span> <span class="st">&quot;.!?,&#39;</span><span class="ch">\&quot;</span><span class="st">:&lt;&gt;=&quot;</span></span></code></pre></div>
+<p>created a list of words longer than four characters, striped of said characters:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>       words <span class="op">=</span> [word.strip(badchars) <span class="cf">for</span> word <span class="kw">in</span> data.strip().split() <span class="cf">if</span> <span class="bu">len</span>(word) <span class="op">&gt;</span> <span class="dv">4</span>]</span></code></pre></div>
+<p>create a dictionary with the words and a numerical key:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>       word_freq <span class="op">=</span> {}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>           word_freq[word] <span class="op">=</span> word_freq.get(word, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>create a list of tuples made up of the words and their id:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      tx <span class="op">=</span> [(v, k) <span class="cf">for</span> (k, v) <span class="kw">in</span> word_freq.items()]</span></code></pre></div>
+<p>sort list in descending order:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>      tx.sort(reverse<span class="op">=</span><span class="va">True</span>) </span></code></pre></div>
+<p>and present the tuple list with the values first.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>      word_freq_sorted <span class="op">=</span> [(k, v) <span class="cf">for</span> (v, k) <span class="kw">in</span> tx]</span></code></pre></div>
+<p>The end result is a list with a lot, and I mean a lot, of trash in the form of useless words, punctuations marks and other assorted artefacts that contribute nothing to the task at hand.<br />
+For this particular case, this is the ‘cleaning’ commands I had to give, and it didn’t get as clean as I would like.<br />
+To erase all entries in a list containing a specific character, first create a list with all entries that have the character, then create a new list from the original list that excludes the entries on the latter.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>        new_freq0 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> word_freq_sorted <span class="cf">if</span> i[<span class="dv">0</span>].startswith(<span class="st">&quot;class=&quot;</span>)]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        new_freq1 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> word_freq_sorted <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq0]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        new_freq2 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq1 <span class="cf">if</span> i[<span class="dv">0</span>].startswith(<span class="st">&quot;&amp;&quot;</span>)]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        new_freq3 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq1 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq2]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        new_freq4 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq3 <span class="cf">if</span> <span class="st">&quot;&gt;&lt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        new_freq5 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq3 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq4]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        new_freq6 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq5 <span class="cf">if</span> <span class="st">&quot;&lt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        new_freq7 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq5 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq6]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        new_freq8 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq7 <span class="cf">if</span> <span class="st">&quot;=&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        new_freq9 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq7 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq8]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        new_freq10 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq9 <span class="cf">if</span> <span class="st">&quot;.&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        new_freq11 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq9 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq10]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        new_freq12 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq11 <span class="cf">if</span> <span class="st">&quot;&gt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        new_freq13 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq11 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq12]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        new_freq14 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq13 <span class="cf">if</span> <span class="st">&quot;#&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        new_freq15 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq13 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq14]</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        new_freq16 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq15 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;div&quot;</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        new_freq17 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq16 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;none&quot;</span>]</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        new_freq18 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq17 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;none;&quot;</span>]</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        new_freq19 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq18 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;margin&quot;</span>]</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        new_freq20 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq19 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;color&quot;</span>]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        new_freq21 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq20 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;code&quot;</span>]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        new_freq22 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq21 <span class="cf">if</span> <span class="st">&quot;/&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        new_freq23 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq21 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq22]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        new_freq24 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq23 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;span&quot;</span>]</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        new_freq25 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq24 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;font-weight&quot;</span>]</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        new_freq26 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq25 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;bold;&quot;</span>]</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        new_freq27 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq26 <span class="cf">if</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        new_freq28 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq26 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq27]</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        new_freq29 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq28 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;padding&quot;</span>]</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        new_freq30 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq29 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;description&quot;</span>]</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        new_freq31 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq30 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;files&quot;</span>]</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        new_freq32 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq31 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;would&quot;</span>]</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        new_freq33 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq32 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;font-size&quot;</span>]</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        new_freq34 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq33 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;that&quot;</span>]</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        new_freq35 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq34 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;lines&quot;</span>]</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        new_freq36 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq35 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;padding-left&quot;</span>]</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        new_freq37 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq36 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;param&quot;</span>]</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        new_freq38 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq37 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;background-color&quot;</span>]</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        new_freq39 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq38 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;solid&quot;</span>]</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        new_freq40 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq39 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;margin-top&quot;</span>]</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        new_freq41 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq40 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;overflow&quot;</span>]</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        new_freq42 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq41 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;other&quot;</span>]</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        new_freq43 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq42 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;position&quot;</span>]</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        new_freq44 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq43 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;display&quot;</span>]</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        new_freq45 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq44 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;except&quot;</span>]</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        new_freq46 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq45 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;height&quot;</span>]</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        new_freq48 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq46 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;Error&quot;</span>]</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        new_freq49 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq48 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;auto;&quot;</span>]</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        new_freq50 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq49 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;body&quot;</span>]</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        new_freq51 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq50 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;through&quot;</span>]</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        new_freq52 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq51 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;while&quot;</span>]</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        new_freq53 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq52 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;@media&quot;</span>]</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>        new_freq54 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq53 <span class="cf">if</span> <span class="st">&quot;em;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>        new_freq55 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq53 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq54]</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>        new_freq56 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq55 <span class="cf">if</span> <span class="st">&quot;px;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>        new_freq57 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq55 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq56]</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>        new_freq58 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq57 <span class="cf">if</span> <span class="st">&quot;-&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>        new_freq59 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq57 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq58]</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>        new_freq60 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq59 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;width&quot;</span>]</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>        new_freq <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq60 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;title&quot;</span>]</span></code></pre></div>
+<p>Finally I took the two most frequent words and use them as tag values.<br />
+Below the full code:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">We prepare the html files of the python blog to</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">be uploaded to the cli_diary database.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> isort</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> snoop</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> loguru <span class="im">import</span> logger</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> Error, <span class="ex">connect</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> snoop <span class="im">import</span> pp</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>fmt <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{time}</span><span class="st"> - </span><span class="sc">{name}</span><span class="st"> - </span><span class="sc">{level}</span><span class="st"> - </span><span class="sc">{message}</span><span class="st">&quot;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;../logs/info.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;INFO&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt, backtrace<span class="op">=</span><span class="va">True</span>, diagnose<span class="op">=</span><span class="va">True</span>)  <span class="co"># noqa: E501</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>logger.add(<span class="st">&quot;../logs/error.log&quot;</span>, level<span class="op">=</span><span class="st">&quot;ERROR&quot;</span>, <span class="bu">format</span><span class="op">=</span>fmt, backtrace<span class="op">=</span><span class="va">True</span>, diagnose<span class="op">=</span><span class="va">True</span>)  <span class="co"># noqa: E501</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> type_watch(source, value):</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;type(</span><span class="sc">{}</span><span class="st">)&quot;</span>.<span class="bu">format</span>(source), <span class="bu">type</span>(value)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>snoop.install(watch_extras<span class="op">=</span>[type_watch])</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># @logger.catch</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> upload():</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">    We start by creating the paths to every post file,</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">    then we remove the file termination from the name</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">    and use it for the title. We read the contents of</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">    the files and define them as entries. For the tags,</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co">    we use nltk to choose the two words most used in</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">    the post and define them as tags.</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> []</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> filename <span class="kw">in</span> os.listdir(<span class="st">&quot;html_posts&quot;</span>):</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        f.append(os.path.join(<span class="st">&quot;html_posts&quot;</span>, filename))</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> f:</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        tit <span class="op">=</span> os.path.basename(os.path.normpath(<span class="bu">file</span>))</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> tit[:<span class="op">-</span><span class="dv">5</span>]</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="bu">file</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>            da <span class="op">=</span> f.readlines()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>            dat <span class="op">=</span> [i.strip() <span class="cf">for</span> i <span class="kw">in</span> da]</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> <span class="bu">str</span>(dat)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>            badchars <span class="op">=</span> <span class="st">&quot;.!?,&#39;</span><span class="ch">\&quot;</span><span class="st">:&lt;&gt;=&quot;</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> [word.strip(badchars) <span class="cf">for</span> word <span class="kw">in</span> data.strip().split() <span class="cf">if</span> <span class="bu">len</span>(word) <span class="op">&gt;</span> <span class="dv">4</span>]</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>            word_freq <span class="op">=</span> {}</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>                word_freq[word] <span class="op">=</span> word_freq.get(word, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>            tx <span class="op">=</span> [(v, k) <span class="cf">for</span> (k, v) <span class="kw">in</span> word_freq.items()]</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>            tx.sort(reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>            word_freq_sorted <span class="op">=</span> [(k, v) <span class="cf">for</span> (v, k) <span class="kw">in</span> tx]</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            new_freq0 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> word_freq_sorted <span class="cf">if</span> i[<span class="dv">0</span>].startswith(<span class="st">&quot;class=&quot;</span>)]</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            new_freq1 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> word_freq_sorted <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq0]</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>            new_freq2 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq1 <span class="cf">if</span> i[<span class="dv">0</span>].startswith(<span class="st">&quot;&amp;&quot;</span>)]</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>            new_freq3 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq1 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq2]</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>            new_freq4 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq3 <span class="cf">if</span> <span class="st">&quot;&gt;&lt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            new_freq5 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq3 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq4]</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>            new_freq6 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq5 <span class="cf">if</span> <span class="st">&quot;&lt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>            new_freq7 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq5 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq6]</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>            new_freq8 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq7 <span class="cf">if</span> <span class="st">&quot;=&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>            new_freq9 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq7 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq8]</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>            new_freq10 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq9 <span class="cf">if</span> <span class="st">&quot;.&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>            new_freq11 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq9 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq10]</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>            new_freq12 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq11 <span class="cf">if</span> <span class="st">&quot;&gt;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            new_freq13 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq11 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq12]</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>            new_freq14 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq13 <span class="cf">if</span> <span class="st">&quot;#&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>            new_freq15 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq13 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq14]</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>            new_freq16 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq15 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;div&quot;</span>]</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>            new_freq17 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq16 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;none&quot;</span>]</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>            new_freq18 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq17 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;none;&quot;</span>]</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>            new_freq19 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq18 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;margin&quot;</span>]</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>            new_freq20 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq19 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;color&quot;</span>]</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>            new_freq21 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq20 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;code&quot;</span>]</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>            new_freq22 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq21 <span class="cf">if</span> <span class="st">&quot;/&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>            new_freq23 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq21 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq22]</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>            new_freq24 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq23 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;span&quot;</span>]</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>            new_freq25 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq24 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;font-weight&quot;</span>]</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>            new_freq26 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq25 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;bold;&quot;</span>]</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>            new_freq27 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq26 <span class="cf">if</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>            new_freq28 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq26 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq27]</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>            new_freq29 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq28 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;padding&quot;</span>]</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>            new_freq30 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq29 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;description&quot;</span>]</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>            new_freq31 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq30 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;files&quot;</span>]</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>            new_freq32 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq31 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;would&quot;</span>]</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>            new_freq33 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq32 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;font-size&quot;</span>]</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>            new_freq34 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq33 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;that&quot;</span>]</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>            new_freq35 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq34 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;lines&quot;</span>]</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>            new_freq36 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq35 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;padding-left&quot;</span>]</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>            new_freq37 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq36 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;param&quot;</span>]</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>            new_freq38 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq37 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;background-color&quot;</span>]</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>            new_freq39 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq38 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;solid&quot;</span>]</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>            new_freq40 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq39 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;margin-top&quot;</span>]</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>            new_freq41 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq40 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;overflow&quot;</span>]</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>            new_freq42 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq41 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;other&quot;</span>]</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>            new_freq43 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq42 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;position&quot;</span>]</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>            new_freq44 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq43 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;display&quot;</span>]</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>            new_freq45 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq44 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;except&quot;</span>]</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>            new_freq46 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq45 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;height&quot;</span>]</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>            new_freq48 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq46 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;Error&quot;</span>]</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>            new_freq49 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq48 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;auto;&quot;</span>]</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>            new_freq50 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq49 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;body&quot;</span>]</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>            new_freq51 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq50 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;through&quot;</span>]</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>            new_freq52 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq51 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;while&quot;</span>]</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>            new_freq53 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq52 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;@media&quot;</span>]</span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>            new_freq54 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq53 <span class="cf">if</span> <span class="st">&quot;em;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>            new_freq55 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq53 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq54]</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>            new_freq56 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq55 <span class="cf">if</span> <span class="st">&quot;px;&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>            new_freq57 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq55 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq56]</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>            new_freq58 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq57 <span class="cf">if</span> <span class="st">&quot;-&quot;</span> <span class="kw">in</span> i[<span class="dv">0</span>]]</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>            new_freq59 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq57 <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> new_freq58]</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>            new_freq60 <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq59 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;width&quot;</span>]</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>            new_freq <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> new_freq60 <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">&quot;title&quot;</span>]</span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>            answers <span class="op">=</span> []</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>            answers.append(title)</span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>            answers.append(data)</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>            answers.append(new_freq[<span class="dv">0</span>][<span class="dv">0</span>])</span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>            answers.append(new_freq[<span class="dv">1</span>][<span class="dv">0</span>])</span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>            conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;cli_diary&quot;</span>)</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>            cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;INSERT INTO cli_diary (title, entry, k1, k2) VALUES (</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)&quot;</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answers)</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>        <span class="cf">finally</span>:</span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> conn:</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>                conn.close()</span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>    upload()</span></code></pre></div>
+</body>
+</html>

@@ -13,7 +13,7 @@ from new import new
 from search import search
 from see import see
 from update import update
-from view import index, show
+from view import view
 
 
 def type_watch(source, value):
@@ -67,7 +67,7 @@ def main():
     if selection == "Exit":
         sys.exit()
     if selection == "View Post":
-        show()
+        view()
     if selection == "Create Post":
         new()
     if selection == "Edit Post":
