@@ -24,276 +24,276 @@ In this case all information needed to run the methods is specific to one method
 
 1. I created an add a bookmark method:
 ```python
-    def add_bkmk(self):
-        title = input_dialog(title="Title", text="What is the title? ").run()
-        comment = input_dialog(title="Comment", text="What is your comment? ").run()
-        link = input_dialog(title="Link", text="What is the link? ").run()
-        k1 = input_dialog(title="K1", text="Choose a keyword ").run()
-        k2 = input_dialog(title="K2", text="Choose another... ").run()
-        k3 = input_dialog(title="K3", text="And another...").run()
-
-        answers = [title, comment, link, k1, k2, k3]
-        logger.info(answers)
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = """INSERT INTO bkmks (title, comment, link, k1, k2, k3) VALUES (%s, %s, %s, %s, %s, %s)"""
-            logger.info(query)
-            cur.execute(query, answers)
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+      def add_bkmk(self):
+          title = input_dialog(title="Title", text="What is the title? ").run()
+          comment = input_dialog(title="Comment", text="What is your comment? ").run()
+          link = input_dialog(title="Link", text="What is the link? ").run()
+          k1 = input_dialog(title="K1", text="Choose a keyword ").run()
+          k2 = input_dialog(title="K2", text="Choose another... ").run()
+          k3 = input_dialog(title="K3", text="And another...").run()
+  
+          answers = [title, comment, link, k1, k2, k3]
+          logger.info(answers)
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = """INSERT INTO bkmks (title, comment, link, k1, k2, k3) VALUES (%s, %s, %s, %s, %s, %s)"""
+              logger.info(query)
+              cur.execute(query, answers)
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 2. A delete a bookmark method:
 ```python
-    def delete(self):
-        """We must use 'ident', not 'id' in choosing the variable name, as the latter is a reserved word"""
-        ident = input_dialog(title="Delete Entry", text="What is the ID? ").run()
-        logger.info(ident)
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = " DELETE FROM bkmks WHERE id = " + ident
-            logger.info(query)
-            cur.execute(query)
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+      def delete(self):
+          """We must use 'ident', not 'id' in choosing the variable name, as the latter is a reserved word"""
+          ident = input_dialog(title="Delete Entry", text="What is the ID? ").run()
+          logger.info(ident)
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = " DELETE FROM bkmks WHERE id = " + ident
+              logger.info(query)
+              cur.execute(query)
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 3. A see all bookmarks method:
 ```python
-    def see(self):
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = """ SELECT * FROM bkmks """
-            logger.info(query)
-            cur.execute(query)
-            records = cur.fetchall()
-            for row in records:
-                print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))  # 1
-                print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
-                print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
-                print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#a2cff0"))
-                print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
-                print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
-                print("\n")
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+      def see(self):
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = """ SELECT * FROM bkmks """
+              logger.info(query)
+              cur.execute(query)
+              records = cur.fetchall()
+              for row in records:
+                  print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))  # 1
+                  print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
+                  print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
+                  print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#a2cff0"))
+                  print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
+                  print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
+                  print("\n")
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 4. A search the bookmarks method:
 ```python
-    def search(self):
-        try:
-            busca = input_dialog(title="Search Bookmarks", text="What are you searching for? ").run()
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = (
-                " SELECT * FROM bkmks WHERE MATCH(title, comment, link, k1, k2, k3) AGAINST ('"
-                + busca
-                + "' IN NATURAL LANGUAGE MODE)"
-            )
-            logger.info(query)
-            cur.execute(query)
-            records = cur.fetchall()
-            for row in records:
-                print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))
-                print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
-                print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
-                print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
-                print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
-                print("\n")
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+      def search(self):
+          try:
+              busca = input_dialog(title="Search Bookmarks", text="What are you searching for? ").run()
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = (
+                  " SELECT * FROM bkmks WHERE MATCH(title, comment, link, k1, k2, k3) AGAINST ('"
+                  + busca
+                  + "' IN NATURAL LANGUAGE MODE)"
+              )
+              logger.info(query)
+              cur.execute(query)
+              records = cur.fetchall()
+              for row in records:
+                  print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))
+                  print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
+                  print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
+                  print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
+                  print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
+                  print("\n")
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 5. And an update a bookmark method:
 ```python
-    def update(self):
-        coluna = input_dialog(title="Update Column", text="Column? ").run()
-        ident = input_dialog(title="Entry ID", text="ID? ").run()
-        update = input_dialog(title="Update Text", text="Write your update.").run()
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = "UPDATE bkmks SET " + coluna + " = '" + update + "' WHERE id = " + ident
-            logger.info(query)
-            cur.execute(
-                query,
-            )
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+      def update(self):
+          coluna = input_dialog(title="Update Column", text="Column? ").run()
+          ident = input_dialog(title="Entry ID", text="ID? ").run()
+          update = input_dialog(title="Update Text", text="Write your update.").run()
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = "UPDATE bkmks SET " + coluna + " = '" + update + "' WHERE id = " + ident
+              logger.info(query)
+              cur.execute(
+                  query,
+              )
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 
 This is the whole class:
 ```python
-from loguru import logger
-from prompt_toolkit.shortcuts import input_dialog
-from mysql.connector import connect, Error
-from colr import color
-
-################################################################################
-# @author      : mclds
-# @file        : add
-# @created     : 21/08/2021
-# @email       : mclds@protonmail.com
-# @description : Bookmark manager app. Adds, deletes, updates, searches, sees
-# the bookmark database. The UI is done in Prompt_Toolkit
-################################################################################
-
-fmt = "{time} - {name} - {level} - {message}"
-logger.add("info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
-logger.add("error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
-
-
-class Add:
-    """This file is organized as a class just because the functions can be organized under the app umbrella. But in reality
-    there's no __init__ variables as there are no variables that are needed by more than one method. As user input is the
-    base of all methods, we are working without __init__ method, that would force us to have pre-determined values to
-    instantiate the class. This way we can instantiate the class, empty of attributes."""
-
-    @logger.catch
-    def add_bkmk(self):
-        title = input_dialog(title="Title", text="What is the title? ").run()
-        comment = input_dialog(title="Comment", text="What is your comment? ").run()
-        link = input_dialog(title="Link", text="What is the link? ").run()
-        k1 = input_dialog(title="K1", text="Choose a keyword ").run()
-        k2 = input_dialog(title="K2", text="Choose another... ").run()
-        k3 = input_dialog(title="K3", text="And another...").run()
-
-        answers = [title, comment, link, k1, k2, k3]
-        logger.info(answers)
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = """INSERT INTO bkmks (title, comment, link, k1, k2, k3) VALUES (%s, %s, %s, %s, %s, %s)"""
-            logger.info(query)
-            cur.execute(query, answers)
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
-
-    @logger.catch
-    def delete(self):
-        """We must use 'ident', not 'id' in choosing the variable name, as the latter is a reserved word"""
-        ident = input_dialog(title="Delete Entry", text="What is the ID? ").run()
-        logger.info(ident)
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = " DELETE FROM bkmks WHERE id = " + ident
-            logger.info(query)
-            cur.execute(query)
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
-
-    @logger.catch
-    def see(self):
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = """ SELECT * FROM bkmks """
-            logger.info(query)
-            cur.execute(query)
-            records = cur.fetchall()
-            for row in records:
-                print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))  # 1
-                print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
-                print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
-                print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#a2cff0"))
-                print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
-                print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
-                print("\n")
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
-
-    @logger.catch
-    def search(self):
-        try:
-            busca = input_dialog(title="Search Bookmarks", text="What are you searching for? ").run()
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = (
-                " SELECT * FROM bkmks WHERE MATCH(title, comment, link, k1, k2, k3) AGAINST ('"
-                + busca
-                + "' IN NATURAL LANGUAGE MODE)"
-            )
-            logger.info(query)
-            cur.execute(query)
-            records = cur.fetchall()
-            for row in records:
-                print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))
-                print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
-                print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
-                print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
-                print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
-                print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
-                print("\n")
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
-
-    @logger.catch
-    def update(self):
-        coluna = input_dialog(title="Update Column", text="Column? ").run()
-        ident = input_dialog(title="Entry ID", text="ID? ").run()
-        update = input_dialog(title="Update Text", text="Write your update.").run()
-
-        try:
-            conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
-            cur = conn.cursor()
-            query = "UPDATE bkmks SET " + coluna + " = '" + update + "' WHERE id = " + ident
-            logger.info(query)
-            cur.execute(
-                query,
-            )
-            conn.commit()
-        except Error as e:
-            print("Error while connecting to db", e)
-        finally:
-            if conn:
-                conn.close()
+  from loguru import logger
+  from prompt_toolkit.shortcuts import input_dialog
+  from mysql.connector import connect, Error
+  from colr import color
+  
+  ################################################################################
+  # @author      : mclds
+  # @file        : add
+  # @created     : 21/08/2021
+  # @email       : mclds@protonmail.com
+  # @description : Bookmark manager app. Adds, deletes, updates, searches, sees
+  # the bookmark database. The UI is done in Prompt_Toolkit
+  ################################################################################
+  
+  fmt = "{time} - {name} - {level} - {message}"
+  logger.add("info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
+  logger.add("error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
+  
+  
+  class Add:
+      """This file is organized as a class just because the functions can be organized under the app umbrella. But in reality
+      there's no __init__ variables as there are no variables that are needed by more than one method. As user input is the
+      base of all methods, we are working without __init__ method, that would force us to have pre-determined values to
+      instantiate the class. This way we can instantiate the class, empty of attributes."""
+  
+      @logger.catch
+      def add_bkmk(self):
+          title = input_dialog(title="Title", text="What is the title? ").run()
+          comment = input_dialog(title="Comment", text="What is your comment? ").run()
+          link = input_dialog(title="Link", text="What is the link? ").run()
+          k1 = input_dialog(title="K1", text="Choose a keyword ").run()
+          k2 = input_dialog(title="K2", text="Choose another... ").run()
+          k3 = input_dialog(title="K3", text="And another...").run()
+  
+          answers = [title, comment, link, k1, k2, k3]
+          logger.info(answers)
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = """INSERT INTO bkmks (title, comment, link, k1, k2, k3) VALUES (%s, %s, %s, %s, %s, %s)"""
+              logger.info(query)
+              cur.execute(query, answers)
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
+  
+      @logger.catch
+      def delete(self):
+          """We must use 'ident', not 'id' in choosing the variable name, as the latter is a reserved word"""
+          ident = input_dialog(title="Delete Entry", text="What is the ID? ").run()
+          logger.info(ident)
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = " DELETE FROM bkmks WHERE id = " + ident
+              logger.info(query)
+              cur.execute(query)
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
+  
+      @logger.catch
+      def see(self):
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = """ SELECT * FROM bkmks """
+              logger.info(query)
+              cur.execute(query)
+              records = cur.fetchall()
+              for row in records:
+                  print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))  # 1
+                  print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
+                  print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
+                  print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#a2cff0"))
+                  print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
+                  print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
+                  print("\n")
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
+  
+      @logger.catch
+      def search(self):
+          try:
+              busca = input_dialog(title="Search Bookmarks", text="What are you searching for? ").run()
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = (
+                  " SELECT * FROM bkmks WHERE MATCH(title, comment, link, k1, k2, k3) AGAINST ('"
+                  + busca
+                  + "' IN NATURAL LANGUAGE MODE)"
+              )
+              logger.info(query)
+              cur.execute(query)
+              records = cur.fetchall()
+              for row in records:
+                  print(color(" [*] ID » ", fore="#928b7f"), color(str(row[0]), fore="#ffffff"))
+                  print(color(" [*] TITLE » ", fore="#928b7f"), color(str(row[1]), fore="#ffffff"))
+                  print(color(" [*] COMMENT » ", fore="#928b7f"), color(str(row[2]), fore="#ffffff"))
+                  print(color(" [*] LINK ? ", fore="#928b7f"), color(str(row[3]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 1 » ", fore="#928b7f"), color(str(row[4]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 2 » ", fore="#928b7f"), color(str(row[5]), fore="#ffffff"))
+                  print(color(" [*] KEYWORD 3 » ", fore="#928b7f"), color(str(row[6]), fore="#ffffff"))
+                  print(color(" [*] TIME » ", fore="#928b7f"), color(str(row[7]), fore="#ffffff"))
+                  print("\n")
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
+  
+      @logger.catch
+      def update(self):
+          coluna = input_dialog(title="Update Column", text="Column? ").run()
+          ident = input_dialog(title="Entry ID", text="ID? ").run()
+          update = input_dialog(title="Update Text", text="Write your update.").run()
+  
+          try:
+              conn = connect(host="localhost", user="mic", password="xxxx", database="bkmks")
+              cur = conn.cursor()
+              query = "UPDATE bkmks SET " + coluna + " = '" + update + "' WHERE id = " + ident
+              logger.info(query)
+              cur.execute(
+                  query,
+              )
+              conn.commit()
+          except Error as e:
+              print("Error while connecting to db", e)
+          finally:
+              if conn:
+                  conn.close()
 ```
 ----------------------------------------------------------------------------
 
@@ -301,97 +301,97 @@ class Add:
 I created a main file where I concentrated the access to the functionalities through a menu, where the user can choose what is going to do with the app.
 The user choice variable is kept in the 'result' variable. So as to access it when instantiating the class, I used the convention that variables named with the function name, 'main', and a variable name, are accessible outside the function:
 ```python
-def main():
-    """Inside the function we build the radio button questionnaire. Outside the function,
-    and necessarily so, we declare the instantiation of the imported class.
-    Finally we connect each radio button option to a specific method, mediated by the
-    instance"""
-    main.result = radiolist_dialog(
-        title="Main",
-        text="What Do You Want To Do?",
-        values=[
-            ("add", "Add a Bookmark"),
-            ("delete", "Delete a Bookmark"),
-            ("see", "See All Bookmarks"),
-            ("search", "Search the Bookmarks"),
-            ("update", "Update a Bookmark"),
-        ],
-    ).run()
-
-
-main()
+  def main():
+      """Inside the function we build the radio button questionnaire. Outside the function,
+      and necessarily so, we declare the instantiation of the imported class.
+      Finally we connect each radio button option to a specific method, mediated by the
+      instance"""
+      main.result = radiolist_dialog(
+          title="Main",
+          text="What Do You Want To Do?",
+          values=[
+              ("add", "Add a Bookmark"),
+              ("delete", "Delete a Bookmark"),
+              ("see", "See All Bookmarks"),
+              ("search", "Search the Bookmarks"),
+              ("update", "Update a Bookmark"),
+          ],
+      ).run()
+  
+  
+  main()
 ```
 
 Outside the main function I instantiated the Add class that I imported to this file:
 ```python
-sum = Add()
+  sum = Add()
 ```
 Note that 'Add' is empty and it will accept whatever values the input objects will create inside the methods.  
 Now is just the case of connecting the menu alternatives to their corresponding methods:
 ```python
-if main.result == "add":
-    sum.add_bkmk()
-if main.result == "delete":
-    sum.delete()
-if main.result == "see":
-    sum.see()
-if main.result == "search":
-    sum.search()
-if main.result == "update":
-    sum.update()
+  if main.result == "add":
+      sum.add_bkmk()
+  if main.result == "delete":
+      sum.delete()
+  if main.result == "see":
+      sum.see()
+  if main.result == "search":
+      sum.search()
+  if main.result == "update":
+      sum.update()
 ```
 
 The whole main file:
 ```python
-from loguru import logger
-from prompt_toolkit.shortcuts import radiolist_dialog
-from bkmk_class import Add
-
-################################################################################
-# @author      : mclds
-# @file        : main
-# @created     : 21/08/2021
-# @email       : mclds@protonmail.com
-# @description : Main file where all functionalities are concentrated and
-# accessed.
-################################################################################
-
-fmt = "{time} - {name} - {level} - {message}"
-logger.add("info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
-logger.add("error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
-
-
-@logger.catch  # Decorator for loguru. All errors will go log. Has to be on all functions
-def main():
-    """Inside the function we build the radio button questionnaire. Outside the function,
-    and necessarily so, we declare the instantiation of the imported class.
-    Finally we connect each radio button option to a specific method, mediated by the
-    instance"""
-    main.result = radiolist_dialog(
-        title="Main",
-        text="What Do You Want To Do?",
-        values=[
-            ("add", "Add a Bookmark"),
-            ("delete", "Delete a Bookmark"),
-            ("see", "See All Bookmarks"),
-            ("search", "Search the Bookmarks"),
-            ("update", "Update a Bookmark"),
-        ],
-    ).run()
-
-
-main()
-
-
-sum = Add()
-if main.result == "add":
-    sum.add_bkmk()
-if main.result == "delete":
-    sum.delete()
-if main.result == "see":
-    sum.see()
-if main.result == "search":
-    sum.search()
-if main.result == "update":
-    sum.update()
+  from loguru import logger
+  from prompt_toolkit.shortcuts import radiolist_dialog
+  from bkmk_class import Add
+  
+  ################################################################################
+  # @author      : mclds
+  # @file        : main
+  # @created     : 21/08/2021
+  # @email       : mclds@protonmail.com
+  # @description : Main file where all functionalities are concentrated and
+  # accessed.
+  ################################################################################
+  
+  fmt = "{time} - {name} - {level} - {message}"
+  logger.add("info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
+  logger.add("error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
+  
+  
+  @logger.catch  # Decorator for loguru. All errors will go log. Has to be on all functions
+  def main():
+      """Inside the function we build the radio button questionnaire. Outside the function,
+      and necessarily so, we declare the instantiation of the imported class.
+      Finally we connect each radio button option to a specific method, mediated by the
+      instance"""
+      main.result = radiolist_dialog(
+          title="Main",
+          text="What Do You Want To Do?",
+          values=[
+              ("add", "Add a Bookmark"),
+              ("delete", "Delete a Bookmark"),
+              ("see", "See All Bookmarks"),
+              ("search", "Search the Bookmarks"),
+              ("update", "Update a Bookmark"),
+          ],
+      ).run()
+  
+  
+  main()
+  
+  
+  sum = Add()
+  if main.result == "add":
+      sum.add_bkmk()
+  if main.result == "delete":
+      sum.delete()
+  if main.result == "see":
+      sum.see()
+  if main.result == "search":
+      sum.search()
+  if main.result == "update":
+      sum.update()
 ```

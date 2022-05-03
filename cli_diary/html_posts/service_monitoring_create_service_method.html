@@ -170,42 +170,46 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
+        background-color: #232629;
+        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
     div.sourceCode
-      { color: #cccccc; background-color: #303030; }
+      { color: #cfcfc2; background-color: #232629; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span.al { color: #ffcfaf; } /* Alert */
-    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-    code span.at { } /* Attribute */
-    code span.bn { color: #dca3a3; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #f0dfaf; } /* ControlFlow */
-    code span.ch { color: #dca3a3; } /* Char */
-    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-    code span.co { color: #7f9f7f; } /* Comment */
-    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-    code span.do { color: #7f9f7f; } /* Documentation */
-    code span.dt { color: #dfdfbf; } /* DataType */
-    code span.dv { color: #dcdccc; } /* DecVal */
-    code span.er { color: #c3bf9f; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #c0bed1; } /* Float */
-    code span.fu { color: #efef8f; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
-    code span.kw { color: #f0dfaf; } /* Keyword */
-    code span.op { color: #f0efd0; } /* Operator */
-    code span.ot { color: #efef8f; } /* Other */
-    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-    code span.sc { color: #dca3a3; } /* SpecialChar */
-    code span.ss { color: #cc9393; } /* SpecialString */
-    code span.st { color: #cc9393; } /* String */
-    code span.va { } /* Variable */
-    code span.vs { color: #cc9393; } /* VerbatimString */
-    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    code span { color: #cfcfc2; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #3f8058; } /* Annotation */
+    code span.at { color: #2980b9; } /* Attribute */
+    code span.bn { color: #f67400; } /* BaseN */
+    code span.bu { color: #7f8c8d; } /* BuiltIn */
+    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #3daee9; } /* Char */
+    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+    code span.co { color: #7a7c7d; } /* Comment */
+    code span.cv { color: #7f8c8d; } /* CommentVar */
+    code span.do { color: #a43340; } /* Documentation */
+    code span.dt { color: #2980b9; } /* DataType */
+    code span.dv { color: #f67400; } /* DecVal */
+    code span.er { color: #da4453; text-decoration: underline; } /* Error */
+    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #f67400; } /* Float */
+    code span.fu { color: #8e44ad; } /* Function */
+    code span.im { color: #27ae60; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+    code span.op { color: #cfcfc2; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #27ae60; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #3daee9; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #f44f4f; } /* String */
+    code span.va { color: #27aeae; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
@@ -222,179 +226,179 @@ Here I’ll talk about service creator module. I’ll be calling a set of System
 The idea was to automate all the steps in the creation of a service, asking the user, as minimal a quantity of information as possible.<br />
 And because of this, some desirable flexibility was lost in the altar of automation. This might be something I’ll revisit at a later stage.</p>
 <p>The command is supposed to be initiated on the main directory of the project you want to create services for. It determines the current working directory:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>        cwds <span class="op">=</span> os.getcwd()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>          cwds <span class="op">=</span> os.getcwd()</span></code></pre></div>
 <p>collects all files in the folder and subfolders in a list:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>        services <span class="op">=</span> []</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(cwds):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                services.append(<span class="bu">file</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>          services <span class="op">=</span> []</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(cwds):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  services.append(<span class="bu">file</span>)</span></code></pre></div>
 <p>creates another list with files ended in ‘.service’ or ‘.timer’:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   services_present <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> services <span class="cf">if</span> i.endswith(<span class="st">&quot;.service&quot;</span>) <span class="kw">or</span> i.endswith(<span class="st">&quot;.timer&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>     services_present <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> services <span class="cf">if</span> i.endswith(<span class="st">&quot;.service&quot;</span>) <span class="kw">or</span> i.endswith(<span class="st">&quot;.timer&quot;</span>)]</span></code></pre></div>
 <p>and if the list is not empty, we ask the user if he wants to use these services.<br />
 This is here because I, lots of times, tend to write the services files in advance, and its a way of not repeating efforts.<br />
 If the user responds affirmatively, the service name goes to a new list, if negatively, to another.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> services_present <span class="op">!=</span> []:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> service <span class="kw">in</span> services_present:</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                use_choice <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot; ++ Do you want to use </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">? [y/n] &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                    chosen_units.append(service)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;n&quot;</span>:</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                    user_negs.append(<span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> services_present <span class="op">!=</span> []:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> service <span class="kw">in</span> services_present:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  use_choice <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot; ++ Do you want to use </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">? [y/n] &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                      chosen_units.append(service)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;n&quot;</span>:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                      user_negs.append(<span class="st">&quot;n&quot;</span>)</span></code></pre></div>
 <p>If we verify that the list of wanted services is empty or the list of negative ones is not, we assume that he may want to create a service from scratch.<br />
 So we ask him what type of service he wants:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> services_present <span class="op">==</span> [] <span class="kw">or</span> user_negs <span class="op">!=</span> []:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            unit_making <span class="op">=</span> questionary.select(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;What units do you want to create?&quot;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                qmark<span class="op">=</span><span class="st">&quot;[x]&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                pointer<span class="op">=</span><span class="st">&quot;++&quot;</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                use_indicator<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                style<span class="op">=</span>custom_style_monitor,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                choices<span class="op">=</span>[<span class="st">&quot;Service&quot;</span>, <span class="st">&quot;Timer&quot;</span>, <span class="st">&quot;Both&quot;</span>, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Exit&quot;</span>],</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            ).ask()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> services_present <span class="op">==</span> [] <span class="kw">or</span> user_negs <span class="op">!=</span> []:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>              unit_making <span class="op">=</span> questionary.select(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;What units do you want to create?&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  qmark<span class="op">=</span><span class="st">&quot;[x]&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  pointer<span class="op">=</span><span class="st">&quot;++&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  use_indicator<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                  style<span class="op">=</span>custom_style_monitor,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  choices<span class="op">=</span>[<span class="st">&quot;Service&quot;</span>, <span class="st">&quot;Timer&quot;</span>, <span class="st">&quot;Both&quot;</span>, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Exit&quot;</span>],</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>              ).ask()</span></code></pre></div>
 <p>As we want to automate the process as much as possible, we don’t ask the user the name he wants for the service; we assume the name of the project folder as the name of service, and append these new names to yet another list.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>            tail <span class="op">=</span> os.path.basename(os.path.normpath(cwds))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>            cmd20 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            cmd21 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;None&quot;</span>:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                sys.exit()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Service&quot;</span>:</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Timer&quot;</span>:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Both&quot;</span>:</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>              tail <span class="op">=</span> os.path.basename(os.path.normpath(cwds))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>              cmd20 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              cmd21 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;None&quot;</span>:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">pass</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                  sys.exit()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Service&quot;</span>:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Timer&quot;</span>:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Both&quot;</span>:</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span></code></pre></div>
 <p>For each unit name in the list, we copy it to the correct directory, reload the Systemd daemon, start the unit and copy its status to a file.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> h <span class="kw">in</span> chosen_units:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>            cmd22 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/cp </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &#39;/usr/lib/systemd/system/&#39;&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd22, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            cmd23 <span class="op">=</span> <span class="st">&quot;/usr/bin/sudo /usr/bin/systemctl daemon-reload&quot;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd23, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            cmd24 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl start </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd24, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            cmd25 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &gt; </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd25, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> h <span class="kw">in</span> chosen_units:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>              cmd22 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/cp </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &#39;/usr/lib/systemd/system/&#39;&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd22, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>              cmd23 <span class="op">=</span> <span class="st">&quot;/usr/bin/sudo /usr/bin/systemctl daemon-reload&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd23, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>              cmd24 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl start </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd24, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>              cmd25 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &gt; </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd25, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 <p>We verify if the file was indeed created, open it and read it line by line. Using Python’s regular expression’s library, we check if the unit is active - running, active - waiting or any other state. In the case of the two first states, we optionally propose to the user the opening of the unit status view, in the case of any other state the status view is opened automatically.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> data:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(running\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            w <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(waiting\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> x <span class="kw">or</span> w:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                success <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot;++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is active. Do you want to see its status? [y/n]: &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> success <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                    subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(click.style(<span class="ss">f&quot; ++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is not active. We&#39;ll open the status view for debugging.&quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                sleep(<span class="fl">0.30</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> line <span class="kw">in</span> data:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>              x <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(running\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>              w <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(waiting\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> x <span class="kw">or</span> w:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  success <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot;++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is active. Do you want to see its status? [y/n]: &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> success <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                      subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">break</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>              <span class="cf">else</span>:</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">print</span>(click.style(<span class="ss">f&quot; ++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is not active. We&#39;ll open the status view for debugging.&quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                  sleep(<span class="fl">0.30</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">break</span></span></code></pre></div>
 <p>Finally we call the entry() function, housed in another module, that inputs the new service information into the json file. After that we call another external module to update the app’s services dropdown.</p>
 <p>Here’s the complete code:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> create_service(<span class="va">self</span>):</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">        It will first search for files with the prefix &#39;service&#39; or &#39;timer&#39; on the</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">        current working directory. If it finds them, it asks if these are the files</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">        to be used, if yes, it processes them with the program, if no, it will copy a</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">        default service file to cwd and open it as file called, &#39;&lt;current_dir&gt;.service&#39;.</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Then it will ask if you want to create a timer, if yes, it&#39;s same procedure</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">        as it was for service, but now we use a default timer file.</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        These files, pre-built or made now, will be copied to &#39;/usr/lib/systemd/system&#39;,</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">        send the daemon-reload&#39; command, their status checked, to see it they are loaded,</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">        started with systemctl and checked again, to see if they are working correctly.</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">        This new service will be manually added to the json file and the dropdown file updated.</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        custom_style_monitor <span class="op">=</span> Style(</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            [</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;qmark&quot;</span>, <span class="st">&quot;fg:#ff5c8d bold&quot;</span>),</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;question&quot;</span>, <span class="st">&quot;fg:#E0DDAA bold&quot;</span>),</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;pointer&quot;</span>, <span class="st">&quot;fg:#BB6464 bold&quot;</span>),</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;highlighted&quot;</span>, <span class="st">&quot;fg:#E5E3C9 bold&quot;</span>),</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;selected&quot;</span>, <span class="st">&quot;fg:#94B49F bold&quot;</span>),</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                (<span class="st">&quot;text&quot;</span>, <span class="st">&quot;fg:#F1E0AC bold&quot;</span>),</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>            ]</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        cwds <span class="op">=</span> os.getcwd()</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        services <span class="op">=</span> []</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(cwds):</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                services.append(<span class="bu">file</span>)</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        services_present <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> services <span class="cf">if</span> i.endswith(<span class="st">&quot;.service&quot;</span>) <span class="kw">or</span> i.endswith(<span class="st">&quot;.timer&quot;</span>)]</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        chosen_units <span class="op">=</span> []</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        user_negs <span class="op">=</span> []</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> services_present <span class="op">!=</span> []:</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> service <span class="kw">in</span> services_present:</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                use_choice <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot; ++ Do you want to use </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">? [y/n] &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>                    chosen_units.append(service)</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;n&quot;</span>:</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                    user_negs.append(<span class="st">&quot;n&quot;</span>)</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> services_present <span class="op">==</span> [] <span class="kw">or</span> user_negs <span class="op">!=</span> []:</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>            unit_making <span class="op">=</span> questionary.select(</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;What units do you want to create?&quot;</span>,</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>                qmark<span class="op">=</span><span class="st">&quot;[x]&quot;</span>,</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>                pointer<span class="op">=</span><span class="st">&quot;++&quot;</span>,</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>                use_indicator<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>                style<span class="op">=</span>custom_style_monitor,</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>                choices<span class="op">=</span>[<span class="st">&quot;Service&quot;</span>, <span class="st">&quot;Timer&quot;</span>, <span class="st">&quot;Both&quot;</span>, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Exit&quot;</span>],</span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>            ).ask()</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>            tail <span class="op">=</span> os.path.basename(os.path.normpath(cwds))</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>            cmd20 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>            cmd21 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span></span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;None&quot;</span>:</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>                sys.exit()</span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Service&quot;</span>:</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Timer&quot;</span>:</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Both&quot;</span>:</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>                subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> h <span class="kw">in</span> chosen_units:</span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>            cmd22 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/cp </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &#39;/usr/lib/systemd/system/&#39;&quot;</span></span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd22, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>            cmd23 <span class="op">=</span> <span class="st">&quot;/usr/bin/sudo /usr/bin/systemctl daemon-reload&quot;</span></span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd23, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>            cmd24 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl start </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd24, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>            cmd25 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &gt; </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span></span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd25, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        cmd26 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        sleep(<span class="fl">0.30</span>)</span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="ss">f&quot;</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span>:</span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>                data <span class="op">=</span> f.readlines()</span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> line <span class="kw">in</span> data:</span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(running\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                w <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(waiting\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> x <span class="kw">or</span> w:</span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>                    success <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot;++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is active. Do you want to see its status? [y/n]: &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> success <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>                        subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(click.style(<span class="ss">f&quot; ++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is not active. We&#39;ll open the status view for debugging.&quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>                    sleep(<span class="fl">0.30</span>)</span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>                    subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>        entry()</span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>        make_dropdown()</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> create_service(<span class="va">self</span>):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">          It will first search for files with the prefix &#39;service&#39; or &#39;timer&#39; on the</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">          current working directory. If it finds them, it asks if these are the files</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">          to be used, if yes, it processes them with the program, if no, it will copy a</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">          default service file to cwd and open it as file called, &#39;&lt;current_dir&gt;.service&#39;.</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">          Then it will ask if you want to create a timer, if yes, it&#39;s same procedure</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">          as it was for service, but now we use a default timer file.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">          These files, pre-built or made now, will be copied to &#39;/usr/lib/systemd/system&#39;,</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">          send the daemon-reload&#39; command, their status checked, to see it they are loaded,</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">          started with systemctl and checked again, to see if they are working correctly.</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">          This new service will be manually added to the json file and the dropdown file updated.</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">          &quot;&quot;&quot;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>          custom_style_monitor <span class="op">=</span> Style(</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>              [</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;qmark&quot;</span>, <span class="st">&quot;fg:#ff5c8d bold&quot;</span>),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;question&quot;</span>, <span class="st">&quot;fg:#E0DDAA bold&quot;</span>),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;pointer&quot;</span>, <span class="st">&quot;fg:#BB6464 bold&quot;</span>),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;highlighted&quot;</span>, <span class="st">&quot;fg:#E5E3C9 bold&quot;</span>),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;selected&quot;</span>, <span class="st">&quot;fg:#94B49F bold&quot;</span>),</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                  (<span class="st">&quot;text&quot;</span>, <span class="st">&quot;fg:#F1E0AC bold&quot;</span>),</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>              ]</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>          cwds <span class="op">=</span> os.getcwd()</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>          services <span class="op">=</span> []</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(cwds):</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                  services.append(<span class="bu">file</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>          services_present <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> services <span class="cf">if</span> i.endswith(<span class="st">&quot;.service&quot;</span>) <span class="kw">or</span> i.endswith(<span class="st">&quot;.timer&quot;</span>)]</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>          chosen_units <span class="op">=</span> []</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>          user_negs <span class="op">=</span> []</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> services_present <span class="op">!=</span> []:</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> service <span class="kw">in</span> services_present:</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                  use_choice <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot; ++ Do you want to use </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">? [y/n] &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>                      chosen_units.append(service)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> use_choice <span class="op">==</span> <span class="st">&quot;n&quot;</span>:</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                      user_negs.append(<span class="st">&quot;n&quot;</span>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> services_present <span class="op">==</span> [] <span class="kw">or</span> user_negs <span class="op">!=</span> []:</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>              unit_making <span class="op">=</span> questionary.select(</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;What units do you want to create?&quot;</span>,</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>                  qmark<span class="op">=</span><span class="st">&quot;[x]&quot;</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>                  pointer<span class="op">=</span><span class="st">&quot;++&quot;</span>,</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>                  use_indicator<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>                  style<span class="op">=</span>custom_style_monitor,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>                  choices<span class="op">=</span>[<span class="st">&quot;Service&quot;</span>, <span class="st">&quot;Timer&quot;</span>, <span class="st">&quot;Both&quot;</span>, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Exit&quot;</span>],</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>              ).ask()</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>              tail <span class="op">=</span> os.path.basename(os.path.normpath(cwds))</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>              cmd20 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>              cmd21 <span class="op">=</span> <span class="ss">f&quot;sudo /usr/bin/vim </span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;None&quot;</span>:</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">pass</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Exit&quot;</span>:</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>                  sys.exit()</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Service&quot;</span>:</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Timer&quot;</span>:</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> unit_making <span class="op">==</span> <span class="st">&quot;Both&quot;</span>:</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd20, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>                  subprocess.run(cmd21, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.service&quot;</span>)</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                  chosen_units.append(<span class="ss">f&quot;</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">.timer&quot;</span>)</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> h <span class="kw">in</span> chosen_units:</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>              cmd22 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/cp </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &#39;/usr/lib/systemd/system/&#39;&quot;</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd22, cwd<span class="op">=</span>cwds, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>              cmd23 <span class="op">=</span> <span class="st">&quot;/usr/bin/sudo /usr/bin/systemctl daemon-reload&quot;</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd23, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>              cmd24 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl start </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd24, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>              cmd25 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> &gt; </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd25, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>          cmd26 <span class="op">=</span> <span class="ss">f&quot;/usr/bin/sudo /usr/bin/systemctl status </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>          sleep(<span class="fl">0.30</span>)</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> <span class="ss">f&quot;</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span>:</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>              <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">.txt&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>                  data <span class="op">=</span> f.readlines()</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> line <span class="kw">in</span> data:</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>                  x <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(running\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                  w <span class="op">=</span> re.search(<span class="st">&quot;^\s+Active: active \(waiting\).+</span><span class="ch">\n</span><span class="st">$&quot;</span>, line)</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> x <span class="kw">or</span> w:</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>                      success <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot;++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is active. Do you want to see its status? [y/n]: &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">if</span> success <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>                          subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">break</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">else</span>:</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>                      <span class="bu">print</span>(click.style(<span class="ss">f&quot; ++ </span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> is not active. We&#39;ll open the status view for debugging.&quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>                      sleep(<span class="fl">0.30</span>)</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>                      subprocess.run(cmd26, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">break</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>          entry()</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>          make_dropdown()</span></code></pre></div>
 </body>
 </html>

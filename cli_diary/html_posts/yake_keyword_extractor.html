@@ -169,42 +169,46 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
+        background-color: #232629;
+        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
     div.sourceCode
-      { color: #cccccc; background-color: #303030; }
+      { color: #cfcfc2; background-color: #232629; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span.al { color: #ffcfaf; } /* Alert */
-    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-    code span.at { } /* Attribute */
-    code span.bn { color: #dca3a3; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #f0dfaf; } /* ControlFlow */
-    code span.ch { color: #dca3a3; } /* Char */
-    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-    code span.co { color: #7f9f7f; } /* Comment */
-    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-    code span.do { color: #7f9f7f; } /* Documentation */
-    code span.dt { color: #dfdfbf; } /* DataType */
-    code span.dv { color: #dcdccc; } /* DecVal */
-    code span.er { color: #c3bf9f; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #c0bed1; } /* Float */
-    code span.fu { color: #efef8f; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
-    code span.kw { color: #f0dfaf; } /* Keyword */
-    code span.op { color: #f0efd0; } /* Operator */
-    code span.ot { color: #efef8f; } /* Other */
-    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-    code span.sc { color: #dca3a3; } /* SpecialChar */
-    code span.ss { color: #cc9393; } /* SpecialString */
-    code span.st { color: #cc9393; } /* String */
-    code span.va { } /* Variable */
-    code span.vs { color: #cc9393; } /* VerbatimString */
-    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    code span { color: #cfcfc2; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #3f8058; } /* Annotation */
+    code span.at { color: #2980b9; } /* Attribute */
+    code span.bn { color: #f67400; } /* BaseN */
+    code span.bu { color: #7f8c8d; } /* BuiltIn */
+    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #3daee9; } /* Char */
+    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+    code span.co { color: #7a7c7d; } /* Comment */
+    code span.cv { color: #7f8c8d; } /* CommentVar */
+    code span.do { color: #a43340; } /* Documentation */
+    code span.dt { color: #2980b9; } /* DataType */
+    code span.dv { color: #f67400; } /* DecVal */
+    code span.er { color: #da4453; text-decoration: underline; } /* Error */
+    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #f67400; } /* Float */
+    code span.fu { color: #8e44ad; } /* Function */
+    code span.im { color: #27ae60; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+    code span.op { color: #cfcfc2; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #27ae60; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #3daee9; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #f44f4f; } /* String */
+    code span.va { color: #27aeae; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
@@ -220,278 +224,281 @@
 I tried some NLP tools to see if they could help; NLTK for word frequency, spaCy for keyword extraction and some others. The best for beginners is, without a doubt, <a href="https://github.com/LIAAD/yake">Yake</a>. It had the best results of all the tools that I tried.<br />
 Here I’ll explain how I implemented it on the ‘notes’ app.</p>
 <p>‘Notes’ is structured like a class that has as first method, two prompts asking for the title and the text of the note. Immediately after having the note text inputted, we initiate the tag suggestion method. It starts with instancing the yake extractor:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span></code></pre></div>
 <p>We reference the note body as a ‘text’ variable. Just because some code was already written with that name and I didn’t felt like reviewing it.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> text <span class="op">=</span> <span class="va">self</span>.note</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>   text <span class="op">=</span> <span class="va">self</span>.note</span></code></pre></div>
 <p>The language used is English.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> language <span class="op">=</span> <span class="st">&#39;en&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   language <span class="op">=</span> <span class="st">&#39;en&#39;</span></span></code></pre></div>
 <p>‘Max Ngram Size’ refers to the number of words that can be accounted as keywords. Setting it to 1 means that the keywords will be one word only.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>        max_ngram_size <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>          max_ngram_size <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
 <p>A ‘deduplication threshold’ of 0.9, means that it’s permitted to repeat similar words in the keyword list. Although logically setting it to 0.1 and not permit duplications seems more reasonable, my short experience showed me that a lot of good content is lost with that option.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>        deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>          deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span></code></pre></div>
 <p>This defines how many keyword suggestions will be outputted.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>        numOfKeywords <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>          numOfKeywords <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
 <p>We define the extractor with the characteristics previously seen:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>      custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span></code></pre></div>
 <p>And house the keywords in a variable list called ‘keywords’.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>        keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>          keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span></code></pre></div>
 <p>Each keyword is presented as a tuple made of a string, the name of the keyword, and a number, the fitness of the keyword. As we are only interested in the strings, we isolate them in a new list.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            kwds.append(kw[<span class="dv">0</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              kwds.append(kw[<span class="dv">0</span>])</span></code></pre></div>
 <p>In order to have a simple way to choose the keywords, we assign a number to each one, through the method ‘Enumerate’, and ask the user if he wants to choose up to three options.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(idx, kwd)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    kwdcho <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot;If you want to keep any of three keywords, type their number. &quot;</span>, lexer, formatter))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          <span class="bu">print</span>(idx, kwd)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      kwdcho <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot;If you want to keep any of three keywords, type their number. &quot;</span>, lexer, formatter))</span></code></pre></div>
 <p>If the user chose some keywords, we begin by splitting the output by the with spaces, as it returns a string with this format: ‘2 3’. As we split it, we end up with a list of two strings, as per the example: [‘2’, ‘3’].</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>            kwdchoi <span class="op">=</span> kwdcho.split(<span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              kwdchoi <span class="op">=</span> kwdcho.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
 <p>We now have a list of strings but we need a list of integers. We convert it here.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>            kwd_choice <span class="op">=</span> []</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> num <span class="kw">in</span> kwdchoi:</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                kwd_choice.append(<span class="bu">int</span>(num))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>              kwd_choice <span class="op">=</span> []</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> num <span class="kw">in</span> kwdchoi:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  kwd_choice.append(<span class="bu">int</span>(num))</span></code></pre></div>
 <p>We recuperate the tuples of the choices:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                choice <span class="op">=</span> [(idx, val) <span class="cf">for</span> (idx, val) <span class="kw">in</span> <span class="bu">enumerate</span>(kwds) <span class="cf">if</span> idx <span class="op">==</span> i]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                choices.append(choice)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  choice <span class="op">=</span> [(idx, val) <span class="cf">for</span> (idx, val) <span class="kw">in</span> <span class="bu">enumerate</span>(kwds) <span class="cf">if</span> idx <span class="op">==</span> i]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  choices.append(choice)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
 <p>Here we flatten ‘choices’, as it consists of list of tuples within a list.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>            flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>              flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span></code></pre></div>
 <p>We isolate the keywords strings of the choices:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>            kwd_names <span class="op">=</span> []</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> f <span class="kw">in</span> flatter_choices:</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                kwd_names.append(f[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>              kwd_names <span class="op">=</span> []</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> f <span class="kw">in</span> flatter_choices:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  kwd_names.append(f[<span class="dv">1</span>])</span></code></pre></div>
 <p>Depending on the length of the list of keywords, we ask to define as many keywords as needed to get to the number three.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">2</span>:</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">3</span>:</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> kwd_names[<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> kwd_names[<span class="dv">2</span>]</span></code></pre></div>
 <p>And, finally, if the user didn’t chose any of the suggestions, we prompt him to input three keywords.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k1 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; And another... » &quot;</span>, lexer, formatter))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span>:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k1 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; And another... » &quot;</span>, lexer, formatter))</span></code></pre></div>
 <p>For context, here it is the full code of the class:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Collects user input, checks keywords for similarity, if they&#39;re new and their frequency.</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">Sends information to the database and creates the md and html pages.&quot;&quot;&quot;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> click</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> snoop</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yake</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> Error, <span class="ex">connect</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pygments <span class="im">import</span> highlight</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pygments.formatters <span class="im">import</span> TerminalTrueColorFormatter</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pygments.lexers <span class="im">import</span> get_lexer_by_name, guess_lexer  <span class="co"># noqa: F401</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> snoop <span class="im">import</span> pp</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> thefuzz <span class="im">import</span> fuzz  <span class="co"># noqa: F401</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> thefuzz <span class="im">import</span> process</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>lexer <span class="op">=</span> get_lexer_by_name(<span class="st">&quot;brainfuck&quot;</span>, stripall<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>formatter <span class="op">=</span> TerminalTrueColorFormatter(linenos<span class="op">=</span><span class="va">False</span>, style<span class="op">=</span><span class="st">&quot;zenburn&quot;</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Add:</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;The class starts with user input and a list with all tags in a string list.</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Having them separated will simplify processes. With this information collected,</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co">    first we&#39;ll ask the keywords questions and run its processes, one by one.</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co">    After this is done we&#39;ll send the information to the database and create the</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co">    md and html files.&quot;&quot;&quot;</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> input_data(<span class="va">self</span>):</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;All the user inputs needed to create a new entry are located here.&quot;&quot;&quot;</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Title? » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(highlight(<span class="st">&quot; Write a note.&quot;</span>, lexer, formatter))</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>        sleep(<span class="dv">1</span>)</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.note <span class="op">=</span> click.edit().rstrip()</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> suggest_tags(<span class="va">self</span>):</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="co">        We&#39;ll use Yake to suggest keywords to the user. He may choose all, some</span></span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="co">        or opt for writing them himself.</span></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>        kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> <span class="va">self</span>.note</span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>        language <span class="op">=</span> <span class="st">&quot;en&quot;</span></span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>        max_ngram_size <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>        deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>        numOfKeywords <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>        custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>        keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span>
-<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>        kwds <span class="op">=</span> []</span>
-<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
-<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>            kwds.append(kw[<span class="dv">0</span>])</span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(idx, kwd)</span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>        kwdcho <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot;If you want to keep any of three keywords, type their number. &quot;</span>, lexer, formatter))</span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>            kwdchoi <span class="op">=</span> kwdcho.split(<span class="st">&quot; &quot;</span>)</span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>            kwd_choice <span class="op">=</span> []</span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> num <span class="kw">in</span> kwdchoi:</span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>                kwd_choice.append(<span class="bu">int</span>(num))</span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>            choices <span class="op">=</span> []</span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>                choice <span class="op">=</span> [(idx, val) <span class="cf">for</span> (idx, val) <span class="kw">in</span> <span class="bu">enumerate</span>(kwds) <span class="cf">if</span> idx <span class="op">==</span> i]</span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>                choices.append(choice)</span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>            flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>            kwd_names <span class="op">=</span> []</span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> f <span class="kw">in</span> flatter_choices:</span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>                kwd_names.append(f[<span class="dv">1</span>])</span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">2</span>:</span>
-<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">3</span>:</span>
-<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
-<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
-<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.k3 <span class="op">=</span> kwd_names[<span class="dv">2</span>]</span>
-<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k1 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; And another... » &quot;</span>, lexer, formatter))</span>
-<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> taglst(<span class="va">self</span>):</span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Union allows to combine two or more sets of results into one, but,</span></span>
-<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="co">        the number and order of columns that appear in the SELECT statement</span></span>
-<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a><span class="co">        must be the same, and the data types must be equal or compatible.</span></span>
-<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="co">        Union removes duplicates.</span></span>
-<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a>            conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a>            cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;SELECT k1 FROM notes UNION SELECT k2 FROM notes UNION SELECT k3 FROM notes&quot;</span></span>
-<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>            cur.execute(query)</span>
-<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>            records <span class="op">=</span> cur.fetchall()  <span class="co"># Results come as one-element tuples. It&#39;s needed to turn it to list.</span></span>
-<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.records <span class="op">=</span> [i <span class="cf">for</span> t <span class="kw">in</span> records <span class="cf">for</span> i <span class="kw">in</span> t]</span>
-<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
-<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> Error <span class="im">as</span> e:</span>
-<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
-<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> tag_links(<span class="va">self</span>):</span>
-<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;I&#39;ll join the three lists and order them by number of connections.&quot;&quot;&quot;</span></span>
-<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a>        queries <span class="op">=</span> [</span>
-<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k1, count(*) as links FROM notes GROUP BY k1&quot;</span>,</span>
-<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k2, count(*) as links FROM notes GROUP BY k2&quot;</span>,</span>
-<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k3, count(*) as links FROM notes GROUP BY k3&quot;</span>,</span>
-<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>        ]</span>
-<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> q <span class="kw">in</span> queries:</span>
-<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>                conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>                cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a>                query <span class="op">=</span> q</span>
-<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a>                cur.execute(</span>
-<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>                    query,</span>
-<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.links <span class="op">=</span> cur.fetchall()</span>
-<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Records is a list and row is a tuple with the tag name and number of connections.</span></span>
-<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.links.sort(key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])  <span class="co"># This sorts the list by the value of the second element. https://tinyurl.com/yfn9alt7</span></span>
-<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
-<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> Error <span class="im">as</span> e:</span>
-<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
-<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> issimilar(<span class="va">self</span>):</span>
-<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Uses Thefuzz library to compare keyword strings. If similarity is above 80%,</span></span>
-<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a><span class="co">        it prints a mesage asking if the user wants to change it.&quot;&quot;&quot;</span></span>
-<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>        query <span class="op">=</span> <span class="st">&quot;SELECT k1 FROM notes UNION SELECT k2 FROM notes UNION SELECT k3 FROM notes&quot;</span></span>
-<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>        cur.execute(query)</span>
-<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a>        records <span class="op">=</span> cur.fetchall()  <span class="co"># Results come as one-element tuples. It&#39;s needed to turn it to list.</span></span>
-<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.records <span class="op">=</span> [i <span class="cf">for</span> t <span class="kw">in</span> records <span class="cf">for</span> i <span class="kw">in</span> t]</span>
-<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.keywords <span class="op">=</span> [<span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3]</span>
-<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="va">self</span>.keywords:</span>
-<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a>            value <span class="op">=</span> process.extractOne(k, <span class="va">self</span>.records)</span>
-<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="dv">80</span> <span class="op">&lt;</span> value[<span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">100</span>:  <span class="co"># If we don&#39;t define it as less that 100, it will show message when inputing a old keyword.</span></span>
-<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a>                chg_tag_decision <span class="op">=</span> <span class="bu">input</span>(</span>
-<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>                    highlight(<span class="ss">f&quot; You inputed the word </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">, that is similar to the word </span><span class="sc">{</span>value[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, that already is a keyword. Won&#39;t you use it instead? [y/n] &quot;</span>, lexer, formatter)</span>
-<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> chg_tag_decision <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
-<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k1:</span>
-<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>                        <span class="va">self</span>.k1 <span class="op">=</span> value[<span class="dv">0</span>]</span>
-<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k2:</span>
-<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a>                        <span class="va">self</span>.k2 <span class="op">=</span> value[<span class="dv">0</span>]</span>
-<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k3:</span>
-<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a>                        <span class="va">self</span>.k3 <span class="op">=</span> value[<span class="dv">0</span>]</span>
-<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span>
-<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> new_tag(<span class="va">self</span>):</span>
-<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Will check the keyword names against the db records. If it doesn&#39;t find a</span></span>
-<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="co">        match, it will produce a message saying the tag is new.&quot;&quot;&quot;</span></span>
-<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.keywords <span class="op">=</span> [<span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3]</span>
-<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="va">self</span>.keywords:</span>
-<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a>            res <span class="op">=</span> <span class="bu">any</span>(k <span class="kw">in</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.records)</span>
-<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> res:</span>
-<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(highlight(<span class="ss">f&quot; [*] - The keyword </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> is new in the database.&quot;</span>, lexer, formatter))</span>
-<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span>
-<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> count_links(<span class="va">self</span>):</span>
-<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Will check the new keywords, see how many links they&#39;ll have, and return that</span></span>
-<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="co">        information.&quot;&quot;&quot;</span></span>
-<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a>        queries <span class="op">=</span> [</span>
-<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k1, count(*) as links FROM notes GROUP BY k1&quot;</span>,</span>
-<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k2, count(*) as links FROM notes GROUP BY k2&quot;</span>,</span>
-<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SELECT k3, count(*) as links FROM notes GROUP BY k3&quot;</span>,</span>
-<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>        ]</span>
-<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> q <span class="kw">in</span> queries:</span>
-<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>            conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a>            cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> q</span>
-<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a>            cur.execute(</span>
-<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>                query,</span>
-<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.links <span class="op">=</span> cur.fetchall()</span>
-<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.links:</span>
-<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k1:</span>
-<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a>                new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
-<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a>                new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
-<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k2:</span>
-<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>                new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
-<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>                new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
-<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k3:</span>
-<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>                new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
-<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>                new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
-<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @snoop</span></span>
-<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_to_db(<span class="va">self</span>):</span>
-<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Sends the data to the database&quot;&quot;&quot;</span></span>
-<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>        answers <span class="op">=</span> [<span class="va">self</span>.title, <span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3, <span class="va">self</span>.note]</span>
-<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>            conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>            cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>            query <span class="op">=</span> <span class="st">&quot;INSERT INTO notes (title, k1, k2, k3, note) VALUES (</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)&quot;</span></span>
-<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a>            cur.execute(query, answers)</span>
-<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>            conn.commit()</span>
-<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> Error <span class="im">as</span> e:</span>
-<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
-<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>        <span class="cf">finally</span>:</span>
-<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> conn:</span>
-<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a>                conn.close()</span>
-<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(highlight(<span class="ss">f&quot; [*] - The entry named: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>title<span class="sc">}</span><span class="ss">, was added to the database.&quot;</span>, lexer, formatter))</span>
-<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Collects user input, checks keywords for similarity, if they&#39;re new and their frequency.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">  Sends information to the database and creates the md and html pages.&quot;&quot;&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> time</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> click</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> snoop</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> yake</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> mysql.connector <span class="im">import</span> Error, <span class="ex">connect</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> pygments <span class="im">import</span> highlight</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> pygments.formatters <span class="im">import</span> TerminalTrueColorFormatter</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> pygments.lexers <span class="im">import</span> get_lexer_by_name, guess_lexer  <span class="co"># noqa: F401</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> snoop <span class="im">import</span> pp</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> thefuzz <span class="im">import</span> fuzz  <span class="co"># noqa: F401</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> thefuzz <span class="im">import</span> process</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  lexer <span class="op">=</span> get_lexer_by_name(<span class="st">&quot;brainfuck&quot;</span>, stripall<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  formatter <span class="op">=</span> TerminalTrueColorFormatter(linenos<span class="op">=</span><span class="va">False</span>, style<span class="op">=</span><span class="st">&quot;zenburn&quot;</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> Add:</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot;The class starts with user input and a list with all tags in a string list.</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co">      Having them separated will simplify processes. With this information collected,</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co">      first we&#39;ll ask the keywords questions and run its processes, one by one.</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co">      After this is done we&#39;ll send the information to the database and create the</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co">      md and html files.&quot;&quot;&quot;</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> input_data(<span class="va">self</span>):</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;All the user inputs needed to create a new entry are located here.&quot;&quot;&quot;</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.title <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Title? » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>          <span class="bu">print</span>(highlight(<span class="st">&quot; Write a note.&quot;</span>, lexer, formatter))</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>          sleep(<span class="dv">1</span>)</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.note <span class="op">=</span> click.edit().rstrip()</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> suggest_tags(<span class="va">self</span>):</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="co">          We&#39;ll use Yake to suggest keywords to the user. He may choose all, some</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="co">          or opt for writing them himself.</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="co">          &quot;&quot;&quot;</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>          kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>          text <span class="op">=</span> <span class="va">self</span>.note</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>          language <span class="op">=</span> <span class="st">&quot;en&quot;</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>          max_ngram_size <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>          deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>          numOfKeywords <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>          custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>          keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>          kwds <span class="op">=</span> []</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>              kwds.append(kw[<span class="dv">0</span>])</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(idx, kwd)</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>          kwdcho <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot;If you want to keep any of three keywords, type their number. &quot;</span>, lexer, formatter))</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>              kwdchoi <span class="op">=</span> kwdcho.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>              kwd_choice <span class="op">=</span> []</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> num <span class="kw">in</span> kwdchoi:</span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>                  kwd_choice.append(<span class="bu">int</span>(num))</span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>              choices <span class="op">=</span> []</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>                  choice <span class="op">=</span> [(idx, val) <span class="cf">for</span> (idx, val) <span class="kw">in</span> <span class="bu">enumerate</span>(kwds) <span class="cf">if</span> idx <span class="op">==</span> i]</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>                  choices.append(choice)</span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>              flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>              kwd_names <span class="op">=</span> []</span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> f <span class="kw">in</span> flatter_choices:</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>                  kwd_names.append(f[<span class="dv">1</span>])</span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> kwd_names[<span class="dv">2</span>]</span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span>:</span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k1 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; And another... » &quot;</span>, lexer, formatter))</span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> taglst(<span class="va">self</span>):</span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;Union allows to combine two or more sets of results into one, but,</span></span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="co">          the number and order of columns that appear in the SELECT statement</span></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a><span class="co">          must be the same, and the data types must be equal or compatible.</span></span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="co">          Union removes duplicates.</span></span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a><span class="co">          &quot;&quot;&quot;</span></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a>          <span class="cf">try</span>:</span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a>              conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a>              cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>              query <span class="op">=</span> <span class="st">&quot;SELECT k1 FROM notes UNION SELECT k2 FROM notes UNION SELECT k3 FROM notes&quot;</span></span>
+<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>              cur.execute(query)</span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>              records <span class="op">=</span> cur.fetchall()  <span class="co"># Results come as one-element tuples. It&#39;s needed to turn it to list.</span></span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.records <span class="op">=</span> [i <span class="cf">for</span> t <span class="kw">in</span> records <span class="cf">for</span> i <span class="kw">in</span> t]</span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a>              conn.close()</span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a>          <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> tag_links(<span class="va">self</span>):</span>
+<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;I&#39;ll join the three lists and order them by number of connections.&quot;&quot;&quot;</span></span>
+<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a>          queries <span class="op">=</span> [</span>
+<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k1, count(*) as links FROM notes GROUP BY k1&quot;</span>,</span>
+<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k2, count(*) as links FROM notes GROUP BY k2&quot;</span>,</span>
+<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k3, count(*) as links FROM notes GROUP BY k3&quot;</span>,</span>
+<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>          <span class="cf">try</span>:</span>
+<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> q <span class="kw">in</span> queries:</span>
+<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>                  conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>                  cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a>                  query <span class="op">=</span> q</span>
+<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a>                  cur.execute(</span>
+<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>                      query,</span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.links <span class="op">=</span> cur.fetchall()</span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a>              <span class="co"># Records is a list and row is a tuple with the tag name and number of connections.</span></span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.links.sort(key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])  <span class="co"># This sorts the list by the value of the second element. https://tinyurl.com/yfn9alt7</span></span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a>              conn.close()</span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a>          <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> issimilar(<span class="va">self</span>):</span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;Uses Thefuzz library to compare keyword strings. If similarity is above 80%,</span></span>
+<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a><span class="co">          it prints a mesage asking if the user wants to change it.&quot;&quot;&quot;</span></span>
+<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>          conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a>          cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>          query <span class="op">=</span> <span class="st">&quot;SELECT k1 FROM notes UNION SELECT k2 FROM notes UNION SELECT k3 FROM notes&quot;</span></span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>          cur.execute(query)</span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a>          records <span class="op">=</span> cur.fetchall()  <span class="co"># Results come as one-element tuples. It&#39;s needed to turn it to list.</span></span>
+<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.records <span class="op">=</span> [i <span class="cf">for</span> t <span class="kw">in</span> records <span class="cf">for</span> i <span class="kw">in</span> t]</span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.keywords <span class="op">=</span> [<span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3]</span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> k <span class="kw">in</span> <span class="va">self</span>.keywords:</span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a>              value <span class="op">=</span> process.extractOne(k, <span class="va">self</span>.records)</span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="dv">80</span> <span class="op">&lt;</span> value[<span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">100</span>:  <span class="co"># If we don&#39;t define it as less that 100, it will show message when inputing a old keyword.</span></span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a>                  chg_tag_decision <span class="op">=</span> <span class="bu">input</span>(</span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>                      highlight(<span class="ss">f&quot; You inputed the word </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">, that is similar to the word </span><span class="sc">{</span>value[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, that already is a keyword. Won&#39;t you use it instead? [y/n] &quot;</span>, lexer, formatter)</span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> chg_tag_decision <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k1:</span>
+<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>                          <span class="va">self</span>.k1 <span class="op">=</span> value[<span class="dv">0</span>]</span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k2:</span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a>                          <span class="va">self</span>.k2 <span class="op">=</span> value[<span class="dv">0</span>]</span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">if</span> k <span class="op">==</span> <span class="va">self</span>.k3:</span>
+<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a>                          <span class="va">self</span>.k3 <span class="op">=</span> value[<span class="dv">0</span>]</span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>              <span class="cf">else</span>:</span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">pass</span></span>
+<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> new_tag(<span class="va">self</span>):</span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;Will check the keyword names against the db records. If it doesn&#39;t find a</span></span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="co">          match, it will produce a message saying the tag is new.&quot;&quot;&quot;</span></span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.keywords <span class="op">=</span> [<span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3]</span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> k <span class="kw">in</span> <span class="va">self</span>.keywords:</span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a>              res <span class="op">=</span> <span class="bu">any</span>(k <span class="kw">in</span> i <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.records)</span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="kw">not</span> res:</span>
+<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">print</span>(highlight(<span class="ss">f&quot; [*] - The keyword </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> is new in the database.&quot;</span>, lexer, formatter))</span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a>              <span class="cf">else</span>:</span>
+<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">pass</span></span>
+<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> count_links(<span class="va">self</span>):</span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;Will check the new keywords, see how many links they&#39;ll have, and return that</span></span>
+<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="co">          information.&quot;&quot;&quot;</span></span>
+<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a>          queries <span class="op">=</span> [</span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k1, count(*) as links FROM notes GROUP BY k1&quot;</span>,</span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k2, count(*) as links FROM notes GROUP BY k2&quot;</span>,</span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;SELECT k3, count(*) as links FROM notes GROUP BY k3&quot;</span>,</span>
+<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> q <span class="kw">in</span> queries:</span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>              conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a>              cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a>              query <span class="op">=</span> q</span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a>              cur.execute(</span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>                  query,</span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.links <span class="op">=</span> cur.fetchall()</span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> i <span class="kw">in</span> <span class="va">self</span>.links:</span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k1:</span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a>                  new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a>                  new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
+<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k2:</span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>                  new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>                  new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> i[<span class="dv">0</span>] <span class="op">==</span> <span class="va">self</span>.k3:</span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>                  new_i <span class="op">=</span> <span class="bu">list</span>(i)</span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>                  new_val <span class="op">=</span> [new_i[<span class="dv">0</span>], (new_i[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">print</span>(highlight(<span class="ss">f&quot;[*] - The updated value of the keyword links is </span><span class="sc">{</span>new_val<span class="sc">}</span><span class="ss">&quot;</span>, lexer, formatter))</span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>      <span class="co"># @snoop</span></span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> add_to_db(<span class="va">self</span>):</span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;Sends the data to the database&quot;&quot;&quot;</span></span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>          answers <span class="op">=</span> [<span class="va">self</span>.title, <span class="va">self</span>.k1, <span class="va">self</span>.k2, <span class="va">self</span>.k3, <span class="va">self</span>.note]</span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>          <span class="cf">try</span>:</span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>              conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>              cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>              query <span class="op">=</span> <span class="st">&quot;INSERT INTO notes (title, k1, k2, k3, note) VALUES (</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)&quot;</span></span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a>              cur.execute(query, answers)</span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>              conn.commit()</span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a>          <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>          <span class="cf">finally</span>:</span>
+<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> conn:</span>
+<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a>                  conn.close()</span>
+<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>          <span class="bu">print</span>(highlight(<span class="ss">f&quot; [*] - The entry named: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>title<span class="sc">}</span><span class="ss">, was added to the database.&quot;</span>, lexer, formatter))</span>
+<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
 </body>
 </html>

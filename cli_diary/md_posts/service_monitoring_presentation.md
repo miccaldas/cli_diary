@@ -16,50 +16,50 @@ mainfont: Iosevka
    with write instructions. Something like this:
 
    ```python
-    f.write(" def dropdown():")
+      f.write(" def dropdown():")
    ```
 
    This way I was able to insert a loop that will write dictionary entries into
    the dropdown choices:
 
    ```python
-    d.write("         app = questionary.select(\n")
-    d.write('             "What app do you want to use?",\n')
-    d.write('             qmark="[x]",\n')
-    d.write('             pointer="++",\n')
-    d.write("             use_indicator=True,\n")
-    d.write("             style=custom_style_monitor,\n")
-    d.write("             choices=[\n")
-    for i in range(len(res["dropinfo"])):
-       d.write(f"               '{res['dropinfo'][i]['name']}',\n")
-    d.write('               Separator("----- EXIT -----"),\n')
-    d.write("               'Exit'\n")
-    d.write("            ]\n")
-    d.write("        ).ask()\n")
+      d.write("         app = questionary.select(\n")
+      d.write('             "What app do you want to use?",\n')
+      d.write('             qmark="[x]",\n')
+      d.write('             pointer="++",\n')
+      d.write("             use_indicator=True,\n")
+      d.write("             style=custom_style_monitor,\n")
+      d.write("             choices=[\n")
+      for i in range(len(res["dropinfo"])):
+         d.write(f"               '{res['dropinfo'][i]['name']}',\n")
+      d.write('               Separator("----- EXIT -----"),\n')
+      d.write("               'Exit'\n")
+      d.write("            ]\n")
+      d.write("        ).ask()\n")
    ```
 
    This ends up looking like this:
 
    ```python
-    app = questionary.select(
-      "What app do you want to use?",
-       qmark="[x]",
-       pointer="++",
-       use_indicator=True,
-       style=custom_style_monitor,
-       choices=[
-                "Backups Service",
-                "Yay Service",
-                "Git Automate",
-                "Home Git Automate",
-                "Flower",
-                "Pip",
-                "service_monitoring",
-                "home_git_updt",
-                Separator("----- EXIT -----"),
-                "Exit",
-            ],
-        ).ask()
+      app = questionary.select(
+        "What app do you want to use?",
+         qmark="[x]",
+         pointer="++",
+         use_indicator=True,
+         style=custom_style_monitor,
+         choices=[
+                  "Backups Service",
+                  "Yay Service",
+                  "Git Automate",
+                  "Home Git Automate",
+                  "Flower",
+                  "Pip",
+                  "service_monitoring",
+                  "home_git_updt",
+                  Separator("----- EXIT -----"),
+                  "Exit",
+              ],
+          ).ask()
    ```
 
    The dropdown module defines the user interface for the app. Too late did I
@@ -70,12 +70,12 @@ mainfont: Iosevka
    answer, will direct the user to one of two dropdowns:
 
    ```python
-     ambit = questionary.confirm(
-        "Is your question about a specific service?",
-        qmark="[x]",
-        default=False,
-        auto_enter=False,
-     ).ask()
+       ambit = questionary.confirm(
+          "Is your question about a specific service?",
+          qmark="[x]",
+          default=False,
+          auto_enter=False,
+       ).ask()
    ```
 
    If the answer is 'yes', the user will be lead to a dropdown with methods that
@@ -116,32 +116,32 @@ mainfont: Iosevka
  In the first case:
 
  ```python
-    if len(dropdown) == 2:
-        for i in dropdown:
-            if i == "Exit":
-                sys.exit()
-        data = []
-        for i in range(len(info["dropinfo"])):
-            if dropdown[0] == info["dropinfo"][i]["name"]:
-                data.append(info["dropinfo"][i]["app"])
-                data.append(info["dropinfo"][i]["path"])
-                data.append(info["dropinfo"][i]["units"])
-            drop = data[0]
-            path = data[1]
-            units = data[2]
-            if path != "none":
-                os.chdir(path)
-            ress = []
-            answer = Answers(drop, units)
-            for method in methods:
-                res = f"answer.{method}()"
-                ress.append(res)
-            for task in ress:
-                print("\n")
-                print("---------------------------------------------------------------------------")
-                print("\n")
-                exec(task)
-            sys.exit()
+      if len(dropdown) == 2:
+          for i in dropdown:
+              if i == "Exit":
+                  sys.exit()
+          data = []
+          for i in range(len(info["dropinfo"])):
+              if dropdown[0] == info["dropinfo"][i]["name"]:
+                  data.append(info["dropinfo"][i]["app"])
+                  data.append(info["dropinfo"][i]["path"])
+                  data.append(info["dropinfo"][i]["units"])
+              drop = data[0]
+              path = data[1]
+              units = data[2]
+              if path != "none":
+                  os.chdir(path)
+              ress = []
+              answer = Answers(drop, units)
+              for method in methods:
+                  res = f"answer.{method}()"
+                  ress.append(res)
+              for task in ress:
+                  print("\n")
+                  print("---------------------------------------------------------------------------")
+                  print("\n")
+                  exec(task)
+              sys.exit()
    ```
 
   The generalist is pretty similar.

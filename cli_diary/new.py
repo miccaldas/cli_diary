@@ -34,7 +34,7 @@ def new():
     cmd = f"vim {md_file}"
     subprocess.run(cmd, cwd="md_posts", shell=True)
 
-    cmd1 = f"pandoc --highlight-style=zenburn -s -o html_posts/{title}.html md_posts/{md_file}"
+    cmd1 = f"pandoc --highlight-style=breezedark -s -o html_posts/{title}.html md_posts/{md_file}"
     subprocess.run(cmd1, shell=True)
 
     with open(f"md_posts/{md_file}", "r") as f:

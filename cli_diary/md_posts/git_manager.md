@@ -11,69 +11,69 @@ So, I thought of this:
 
 1. First create a dictionary with names and urls of all the repositories and keep it in a file:  
 ```python
-"""Dictionary with lists of my git projects"""
-
-
-def repo_list():
-    repo_list.dict = {
-        "bkmks": "/home/mic/python/bkmk",
-        "urwid": "/home/mic/python/bkmks_urwid",
-        "books": "/home/mic/python/books",
-        "cli_app": "/home/mic/python/cli_app_list",
-        "micro_diary": "/home/mic/python/micro_diary",
-        "notes": "/home/mic/python/notes",
-        "old_projects": "/home/mic/python/old_alternative_projects",
-        "player": "/home/mic/python/player",
-        "pwd": "/home/mic/python/pwd",
-        "rss": "/home/mic/python/rss",
-        "scraper": "/home/mic/python/scraper",
-        "todos": "/home/mic/python/todos",
-        "tree": "/home/mic/python/tree",
-        "urlshort": "/home/mic/python/urlshort",
-        "scripts": "/home/mic/scripts",
-        "python_blog": "/home/mic/hexo-python-blog",
-        "hexo-poems": "/home/mic/hexo-poems",
-        "site": "/srv/http",
-    }
-
-    return repo_list.dict
-
-
-if __name__ == "__main__":
-    repo_list()
+  """Dictionary with lists of my git projects"""
+  
+  
+  def repo_list():
+      repo_list.dict = {
+          "bkmks": "/home/mic/python/bkmk",
+          "urwid": "/home/mic/python/bkmks_urwid",
+          "books": "/home/mic/python/books",
+          "cli_app": "/home/mic/python/cli_app_list",
+          "micro_diary": "/home/mic/python/micro_diary",
+          "notes": "/home/mic/python/notes",
+          "old_projects": "/home/mic/python/old_alternative_projects",
+          "player": "/home/mic/python/player",
+          "pwd": "/home/mic/python/pwd",
+          "rss": "/home/mic/python/rss",
+          "scraper": "/home/mic/python/scraper",
+          "todos": "/home/mic/python/todos",
+          "tree": "/home/mic/python/tree",
+          "urlshort": "/home/mic/python/urlshort",
+          "scripts": "/home/mic/scripts",
+          "python_blog": "/home/mic/hexo-python-blog",
+          "hexo-poems": "/home/mic/hexo-poems",
+          "site": "/srv/http",
+      }
+  
+      return repo_list.dict
+  
+  
+  if __name__ == "__main__":
+      repo_list()
 ```
 
 2. Now we will test all repositories to know if they need updating, by going in their directories and typing the command "git status". We convert the function object in a dictionary so as to be simple to handle.  
 We iterate through a loop for all the values of the dictionary, go to their location and do 'git status'. We collect the output to a file. I used a bash expression so as to be able to use the git command "git status". The '$()' is the format for commands in bash.  I used the expression '&>' instead of only '>', to write to a file because the ampersand diverts standard error as the '>' diverts output. 'cwd' means 'current working directory' and determines where the subprocess command will take place.  
 
 ```python
-def repositories():
-    """Here we harvest a 'git status' of all the repositories"""
-    repositories.repos = repo_list()
-    for value in repositories.repos.values():
-        cmd = "echo $(git status) &> status_results.txt"
-        subprocess.run(cmd, cwd=value, shell=True)
-
-
-if __name__ == "__main__":
-    repositories()
+  def repositories():
+      """Here we harvest a 'git status' of all the repositories"""
+      repositories.repos = repo_list()
+      for value in repositories.repos.values():
+          cmd = "echo $(git status) &> status_results.txt"
+          subprocess.run(cmd, cwd=value, shell=True)
+  
+  
+  if __name__ == "__main__":
+      repositories()
 ```
 3. Again we iterate through the list of values of our dictionary to find the files with the answers to our former query. We open them and if the strings "Changes no staged for commit" and "Untracked files" are present, we put them in a list of repositories to update.  
 
 ```python
-def update():
-    """Here we verify who needs an update"""
-    update.lst = []
-    for value in repositories.repos.values():
-        path = value + "/status_results.txt"
-        with open(path, "r") as f:
-            status_content = f.read()
-        if "Changes not staged for commit" or "Untracked files" in status_content:
-            update.lst.append(path)
-
-
-if __name__ == "__main__":
-    update()
+  def update():
+      """Here we verify who needs an update"""
+      update.lst = []
+      for value in repositories.repos.values():
+          path = value + "/status_results.txt"
+          with open(path, "r") as f:
+              status_content = f.read()
+          if "Changes not staged for commit" or "Untracked files" in status_content:
+              update.lst.append(path)
+  
+  
+  if __name__ == "__main__":
+      update()
 ```
 
 4. And, at last, we iterate through a list of dictionary items, (key:value), and if we find the path in the list of repositories to update, we take it's name and put it in a list.
@@ -201,72 +201,72 @@ expect eof
 
 Getting back to the python document. For each name that we find in our list of paths to repos that needed updating, write the url to the bash script that'll do the job, and run it with subprocess.  
 ```python
-def final_update():
-    "Here we proceed at the actual update"
-    names = []
-    for name, path in repositories.repos.items():
-        if path in update.lst:
-            names.append(name)
-
-    for name in names:
-        cmd = "/home/mic/scripts/git_manager/" + name + ".exp"
-        subprocess.run(cmd, shell=True)
+  def final_update():
+      "Here we proceed at the actual update"
+      names = []
+      for name, path in repositories.repos.items():
+          if path in update.lst:
+              names.append(name)
+  
+      for name in names:
+          cmd = "/home/mic/scripts/git_manager/" + name + ".exp"
+          subprocess.run(cmd, shell=True)
 ```
 Here's the final document:
 
 ```python
-"""This function checks if the output says that is needed to update the repository"""
-import os
-import subprocess
-from loguru import logger
-from dic import repo_list
-
-fmt = "{time} - {name} - {level} - {message}"
-logger.add("spam.log", level="DEBUG", format=fmt)
-logger.add("error.log", level="ERROR", format=fmt)
-
-
-def repositories():
-    """Here we harvest a 'git status' of all the repositories"""
-    repositories.repos = repo_list()
-    for value in repositories.repos.values():
-        cmd = "echo $(git status) &> status_results.txt"
-        subprocess.run(cmd, cwd=value, shell=True)
-
-
-if __name__ == "__main__":
-    repositories()
-
-
-def update():
-    """Here we verify who needs an update"""
-    update.lst = []
-    for value in repositories.repos.values():
-        path = value + "/status_results.txt"
-        with open(path, "r") as f:
-            status_content = f.read()
-        if "Changes not staged for commit" or "Untracked files" in status_content:
-            update.lst.append(path)
-
-
-if __name__ == "__main__":
-    update()
-
-
-def final_update():
-    "Here we proceed at the actual update"
-    names = []
-    for name, path in repositories.repos.items():
-        if path in update.lst:
-            names.append(name)
-
-    for name in names:
-        cmd = "/home/mic/scripts/git_manager/" + name + ".exp"
-        subprocess.run(cmd, shell=True)
-
-
-if __name__ == "__main__":
-    final_update()
+  """This function checks if the output says that is needed to update the repository"""
+  import os
+  import subprocess
+  from loguru import logger
+  from dic import repo_list
+  
+  fmt = "{time} - {name} - {level} - {message}"
+  logger.add("spam.log", level="DEBUG", format=fmt)
+  logger.add("error.log", level="ERROR", format=fmt)
+  
+  
+  def repositories():
+      """Here we harvest a 'git status' of all the repositories"""
+      repositories.repos = repo_list()
+      for value in repositories.repos.values():
+          cmd = "echo $(git status) &> status_results.txt"
+          subprocess.run(cmd, cwd=value, shell=True)
+  
+  
+  if __name__ == "__main__":
+      repositories()
+  
+  
+  def update():
+      """Here we verify who needs an update"""
+      update.lst = []
+      for value in repositories.repos.values():
+          path = value + "/status_results.txt"
+          with open(path, "r") as f:
+              status_content = f.read()
+          if "Changes not staged for commit" or "Untracked files" in status_content:
+              update.lst.append(path)
+  
+  
+  if __name__ == "__main__":
+      update()
+  
+  
+  def final_update():
+      "Here we proceed at the actual update"
+      names = []
+      for name, path in repositories.repos.items():
+          if path in update.lst:
+              names.append(name)
+  
+      for name in names:
+          cmd = "/home/mic/scripts/git_manager/" + name + ".exp"
+          subprocess.run(cmd, shell=True)
+  
+  
+  if __name__ == "__main__":
+      final_update()
 ```
 
 ----------------------------------------------------------------------------
@@ -294,35 +294,35 @@ expect -exact "[?2004l\r\r
  1. First thing I did was bring to the main file the repos list and turn it in a dictionary in global setting, so it can be used by all functions.  
 
  ```python
-repo_dict = {
-    "bkmks": "/home/mic/python/bkmk",
-    "bkmks_urwid": "/home/mic/python/bkmks_urwid",
-    "books": "/home/mic/python/books",
-    "cli_app_list": "/home/mic/python/cli_app_list",
-    "micro_diary": "/home/mic/python/micro_diary",
-    "notes": "/home/mic/python/notes",
-    "old_alternative_projects": "/home/mic/python/old_alternative_projects",
-    "player": "/home/mic/python/player",
-    "pwd": "/home/mic/python/pwd",
-    "rss": "/home/mic/python/rss",
-    "scraper": "/home/mic/python/scraper",
-    "scripts": "/home/mic/scripts",
-    "todos": "/home/mic/python/todos",
-    "tree": "/home/mic/python/tree",
-    "url": "/home/mic/python/urlshort",
-    "hexo-python-blog": "/home/mic/hexo-python-blog",
-    "hexo_poems": "/home/mic/hexo-poems",
-    "http": "/srv/http",
-}
+  repo_dict = {
+      "bkmks": "/home/mic/python/bkmk",
+      "bkmks_urwid": "/home/mic/python/bkmks_urwid",
+      "books": "/home/mic/python/books",
+      "cli_app_list": "/home/mic/python/cli_app_list",
+      "micro_diary": "/home/mic/python/micro_diary",
+      "notes": "/home/mic/python/notes",
+      "old_alternative_projects": "/home/mic/python/old_alternative_projects",
+      "player": "/home/mic/python/player",
+      "pwd": "/home/mic/python/pwd",
+      "rss": "/home/mic/python/rss",
+      "scraper": "/home/mic/python/scraper",
+      "scripts": "/home/mic/scripts",
+      "todos": "/home/mic/python/todos",
+      "tree": "/home/mic/python/tree",
+      "url": "/home/mic/python/urlshort",
+      "hexo-python-blog": "/home/mic/hexo-python-blog",
+      "hexo_poems": "/home/mic/hexo-poems",
+      "http": "/srv/http",
+  }
  ```
 
 2. The first function verifies what repos need an update.  
 We create a loop that runs through the paths to repos in said dictionary, and adds to them the name of the file that will be created when we run the 'git status' command through all repositories. This new list with the updated URLs, is called 'paths'.  
 ```python
-    logger.info(repo_dict)
-    for value in repo_dict.values():
-        path.append(value + "/status_results.txt")
-    logger.info(path)
+      logger.info(repo_dict)
+      for value in repo_dict.values():
+          path.append(value + "/status_results.txt")
+      logger.info(path)
 ```
 3. Now we look to the paths in the 'path' list, and check for the patterns that'll tell us if its necessary to update the repo or not. These patterns are:
  * 'Changes not staged for commit',
@@ -330,26 +330,26 @@ We create a loop that runs through the paths to repos in said dictionary, and ad
 If we find these patterns in the file with the output of the 'git status' command, we append the URLs to a new list called 'repositories.lst'.  
 From that list we take out only the repository names, with the [rsplit](https://www.w3schools.com/python/ref_string_rsplit.asp) method, that splits a string to a list. We define that we want only the penultimate value (-2), counted if we split the string by '/'. This list will have only the repo names that need updating.  
 ```python
-    for i in path:
-        if "Changes not staged for commit" or "Untracked files" in i:
-            repositories.lst.append(i)
-    logger.info(repositories.lst)
-    for i in repositories.lst:
-        repositories.chaves.append(i.rsplit("/")[-2])
-    logger.info(repositories.chaves)
+      for i in path:
+          if "Changes not staged for commit" or "Untracked files" in i:
+              repositories.lst.append(i)
+      logger.info(repositories.lst)
+      for i in repositories.lst:
+          repositories.chaves.append(i.rsplit("/")[-2])
+      logger.info(repositories.chaves)
 ```
 4. As there is one Expect script per repository, we build a string URL that is composed of the path to these scripts, plus the repo names to update, that we take from repositories.chaves. As they are bash scripts, it's necessary to use subprocess.  
 ```python
-
-
-@logger.catch
-def update():
-    "Here we do the update"
-    for i in repositories.chaves:
-        cmd = "/home/mic/scripts/git_manager/" + i + ".exp"
-        subprocess.run(cmd, shell=True)
-
-    logger.info(cmd)
+  
+  
+  @logger.catch
+  def update():
+      "Here we do the update"
+      for i in repositories.chaves:
+          cmd = "/home/mic/scripts/git_manager/" + i + ".exp"
+          subprocess.run(cmd, shell=True)
+  
+      logger.info(cmd)
 ```
 
 Of course that even with these changes the script still doesn't work. It needs the Expect scripts working correctly.  
@@ -359,74 +359,74 @@ I corrected a lot of 'corrections' I did to the original version; that weren't c
 Expect another update when I solve the Expect problem. I hope it's soon.  
 Here is the updated file:  
 ```python
-import os
-import subprocess
-import time
-from loguru import logger
-
-
-fmt = "{time} - {name} - {level} - {message}"
-logger.add("logging/spam.log", level="DEBUG", format=fmt, backtrace=True, diagnose=True)
-logger.add("logging/error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
-logger.add("logging/info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
-
-repo_dict = {
-    "bkmks": "/home/mic/python/bkmk",
-    "bkmks_urwid": "/home/mic/python/bkmks_urwid",
-    "books": "/home/mic/python/books",
-    "cli_app_list": "/home/mic/python/cli_app_list",
-    "micro_diary": "/home/mic/python/micro_diary",
-    "notes": "/home/mic/python/notes",
-    "old_alternative_projects": "/home/mic/python/old_alternative_projects",
-    "player": "/home/mic/python/player",
-    "pwd": "/home/mic/python/pwd",
-    "rss": "/home/mic/python/rss",
-    "scraper": "/home/mic/python/scraper",
-    "scripts": "/home/mic/scripts",
-    "todos": "/home/mic/python/todos",
-    "tree": "/home/mic/python/tree",
-    "url": "/home/mic/python/urlshort",
-    "hexo-python-blog": "/home/mic/hexo-python-blog",
-    "hexo_poems": "/home/mic/hexo-poems",
-    "http": "/srv/http",
-}
-
-
-@logger.catch
-def repositories():
-    """Verify what repos need an update"""
-    repositories.lst = []
-    path = []
-    repositories.chaves = []
-
-    logger.info(repo_dict)
-    for value in repo_dict.values():
-        path.append(value + "/status_results.txt")
-    logger.info(path)
-
-    for i in path:
-        if "Changes not staged for commit" or "Untracked files" in i:
-            repositories.lst.append(i)
-    logger.info(repositories.lst)
-    for i in repositories.lst:
-        repositories.chaves.append(i.rsplit("/")[-2])
-    logger.info(repositories.chaves)
-
-
-if __name__ == "__main__":
-    repositories()
-
-
-@logger.catch
-def update():
-    "Here we do the update"
-    for i in repositories.chaves:
-        cmd = "/home/mic/scripts/git_manager/" + i + ".exp"
-        subprocess.run(cmd, shell=True)
-
-    logger.info(cmd)
-
-
-if __name__ == "__main__":
-    update()
+  import os
+  import subprocess
+  import time
+  from loguru import logger
+  
+  
+  fmt = "{time} - {name} - {level} - {message}"
+  logger.add("logging/spam.log", level="DEBUG", format=fmt, backtrace=True, diagnose=True)
+  logger.add("logging/error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)
+  logger.add("logging/info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)
+  
+  repo_dict = {
+      "bkmks": "/home/mic/python/bkmk",
+      "bkmks_urwid": "/home/mic/python/bkmks_urwid",
+      "books": "/home/mic/python/books",
+      "cli_app_list": "/home/mic/python/cli_app_list",
+      "micro_diary": "/home/mic/python/micro_diary",
+      "notes": "/home/mic/python/notes",
+      "old_alternative_projects": "/home/mic/python/old_alternative_projects",
+      "player": "/home/mic/python/player",
+      "pwd": "/home/mic/python/pwd",
+      "rss": "/home/mic/python/rss",
+      "scraper": "/home/mic/python/scraper",
+      "scripts": "/home/mic/scripts",
+      "todos": "/home/mic/python/todos",
+      "tree": "/home/mic/python/tree",
+      "url": "/home/mic/python/urlshort",
+      "hexo-python-blog": "/home/mic/hexo-python-blog",
+      "hexo_poems": "/home/mic/hexo-poems",
+      "http": "/srv/http",
+  }
+  
+  
+  @logger.catch
+  def repositories():
+      """Verify what repos need an update"""
+      repositories.lst = []
+      path = []
+      repositories.chaves = []
+  
+      logger.info(repo_dict)
+      for value in repo_dict.values():
+          path.append(value + "/status_results.txt")
+      logger.info(path)
+  
+      for i in path:
+          if "Changes not staged for commit" or "Untracked files" in i:
+              repositories.lst.append(i)
+      logger.info(repositories.lst)
+      for i in repositories.lst:
+          repositories.chaves.append(i.rsplit("/")[-2])
+      logger.info(repositories.chaves)
+  
+  
+  if __name__ == "__main__":
+      repositories()
+  
+  
+  @logger.catch
+  def update():
+      "Here we do the update"
+      for i in repositories.chaves:
+          cmd = "/home/mic/scripts/git_manager/" + i + ".exp"
+          subprocess.run(cmd, shell=True)
+  
+      logger.info(cmd)
+  
+  
+  if __name__ == "__main__":
+      update()
 ```

@@ -20,88 +20,88 @@ I think I'll later, rewrite these modules to use only psutil. If for nothing els
 This is what I've ended up doing, finding the pid with with subprocess and terminating it with psutil.  
 3. I imported the libraries,  
 ```python
-import psutil
-import subprocess
+  import psutil
+  import subprocess
 ```
 4. created a function,  
 ```python
-def resume():
-    """Use subprocess to, first find out the pid, and then stop it with psutil"""
+  def resume():
+      """Use subprocess to, first find out the pid, and then stop it with psutil"""
 ```
 5. created a variable 'processes' that houses the subprocess command.  
 The bash script uses the [ps](https://man7.org/linux/man-pages/man1/ps.1.html) command, adding the `ax` options, that outputs the results in BSD syntax. This was done because I copied code and didn't thought about it. Which is a very dumb thing to do. I will change it ro read `ps -e`, when I refactor this module.
 The result is piped to grep, so as to find the ffplay, ffmpeg player, occurrences.  
 ```python
-processes = subprocess.Popen(["ps ax | grep 'ffplay'"],
+  processes = subprocess.Popen(["ps ax | grep 'ffplay'"],
 ```
 6. declared the command as a shell command,
 ```python
-shell=True,
+  shell=True,
 ```
 7. piped the results to standard output and kept it.
 ```python
-stdout=subprocess.PIPE,
+  stdout=subprocess.PIPE,
 ```
 8. and sent any errors to be shown in the screen.
 ```python
-stderr=subprocess.STDOUT)
+  stderr=subprocess.STDOUT)
 ```
 9. Now I make sure that is possible to see the outputs of the command,
 ```python
-stderr=subprocess.STDOUT
+  stderr=subprocess.STDOUT
 ```
 10. I collect the pid from the output that has this format `967 tty1 S 0:02 sh /home/mic/.xinitrc`, being the first number, the pid number,
 ```python
-pid = stdout.split()[0]
+  pid = stdout.split()[0]
 ```
 11. as Popen is a byte object, I translate it to a string,
 ```python
-pid_str = pid.decode('utf-8')
+  pid_str = pid.decode('utf-8')
 ```
 12. create a variable to house a psutil command that turns the string to an integer,
 ```python
-p = psutil.Process(int(pid_str))
+  p = psutil.Process(int(pid_str))
 ```
 13. And, as this is the resume command, it resumes a process that was previously stopped.
 ```python
-p.resume()
+  p.resume()
 ```
 After making this reconstruction exercise, it's clear to me now that there's a lot of things that can be bettered here. And that's what I'm going to do.
 I leave you with the complete code, with all my comments.  
 ```python
-""" Module to stop the ffplay, ffmpeg's player, by stopping its process """
-import psutil
-import subprocess
-
-
-def resume():
-    """Use subprocess to, first find out the pid, and then stop it with psutil"""
-    # 3)
-    processes = subprocess.Popen(["ps ax | grep 'ffplay'"],
-                                 shell=True, stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
-    # 'ps ax | grep 'python3 playsound_player.py' looks for the pid of the command.
-    # https://askubuntu.com/questions/180336/how-to-find-the-process-id-pid-of-a-running-terminal-program
-    # 'stdout=subprocess.PIPE' pipes the standard output and keeps it.
-    # 'stderr=subprocess.STDOUT', sends the errors to the screen
-    # 1)
-
-    stdout, stderr = processes.communicate()   # This allows us to see the outputs of the command
-    pid = stdout.split()[0]                    # It collects just the pid.
-    pid_str = pid.decode('utf-8')              # Decodes the Popen byte object into a string.
-
-    p = psutil.Process(int(pid_str))           # psutil is a library the deals with process management
-    p.resume()                                 # 2)
-
-
-resume()
-
-
-"""
-NOTES
-1) - https://cmdlinetips.com/2014/03/how-to-run-a-shell-command-from-python-and-get-the-output/
-2) - https://github.com/giampaolo/psutil
-3) - http://queirozf.com/entries/python-3-subprocess-examples
-https://docs.python.org/3/library/subprocess.html
-"""
+  """ Module to stop the ffplay, ffmpeg's player, by stopping its process """
+  import psutil
+  import subprocess
+  
+  
+  def resume():
+      """Use subprocess to, first find out the pid, and then stop it with psutil"""
+      # 3)
+      processes = subprocess.Popen(["ps ax | grep 'ffplay'"],
+                                   shell=True, stdout=subprocess.PIPE,
+                                   stderr=subprocess.STDOUT)
+      # 'ps ax | grep 'python3 playsound_player.py' looks for the pid of the command.
+      # https://askubuntu.com/questions/180336/how-to-find-the-process-id-pid-of-a-running-terminal-program
+      # 'stdout=subprocess.PIPE' pipes the standard output and keeps it.
+      # 'stderr=subprocess.STDOUT', sends the errors to the screen
+      # 1)
+  
+      stdout, stderr = processes.communicate()   # This allows us to see the outputs of the command
+      pid = stdout.split()[0]                    # It collects just the pid.
+      pid_str = pid.decode('utf-8')              # Decodes the Popen byte object into a string.
+  
+      p = psutil.Process(int(pid_str))           # psutil is a library the deals with process management
+      p.resume()                                 # 2)
+  
+  
+  resume()
+  
+  
+  """
+  NOTES
+  1) - https://cmdlinetips.com/2014/03/how-to-run-a-shell-command-from-python-and-get-the-output/
+  2) - https://github.com/giampaolo/psutil
+  3) - http://queirozf.com/entries/python-3-subprocess-examples
+  https://docs.python.org/3/library/subprocess.html
+  """
 ```

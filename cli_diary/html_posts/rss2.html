@@ -169,42 +169,46 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
+        background-color: #232629;
+        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
     div.sourceCode
-      { color: #cccccc; background-color: #303030; }
+      { color: #cfcfc2; background-color: #232629; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span.al { color: #ffcfaf; } /* Alert */
-    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-    code span.at { } /* Attribute */
-    code span.bn { color: #dca3a3; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #f0dfaf; } /* ControlFlow */
-    code span.ch { color: #dca3a3; } /* Char */
-    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-    code span.co { color: #7f9f7f; } /* Comment */
-    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-    code span.do { color: #7f9f7f; } /* Documentation */
-    code span.dt { color: #dfdfbf; } /* DataType */
-    code span.dv { color: #dcdccc; } /* DecVal */
-    code span.er { color: #c3bf9f; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #c0bed1; } /* Float */
-    code span.fu { color: #efef8f; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
-    code span.kw { color: #f0dfaf; } /* Keyword */
-    code span.op { color: #f0efd0; } /* Operator */
-    code span.ot { color: #efef8f; } /* Other */
-    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-    code span.sc { color: #dca3a3; } /* SpecialChar */
-    code span.ss { color: #cc9393; } /* SpecialString */
-    code span.st { color: #cc9393; } /* String */
-    code span.va { } /* Variable */
-    code span.vs { color: #cc9393; } /* VerbatimString */
-    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+    code span { color: #cfcfc2; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #3f8058; } /* Annotation */
+    code span.at { color: #2980b9; } /* Attribute */
+    code span.bn { color: #f67400; } /* BaseN */
+    code span.bu { color: #7f8c8d; } /* BuiltIn */
+    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #3daee9; } /* Char */
+    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+    code span.co { color: #7a7c7d; } /* Comment */
+    code span.cv { color: #7f8c8d; } /* CommentVar */
+    code span.do { color: #a43340; } /* Documentation */
+    code span.dt { color: #2980b9; } /* DataType */
+    code span.dv { color: #f67400; } /* DecVal */
+    code span.er { color: #da4453; text-decoration: underline; } /* Error */
+    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #f67400; } /* Float */
+    code span.fu { color: #8e44ad; } /* Function */
+    code span.im { color: #27ae60; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+    code span.op { color: #cfcfc2; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #27ae60; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #3daee9; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #f44f4f; } /* String */
+    code span.va { color: #27aeae; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
@@ -223,57 +227,57 @@ As I currently am, very actively, not thinking in anything, this must be an ausp
 ————————————————————————————————————————</p>
 <h2 id="append_rss.py">append_rss.py</h2>
 <p>This module is needed because, in insert_db.py, the line <code>fp = feedparser.parse(url)</code>, wouldn’t accept a function object, which is what happens if you import the outcome of this module directly. So, it was necessary to assure that the URL would be formatted as a string. Hence the passage to a text file. This has the added advantage of creating a record of all feeds in use.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> click</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> append_rss():</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        new_rss <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="st">&#39; What is the url you want to add? &#39;</span>, fg<span class="op">=</span><span class="st">&#39;magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        envio <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;a&#39;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        envio.write(new_rss)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        envio.close()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    append_rss()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> click</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> append_rss():</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          new_rss <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="st">&#39; What is the url you want to add? &#39;</span>, fg<span class="op">=</span><span class="st">&#39;magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>          envio <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;a&#39;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>          envio.write(new_rss)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>          envio.close()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      append_rss()</span></code></pre></div>
 <hr />
 <h2 id="delete_rss.py">delete_rss.py</h2>
 <p>Since a text file was created in the last module with a list of the URLs of the feeds in use by the app, it stands to reason that, if wanted, we would edit this file to delete a feed. - We first show the user the available feeds in file ‘lista’:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_rss():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        lista <span class="op">=</span> f.read()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(lista)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> read_rss():</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>          lista <span class="op">=</span> f.read()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="bu">print</span>(lista)</span></code></pre></div>
 <p>Then we create another function to house the deletion command.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_rss():</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> delete_rss():</span></code></pre></div>
 <p>You need to open the file and read its contents in memory, then open the file again write the line to it but without the line you wish to omit.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>delete_rss <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="st">&#39; What is the url you want to delete? &#39;</span>, fg<span class="op">=</span><span class="st">&#39;magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> f.readlines()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">!=</span> delete_rss:</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            f.write(line)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    delete_rss()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  delete_rss <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="st">&#39; What is the url you want to delete? &#39;</span>, fg<span class="op">=</span><span class="st">&#39;magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      lines <span class="op">=</span> f.readlines()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;url_list.txt&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> line.strip(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">!=</span> delete_rss:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>              f.write(line)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      delete_rss()</span></code></pre></div>
 <hr />
 <h2 id="insert_db.py">insert_db.py</h2>
 <p>In order to keep our database clean and up to date we’ll first delete old entries in the database, and create new ones. - From <a href="https://dateutil.readthedocs.io/en/stable/index.html">Dateutil</a>, a library for date manipulations, we’ll import parse. We also need SQLite for db access and <a href="https://pythonhosted.org/feedparser/#">Feedparser</a> for the RSS.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dateutil.parser <span class="im">import</span> parse</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> feedparser</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> dateutil.parser <span class="im">import</span> parse</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> sqlite3</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> feedparser</span></code></pre></div>
 <p>Open a SQLite connector and erase all entries in the table,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_old():</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> sqlite3.<span class="ex">connect</span>(<span class="st">&#39;rss.db&#39;</span>) <span class="im">as</span> db:</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> db.cursor()</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        inserir <span class="op">=</span> <span class="st">&#39;DELETE FROM rss;&#39;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        cur.execute(inserir,),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        db.commit()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> delete_old():</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="cf">with</span> sqlite3.<span class="ex">connect</span>(<span class="st">&#39;rss.db&#39;</span>) <span class="im">as</span> db:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>          cur <span class="op">=</span> db.cursor()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          inserir <span class="op">=</span> <span class="st">&#39;DELETE FROM rss;&#39;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          cur.execute(inserir,),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          db.commit()</span></code></pre></div>
 <p>Define a function containing the URL of the RSS. Define what elements of the feed we are going to use.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_rss():</span></code></pre></div>
-<p>Read the file into a list of lines, <code>python with open('url_list.txt') as f:     urls = f.read().splitlines()</code> define 0 as the start of our index, <code>python index = 0</code> connect to the db, <code>python with open('url_list.txt') as f:     urls = f.read().splitlines()</code> create feedparser object for each publication in the file list, <code>python for url in urls:     fp = feedparser.parse(url)     nome = fp['feed']['title']     print(nome)</code> for each unique number that defines each content piece, we take out the ones that have a item named ‘title’ and ‘link’ and turn them to strings. As not all publications had the ‘published’ item, it was necessary to place its extraction inside a ‘try/except’ element, or the module would stop with key and attribute errors. Also, as it is a time element, the date format imported by the feed is not valid in SQLite3. So it was necessary to change it to something more acceptable.<br />
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_rss():</span></code></pre></div>
+<p>Read the file into a list of lines, <code>python   with open('url_list.txt') as f:     urls = f.read().splitlines()</code> define 0 as the start of our index, <code>python   index = 0</code> connect to the db, <code>python   with open('url_list.txt') as f:     urls = f.read().splitlines()</code> create feedparser object for each publication in the file list, <code>python   for url in urls:     fp = feedparser.parse(url)     nome = fp['feed']['title']     print(nome)</code> for each unique number that defines each content piece, we take out the ones that have a item named ‘title’ and ‘link’ and turn them to strings. As not all publications had the ‘published’ item, it was necessary to place its extraction inside a ‘try/except’ element, or the module would stop with key and attribute errors. Also, as it is a time element, the date format imported by the feed is not valid in SQLite3. So it was necessary to change it to something more acceptable.<br />
 ```python for index in range(len(fp.entries)): try: titulo = fp.entries[index].title titulo = str(titulo) linque = fp.entries[index].link linque = str(linque) publi = fp.entries[index].published publi = str(publi) pub = parse(publi) tempo = pub.strftime(‘%y/%m/%d’) except KeyError: pass except AttributeError: pass try: fp.entries[index].pubDate publi = fp.entries[index].pubDate publi = str(publi) pub = parse(publi) tempo = pub.strftime(‘%y/%m/%d’) except KeyError: pass except AttributeError: pass except AttributeError: try: fp.entries[index].updated publi = fp.entries[index].updated publi = str(publi) pub = parse(publi) tempo = pub.strftime(‘%y/%m/%d’) except KeyError: pass except AttributeError: pass try: # 6 fp.entries[index].pubDate publi = fp.entries[index].pubDate publi = str(publi) pub = parse(publi) tempo = pub.strftime(‘%y/%m/%d’) except KeyError: pass except AttributeError: pass</p>
-<pre><code>            inserir = &#39;INSERT INTO rss (name, title, link, date) VALUES (?, ?, ? , ?)&#39;
-            cur.execute(inserir, (nome, titulo, linque, tempo)),
-            db.commit()</code></pre>
+<pre><code>              inserir = &#39;INSERT INTO rss (name, title, link, date) VALUES (?, ?, ? , ?)&#39;
+              cur.execute(inserir, (nome, titulo, linque, tempo)),
+              db.commit()</code></pre>
 <pre><code>-----------------------------------------------------------------------------------------------------
 
 ## show_rss.py
@@ -282,31 +286,31 @@ This module shows the content of the db.
 Turned it to a module, so I can separate changing the db and seeing it.  
 In essence, you just open the db and embellish the output.  
 ```python
-with sqlite3.connect(&#39;rss.db&#39;) as db:
-        cur = db.cursor()
-        cur.execute(&#39;SELECT * FROM rss ORDER BY strftime(date) ASC&#39;)  # 1
-        rows = cur.fetchall()
-        for row in rows:
-            print(click.style(&#39;Ж - &#39;, fg=&#39;bright_blue&#39;, bold=True), click.style(str(row[1]), fg=&#39;bright_blue&#39;, bold=True))
-            print(click.style(&#39;Щ - &#39;, fg=&#39;bright_cyan&#39;, bold=True), click.style(str(row[2]), fg=&#39;bright_cyan&#39;, bold=True))
-            print(click.style(&#39;Ÿ - &#39;, fg=&#39;bright_blue&#39;, bold=True), click.style(str(row[3]), fg=&#39;bright_blue&#39;, bold=True))
-            print(click.style(&#39;Ʞ -&#39;, fg=&#39;bright_cyan&#39;, bold=True), click.style(str(row[4]), fg=&#39;bright_cyan&#39;, bold=True))
-            print(&#39;\n&#39;)</code></pre>
+  with sqlite3.connect(&#39;rss.db&#39;) as db:
+          cur = db.cursor()
+          cur.execute(&#39;SELECT * FROM rss ORDER BY strftime(date) ASC&#39;)  # 1
+          rows = cur.fetchall()
+          for row in rows:
+              print(click.style(&#39;Ж - &#39;, fg=&#39;bright_blue&#39;, bold=True), click.style(str(row[1]), fg=&#39;bright_blue&#39;, bold=True))
+              print(click.style(&#39;Щ - &#39;, fg=&#39;bright_cyan&#39;, bold=True), click.style(str(row[2]), fg=&#39;bright_cyan&#39;, bold=True))
+              print(click.style(&#39;Ÿ - &#39;, fg=&#39;bright_blue&#39;, bold=True), click.style(str(row[3]), fg=&#39;bright_blue&#39;, bold=True))
+              print(click.style(&#39;Ʞ -&#39;, fg=&#39;bright_cyan&#39;, bold=True), click.style(str(row[4]), fg=&#39;bright_cyan&#39;, bold=True))
+              print(&#39;\n&#39;)</code></pre>
 <hr />
 <h2 id="sources_search.py">sources_search.py</h2>
 <p>Internal function that calls the db by publication. Called from the main module.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ith sqlite3.<span class="ex">connect</span>(<span class="st">&#39;rss.db&#39;</span>) <span class="im">as</span> db:</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> db.cursor()</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        expression <span class="op">=</span> <span class="st">&#39;SELECT * FROM rss_fts WHERE rss_fts MATCH ? ORDER BY date DESC&#39;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        cur.execute(expression, (source,))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        record <span class="op">=</span> cur.fetchall()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> record:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(click.style(<span class="st">&#39; 𝝵 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                  (click.style(<span class="bu">str</span>(row[<span class="dv">1</span>]), fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(click.style(<span class="st">&#39; 𝞇 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                  (click.style(<span class="bu">str</span>(row[<span class="dv">2</span>]), fg<span class="op">=</span><span class="st">&#39;bright_blue&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(click.style(<span class="st">&#39; 𝝮 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                  (click.style(<span class="bu">str</span>(row[<span class="dv">3</span>]), fg<span class="op">=</span><span class="st">&#39;bright_white&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  ith sqlite3.<span class="ex">connect</span>(<span class="st">&#39;rss.db&#39;</span>) <span class="im">as</span> db:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          cur <span class="op">=</span> db.cursor()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          expression <span class="op">=</span> <span class="st">&#39;SELECT * FROM rss_fts WHERE rss_fts MATCH ? ORDER BY date DESC&#39;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>          cur.execute(expression, (source,))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>          record <span class="op">=</span> cur.fetchall()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> row <span class="kw">in</span> record:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(click.style(<span class="st">&#39; 𝝵 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                    (click.style(<span class="bu">str</span>(row[<span class="dv">1</span>]), fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(click.style(<span class="st">&#39; 𝞇 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                    (click.style(<span class="bu">str</span>(row[<span class="dv">2</span>]), fg<span class="op">=</span><span class="st">&#39;bright_blue&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(click.style(<span class="st">&#39; 𝝮 &#39;</span>, fg<span class="op">=</span><span class="st">&#39;bright_magenta&#39;</span>, bold<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                    (click.style(<span class="bu">str</span>(row[<span class="dv">3</span>]), fg<span class="op">=</span><span class="st">&#39;bright_white&#39;</span>, bold<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>              <span class="bu">print</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span></code></pre></div>
 </body>
 </html>

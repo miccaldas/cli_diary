@@ -15,37 +15,37 @@ In the imports you'll see a mention from __future__, that I imagine is a python2
 Colr, is the usual pretiffier.  
   
 ```python
-from __future__ import with_statement
-import contextlib
-from urllib.parse import urlencode
-from urllib.request import urlopen
-from colr import color
+  from __future__ import with_statement
+  import contextlib
+  from urllib.parse import urlencode
+  from urllib.request import urlopen
+  from colr import color
 ```
   
 We define the function to shorten the URL:
 ```python
-def make_shorten(url):
+  def make_shorten(url):
 ```
   
 we append the escaped URL to the end of tinyurl’s api URL. Then we open the request_url using urlopen.
 ```python
-request_url = ('http://tinyurl.com/api-create.php?' +
-                   urlencode({'url': url}))
-    with contextlib.closing(urlopen(request_url)) as response:
+  request_url = ('http://tinyurl.com/api-create.php?' +
+                     urlencode({'url': url}))
+      with contextlib.closing(urlopen(request_url)) as response:
 ```
   
 The urlopen function returns a stream of bytes rather than a string, so in order to print it and alter it, we have to convert it into utf-8.
 ```python
-return response.read().decode('utf-8')
+  return response.read().decode('utf-8')
 ```
   
 Finally all that remains to be done is presentation:
 ```python
-url = input(color('What is your url? ', fore='#f37735'))
-url_short = make_shorten(url)
-print(color('+------------------------------+', fore='#f7d0cb'))
-print(color('| ', fore='#f7d0cb') + color(url_short, fore='#f37735') + color(' |', fore='#f7d0cb'))
-print(color('+------------------------------+', fore='#f7d0cb'))
+  url = input(color('What is your url? ', fore='#f37735'))
+  url_short = make_shorten(url)
+  print(color('+------------------------------+', fore='#f7d0cb'))
+  print(color('| ', fore='#f7d0cb') + color(url_short, fore='#f37735') + color(' |', fore='#f7d0cb'))
+  print(color('+------------------------------+', fore='#f7d0cb'))
 ```
   
 And that's it.

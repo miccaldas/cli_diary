@@ -23,35 +23,35 @@ But then I noticed that his site, at least the version in Github, had all conten
 So I had all this content that was in, apparently, the wrong format. What do? I do the following:
 1. I imported os to manipulate files and markdown to change the format,
 ```python
-import os
-from os import walk
-from os import listdir
-import markdown
+  import os
+  from os import walk
+  from os import listdir
+  import markdown
 ```
 2. For some reason I couldn't get this to work with the code divided in functions, as the normal people do. I don't know what went wrong but, in the beginning, when I was trying to build this with [Sultan](https://sultan.readthedocs.io/en/latest/), a very cool alternative to subprocess, for some reason, Python would read the imports, where he would freeze in some part of the import of Sultan, and completely ignore all code inside the functions. When I took off the functions and just let the code run free, it started reading it without a problem.  
 Again, someone with a more disciplined mind would've gone to the bottom of this, if for nothing else, to avoid this type of situations on later dates. But I just cogitated that, now, for magical reasons, probably something to do with the moon, it was working. And that was all good to me.  
 If you read any more that one post on this blog, you already might've come across the deep disgust with which I see me doing things.  This was another of those times.  
 3. got the present directory in a variable,
 ```python
-directory = os.getcwd()
+  directory = os.getcwd()
 ```
 4. created a list with all markdown files inside this folder,
 ```python
-files_md = [open(i, "rb") for i in os.listdir(directory) if i.endswith('.md')]
+  files_md = [open(i, "rb") for i in os.listdir(directory) if i.endswith('.md')]
 ```
 5. made another list where I kept the same information,, but now in string format,
 ```python
-str_files = [i for i in os.listdir(directory) if i.endswith('.md')]
+  str_files = [i for i in os.listdir(directory) if i.endswith('.md')]
 ```
 6. created a variable that keeps the folder where I'll keep the new created html files,
 ```python
-path = directory + '/' + 'html_files'
+  path = directory + '/' + 'html_files'
 ```
 7. created a list with markdown files in full link, because during a time, I was convinced that might be the reason why whatever it was not working then failed. It later become clear that it was not the case. But I couldn't be bothered to change it. Because that's the kind of men I am.  
 ```python
-full_link = []
-for i in str_files:
-    a = str(directory) + '/' + i
-    full_link.append(a)
+  full_link = []
+  for i in str_files:
+      a = str(directory) + '/' + i
+      full_link.append(a)
 ```
 8. And finally I took this from a digital ocean article (where would I be without them?), on how to convert markdown to html. Off course this came only after a unfruitful war with subprocess and Sultan, but it's done now and let us not speak of it ever again.  

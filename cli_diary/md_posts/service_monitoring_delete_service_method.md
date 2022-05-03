@@ -15,15 +15,15 @@ presents the available services.
 We start by reading the json file into a string:
   
 ```python
-        with open("/home/mic/python/service_monitoring/service_monitoring/dropdown_info.json", "r") as f:
-            servs = f.read()  # It has to be read(), not readlines(), because the latter is a list.
-        info = json.loads(servs)
+          with open("/home/mic/python/service_monitoring/service_monitoring/dropdown_info.json", "r") as f:
+              servs = f.read()  # It has to be read(), not readlines(), because the latter is a list.
+          info = json.loads(servs)
 ```
   
 Create an empty list that will user later on:
   
 ```python
-    decision_lst = []
+      decision_lst = []
 ```
   
 There are two types of inputs for the app's methods:  
@@ -41,11 +41,11 @@ For all units that the user answers affirmatively, there'll be an entrance on
 the `decision_lst` list, that'll keep the user's choices for all the queries.  
   
 ```python
-    if "dummy_service" not in self_units:
-        for unit in self.units:
-            decision = input(click.style(f" ++ Do you want to disable unit {unit}? [y/n] ", fg="bright_white", bold=True))
-            if decision == "y":
-                decision_lst.append(f"{unit}")
+      if "dummy_service" not in self_units:
+          for unit in self.units:
+              decision = input(click.style(f" ++ Do you want to disable unit {unit}? [y/n] ", fg="bright_white", bold=True))
+              if decision == "y":
+                  decision_lst.append(f"{unit}")
 ```
   
 If, on the other hand, the information available does contain the string
@@ -58,14 +58,14 @@ Off course this means that no commas should be added when inputting the list of 
 We add the list's items to the `decision_lst` list.  
   
 ```python
-    else:
-        deci = input(click.style(" ++ What unit(s) do you want to delete? ", fg="bright_white", bold=True))
-        if deci == "":
-            sys.exit()
-        else:
-            decision = deci.split(" ")
-        for i in decision:
-            decision_lst.append(i)
+      else:
+          deci = input(click.style(" ++ What unit(s) do you want to delete? ", fg="bright_white", bold=True))
+          if deci == "":
+              sys.exit()
+          else:
+              decision = deci.split(" ")
+          for i in decision:
+              decision_lst.append(i)
 ```
   
 For each unit chosen, we'll run consecutively, the following commands:  
@@ -76,17 +76,17 @@ For each unit chosen, we'll run consecutively, the following commands:
 5. Reset failed services.  
   
 ```python
-    for service in decision_lst:
-        cmd15 = f"sudo systemctl stop {service}"
-        subprocess.run(cmd15, shell=True)
-        cmd16 = f"sudo systemctl disable {service}"
-        subprocess.run(cmd16, shell=True)
-        cmd18 = f"sudo rm /usr/lib/systemd/system/{service}"
-        subprocess.run(cmd18, shell=True)
-        cmd17 = "sudo systemctl daemon-reload"
-        subprocess.run(cmd17, shell=True)
-        cmd19 = "sudo systemctl reset-failed"
-        subprocess.run(cmd19, shell=True)
+      for service in decision_lst:
+          cmd15 = f"sudo systemctl stop {service}"
+          subprocess.run(cmd15, shell=True)
+          cmd16 = f"sudo systemctl disable {service}"
+          subprocess.run(cmd16, shell=True)
+          cmd18 = f"sudo rm /usr/lib/systemd/system/{service}"
+          subprocess.run(cmd18, shell=True)
+          cmd17 = "sudo systemctl daemon-reload"
+          subprocess.run(cmd17, shell=True)
+          cmd19 = "sudo systemctl reset-failed"
+          subprocess.run(cmd19, shell=True)
 ```
   
 Now we'll update the json file. Contrary to what is done in `create_service`
@@ -97,8 +97,8 @@ change the `create_service` workflow.
 We open the file:
   
 ```python
-    monitor = "/home/mic/python/service_monitoring/service_monitoring"
-    data = json.load(open(f"{monitor}/dropdown_info.json"))
+      monitor = "/home/mic/python/service_monitoring/service_monitoring"
+      data = json.load(open(f"{monitor}/dropdown_info.json"))
 ```
   
 The python structure of the json file is a dictionary, that has, as value, a
@@ -118,13 +118,13 @@ list member:
 5. run `make_dropdown`, that'll update the services list in the UI.  
   
 ```python
-    for i in range(len(data["dropinfo"])):
-        if decision_lst == data["dropinfo"][i]["units"]:
-            data["dropinfo"].pop(i)
-        open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
-        os.remove(f"{monitor}/dropdown_info.json")
-        os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
-        make_dropdown()
+      for i in range(len(data["dropinfo"])):
+          if decision_lst == data["dropinfo"][i]["units"]:
+              data["dropinfo"].pop(i)
+          open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
+          os.remove(f"{monitor}/dropdown_info.json")
+          os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
+          make_dropdown()
 ```
   
 For the second case:  
@@ -140,93 +140,93 @@ For the second case:
 10. run `make_dropdown`.  
 
 ```python
-    tst = [v.get("units") for v in data["dropinfo"]]
-    if decision_lst not in tst:
-        for u in decision_lst:
-            for t in range(len(data["dropinfo"])):
-                if u in data["dropinfo"][t]["units"]:
-                    data["dropinfo"][t]["units"].remove(u)
-                open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
-                os.remove(f"{monitor}/dropdown_info.json")
-                os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
-                make_dropdown()
+      tst = [v.get("units") for v in data["dropinfo"]]
+      if decision_lst not in tst:
+          for u in decision_lst:
+              for t in range(len(data["dropinfo"])):
+                  if u in data["dropinfo"][t]["units"]:
+                      data["dropinfo"][t]["units"].remove(u)
+                  open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
+                  os.remove(f"{monitor}/dropdown_info.json")
+                  os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
+                  make_dropdown()
 ```
   
   
 Here is the full code:
 
 ```python
-    @snoop
-    def delete_service(self):
-        """
-        First stops the unit, then disables it and
-        lastly, deletes files. If service is
-        completely erased, it'll delete also the
-        entry on the json file and run again the
-        dropdown creation file.
-        The reason I repeated the 'stop_service'
-        and 'daemon_reload' methods, instead of
-        simply calling them from this method, is
-        that if I did that, there would be a lot
-        of spurious empty and dotted lines. This
-        way the presentation is cleaner.
-        """
-
-        with open("/home/mic/python/service_monitoring/service_monitoring/dropdown_info.json", "r") as f:
-            servs = f.read()  # It has to be read(), not readlines(), because the latter is a list.
-        info = json.loads(servs)
-
-        decision_lst = []
-
-        if "dummy_service" not in self.units:
-            for unit in self.units:
-                decision = input(click.style(f" ++ Do you want to disable unit {unit}? [y/n] ", fg="bright_white", bold=True))
-                if decision == "y":
-                    decision_lst.append(f"{unit}")
-        else:
-            deci = input(click.style(" ++ What unit(s) do you want to delete? ", fg="bright_white", bold=True))
-            if deci == "":
-                sys.exit()
-            else:
-                decision = deci.split(" ")
-            for i in decision:
-                decision_lst.append(i)
-
-        for service in decision_lst:
-            cmd15 = f"sudo systemctl stop {service}"
-            subprocess.run(cmd15, shell=True)
-            cmd16 = f"sudo systemctl disable {service}"
-            subprocess.run(cmd16, shell=True)
-            cmd18 = f"sudo rm /usr/lib/systemd/system/{service}"
-            subprocess.run(cmd18, shell=True)
-            cmd17 = "sudo systemctl daemon-reload"
-            subprocess.run(cmd17, shell=True)
-            cmd19 = "sudo systemctl reset-failed"
-            subprocess.run(cmd19, shell=True)
-
-        monitor = "/home/mic/python/service_monitoring/service_monitoring"
-        data = json.load(open(f"{monitor}/dropdown_info.json"))
-
-        for i in range(len(data["dropinfo"])):
-            if decision_lst == data["dropinfo"][i]["units"]:
-                data["dropinfo"].pop(i)
-            open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
-            os.remove(f"{monitor}/dropdown_info.json")
-            os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
-            make_dropdown()
-
-        tst = [v.get("units") for v in data["dropinfo"]]
-        if decision_lst not in tst:
-            for u in decision_lst:
-                for t in range(len(data["dropinfo"])):
-                    if u in data["dropinfo"][t]["units"]:
-                        data["dropinfo"][t]["units"].remove(u)
-                    open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
-                    os.remove(f"{monitor}/dropdown_info.json")
-                    os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
-                    make_dropdown()
-
-        print("\n\n")
+      @snoop
+      def delete_service(self):
+          """
+          First stops the unit, then disables it and
+          lastly, deletes files. If service is
+          completely erased, it'll delete also the
+          entry on the json file and run again the
+          dropdown creation file.
+          The reason I repeated the 'stop_service'
+          and 'daemon_reload' methods, instead of
+          simply calling them from this method, is
+          that if I did that, there would be a lot
+          of spurious empty and dotted lines. This
+          way the presentation is cleaner.
+          """
+  
+          with open("/home/mic/python/service_monitoring/service_monitoring/dropdown_info.json", "r") as f:
+              servs = f.read()  # It has to be read(), not readlines(), because the latter is a list.
+          info = json.loads(servs)
+  
+          decision_lst = []
+  
+          if "dummy_service" not in self.units:
+              for unit in self.units:
+                  decision = input(click.style(f" ++ Do you want to disable unit {unit}? [y/n] ", fg="bright_white", bold=True))
+                  if decision == "y":
+                      decision_lst.append(f"{unit}")
+          else:
+              deci = input(click.style(" ++ What unit(s) do you want to delete? ", fg="bright_white", bold=True))
+              if deci == "":
+                  sys.exit()
+              else:
+                  decision = deci.split(" ")
+              for i in decision:
+                  decision_lst.append(i)
+  
+          for service in decision_lst:
+              cmd15 = f"sudo systemctl stop {service}"
+              subprocess.run(cmd15, shell=True)
+              cmd16 = f"sudo systemctl disable {service}"
+              subprocess.run(cmd16, shell=True)
+              cmd18 = f"sudo rm /usr/lib/systemd/system/{service}"
+              subprocess.run(cmd18, shell=True)
+              cmd17 = "sudo systemctl daemon-reload"
+              subprocess.run(cmd17, shell=True)
+              cmd19 = "sudo systemctl reset-failed"
+              subprocess.run(cmd19, shell=True)
+  
+          monitor = "/home/mic/python/service_monitoring/service_monitoring"
+          data = json.load(open(f"{monitor}/dropdown_info.json"))
+  
+          for i in range(len(data["dropinfo"])):
+              if decision_lst == data["dropinfo"][i]["units"]:
+                  data["dropinfo"].pop(i)
+              open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
+              os.remove(f"{monitor}/dropdown_info.json")
+              os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
+              make_dropdown()
+  
+          tst = [v.get("units") for v in data["dropinfo"]]
+          if decision_lst not in tst:
+              for u in decision_lst:
+                  for t in range(len(data["dropinfo"])):
+                      if u in data["dropinfo"][t]["units"]:
+                          data["dropinfo"][t]["units"].remove(u)
+                      open(f"{monitor}/dropdown_info1.json", "w").write(json.dumps(data, indent=4, sort_keys=True))
+                      os.remove(f"{monitor}/dropdown_info.json")
+                      os.rename(f"{monitor}/dropdown_info1.json", f"{monitor}/dropdown_info.json")
+                      make_dropdown()
+  
+          print("\n\n")
 ```
 
 

@@ -72,18 +72,18 @@ Here we create a Celery instance, defining:
       Wednesday.  
 
 ```python
- from celery import Celery
- from celery.schedules import crontab
-
- app = Celery(
-    "celery",
-    backend="redis://localhost:6379/0",
-    broker="redis://localhost:6379/0",
-    include=["main"],
-    beat_schedule={
-        "yay_cron": {"task": "tasks.run", "schedule": crontab(day_of_week=3)},
-    },
- )
+   from celery import Celery
+   from celery.schedules import crontab
+  
+   app = Celery(
+      "celery",
+      backend="redis://localhost:6379/0",
+      broker="redis://localhost:6379/0",
+      include=["main"],
+      beat_schedule={
+          "yay_cron": {"task": "tasks.run", "schedule": crontab(day_of_week=3)},
+      },
+   )
 ```
   
   
@@ -98,13 +98,13 @@ configurations are kept. It's necessary to repeat some of information on the
 4. Timezone. Where are you situated.  
 
 ```python
-from app import app
-
-
-result_backend = "redis://localhost:6379/0"
-broker_url = "redis://localhost:6379/0"
-app.autodiscover_tasks(packages=["celery"])
-timezone = "Europe/Lisbon"
+  from app import app
+  
+  
+  result_backend = "redis://localhost:6379/0"
+  broker_url = "redis://localhost:6379/0"
+  app.autodiscover_tasks(packages=["celery"])
+  timezone = "Europe/Lisbon"
 ```
 
 
@@ -119,51 +119,51 @@ different use in this context.
 Setting a function as a celery task is done through the `@app.task` decorator.  
 
 ```python
- import snoop
- from loguru import logger
-
- from app import app
- from cron import cron
- from db_upload import db_upload
- from delete_transient_files import delete_transient_files
- from query_builder import query_builder
-
- fmt = "{time} - {name} - {level} - {message}"
- logger.add("../logs/info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)  # noqa: E501
- logger.add("../logs/error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)  # noqa: E501
-
- subprocess.run(["isort", __file__])
-
-
- def type_watch(source, value):
-    return "type({})".format(source), type(value)
-
-
- snoop.install(watch_extras=[type_watch])
-
-
- @app.task
- def run():
-    """
-    We call all the functions and scripts that
-    source, treat, store and clean, the information
-    regarding the packages installed by pacman and AUR.
-    Aditionally it's created a notification to warn the
-    user that the update has ran.
-    """
-    cmd = "/home/mic/python/cli_apps/cli_apps/yay_querying/celery/yay_lst.sh"
-    subprocess.run(cmd, shell=True)
-
-    query_builder()
-
-    cmd1 = "/home/mic/python/cli_apps/cli_apps/yay_querying/celery/extract_file_info.sh"
-    subprocess.run(cmd1, shell=True)
-
-    db_upload()
-
-    delete_transient_files()
-
-    cron()
+   import snoop
+   from loguru import logger
+  
+   from app import app
+   from cron import cron
+   from db_upload import db_upload
+   from delete_transient_files import delete_transient_files
+   from query_builder import query_builder
+  
+   fmt = "{time} - {name} - {level} - {message}"
+   logger.add("../logs/info.log", level="INFO", format=fmt, backtrace=True, diagnose=True)  # noqa: E501
+   logger.add("../logs/error.log", level="ERROR", format=fmt, backtrace=True, diagnose=True)  # noqa: E501
+  
+   subprocess.run(["isort", __file__])
+  
+  
+   def type_watch(source, value):
+      return "type({})".format(source), type(value)
+  
+  
+   snoop.install(watch_extras=[type_watch])
+  
+  
+   @app.task
+   def run():
+      """
+      We call all the functions and scripts that
+      source, treat, store and clean, the information
+      regarding the packages installed by pacman and AUR.
+      Aditionally it's created a notification to warn the
+      user that the update has ran.
+      """
+      cmd = "/home/mic/python/cli_apps/cli_apps/yay_querying/celery/yay_lst.sh"
+      subprocess.run(cmd, shell=True)
+  
+      query_builder()
+  
+      cmd1 = "/home/mic/python/cli_apps/cli_apps/yay_querying/celery/extract_file_info.sh"
+      subprocess.run(cmd1, shell=True)
+  
+      db_upload()
+  
+      delete_transient_files()
+  
+      cron()
 ```
 
 
@@ -173,11 +173,11 @@ service, call the task function, and run it with the `delay()` method, that
 initiates a service.  
 
 ```python
-from app import app
-from tasks import run
-
-if __name__ == "__main__":
-    run.delay()
+  from app import app
+  from tasks import run
+  
+  if __name__ == "__main__":
+      run.delay()
 ```
 
 

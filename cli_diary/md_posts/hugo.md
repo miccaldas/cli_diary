@@ -52,19 +52,19 @@ Note that I sent all output to a 'hugo.log' file, so I can know what fresh hell 
 The second is called `permissions_hugo.sh`:
 
 ```python
- #!/usr/bin/env python
- from fabric import Connection
-
- c = Connection(
-    host = 'constantconstipation.club',
-    user = 'root',
-    connect_kwargs={
-        'key_filename': '/home/mic/.ssh/id_rsa'
-    }
- )
-
- c .run('cd /var/www/constantconstipation.club/html/ && chown -R \
- www-data:www-data public')
+   #!/usr/bin/env python
+   from fabric import Connection
+  
+   c = Connection(
+      host = 'constantconstipation.club',
+      user = 'root',
+      connect_kwargs={
+          'key_filename': '/home/mic/.ssh/id_rsa'
+      }
+   )
+  
+   c .run('cd /var/www/constantconstipation.club/html/ && chown -R \
+   www-data:www-data public')
 ```
 
 This script uses a Python tool called [fabric](https://docs.fabfile.org/en/2.6/index.html), that allows to send commands to the server from your local computer. It can also send files to the server, but it can't pass folders recursively. That is another reason why I split the script in two parts. One is best run as the shell and the other as python. Off course I could have made it all in Python, by using [subprocess](https://docs.python.org/3/library/subprocess.html) in the first part.  

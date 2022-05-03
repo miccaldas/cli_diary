@@ -17,186 +17,186 @@ This is what I did:
 1.  I imported [string](https://www.journaldev.com/23788/python-string-module), to capitalize words without having to worry with errors coming from apostrophes,
 [Sultan](https://sultan.readthedocs.io/en/latest/), because it's easier than Subprocess, mysql.connector to link to the db and [Colr](https://github.com/welbornprod/colr) to make it less drab.
 ```python
-import string
-from sultan.api import Sultan
-from mysql.connector import connect
-from colr import color
+  import string
+  from sultan.api import Sultan
+  from mysql.connector import connect
+  from colr import color
 ```
 
 2. Opened the class and defined the global variable 'tit' for title, because it
 soon became clear that it would be needed for a lot of methods.
 ```python
-class Meta():
-
-    def __init__(self, tit):
-        self.tit = input(color('  [T] - Title? ', fore='#fa2033'))
+  class Meta():
+  
+      def __init__(self, tit):
+          self.tit = input(color('  [T] - Title? ', fore='#fa2033'))
 ```
 
 3. Title method. Collects the title chosen by the user and capitalizes the
 first letter of every word.
 ```python
-def title(self):
-    """ Collects the title chosen by the user and capitalizes the
-    first letter of every word. """
-    self.title = string.capwords(self.tit)  # https://bit.ly/3pMw9ew
-    return self.title
+  def title(self):
+      """ Collects the title chosen by the user and capitalizes the
+      first letter of every word. """
+      self.title = string.capwords(self.tit)  # https://bit.ly/3pMw9ew
+      return self.title
 ```
 
 4. Create a db entry with the URL of the post.
 ```python
-def link(self):
-    """ Creates an entry with a link where the post will be. """
-    slug = input(color('  [S] - Slug? ', fore='#fa2033'))
-    lnk = '/usr/share/nginx/html/analytics/ascii/public/pages/posts/'\
-          + slug + ".html"
-    return lnk
+  def link(self):
+      """ Creates an entry with a link where the post will be. """
+      slug = input(color('  [S] - Slug? ', fore='#fa2033'))
+      lnk = '/usr/share/nginx/html/analytics/ascii/public/pages/posts/'\
+            + slug + ".html"
+      return lnk
 ```
 
 5. Create a draft page.
 ```python
-def page(self):
-    """ Creates the draft page. """
-    s = Sultan()
-    draft_path = "/usr/share/nginx/html/analytics/ascii/drafts/" \
-        + "'" + self.tit + "'" + ".md"
-    with Sultan.load() as s:
-        s.touch(draft_path).run()
+  def page(self):
+      """ Creates the draft page. """
+      s = Sultan()
+      draft_path = "/usr/share/nginx/html/analytics/ascii/drafts/" \
+          + "'" + self.tit + "'" + ".md"
+      with Sultan.load() as s:
+          s.touch(draft_path).run()
 ```
  
 6. Asks the user for a description of the post.
 ```python
-def description(self):
-    """ Asks the user for a description of the post. """
-    descript = input(color('  [D] - Write a description: ',
-                           fore='#fa2033'))
-    return descript
+  def description(self):
+      """ Asks the user for a description of the post. """
+      descript = input(color('  [D] - Write a description: ',
+                             fore='#fa2033'))
+      return descript
 ```
 
 7. Ask for tags.
 ```python
-def tags(self):
-    """ Asks the user for the tags of the post. """
-    tgs = input(color('  [T] - Tags? ', fore='#fa2033'))
-    return tgs
+  def tags(self):
+      """ Asks the user for the tags of the post. """
+      tgs = input(color('  [T] - Tags? ', fore='#fa2033'))
+      return tgs
 ```
 
 8. Asks for categories.
 ```python
-def categories(self):
-    """ Asks the user for the categories of the post. """
-    cat = input(color('  [C] - Choose the Categories ', fore='#fa2033'))
-    return cat
+  def categories(self):
+      """ Asks the user for the categories of the post. """
+      cat = input(color('  [C] - Choose the Categories ', fore='#fa2033'))
+      return cat
 ```
 
 9. Turns all function results in strings so it can be sent as a query.
 ```python
-def answers(self):
-    tit = str(self.title())
-    desc = str(self.description())
-    tags = str(self.tags())
-    cat = str(self.categories())
-    lnk = str(self.link())
-    answrs = [tit, desc, tags, cat, lnk]
-    return answrs
+  def answers(self):
+      tit = str(self.title())
+      desc = str(self.description())
+      tags = str(self.tags())
+      cat = str(self.categories())
+      lnk = str(self.link())
+      answrs = [tit, desc, tags, cat, lnk]
+      return answrs
 ```
 
 10. Send it to the database.
 ```python
-def connection(self):
-    self.page()
-    conn = connect(
-            host="localhost",
-            user="root",
-            password="xxxx",
-            database="dazed")
-    cur = conn.cursor()
-    query = """ INSERT INTO dazed (title, description, tags, categories, link)
-            VALUES (%s, %s, %s, %s, %s) """
-    cur.execute(query, self.answers())
-    conn.commit()
-    conn.close()
+  def connection(self):
+      self.page()
+      conn = connect(
+              host="localhost",
+              user="root",
+              password="xxxx",
+              database="dazed")
+      cur = conn.cursor()
+      query = """ INSERT INTO dazed (title, description, tags, categories, link)
+              VALUES (%s, %s, %s, %s, %s) """
+      cur.execute(query, self.answers())
+      conn.commit()
+      conn.close()
 ```
 
 Here is the whole code:
 
 ```python
-
-""" This class will house the functions for the creation of the\
-post's metadata. """
-import string
-from sultan.api import Sultan
-from mysql.connector import connect
-from colr import color
-
-
-class Meta():
-
-    def __init__(self, tit):
-        self.tit = input(color('  [T] - Title? ', fore='#fa2033'))
-
-    def title(self):
-        """ Collects the title chosen by the user and capitalizes the
-        first letter of every word. """
-        self.title = string.capwords(self.tit)  # https://bit.ly/3pMw9ew
-        return self.title
-
-    def link(self):
-        """ Creates an entry with a link where the post will be. """
-        slug = input(color('  [S] - Slug? ', fore='#fa2033'))
-        lnk = '/usr/share/nginx/html/analytics/ascii/public/pages/posts/'\
-              + slug + ".html"
-        return lnk
-
-    def page(self):
-        """ Creates the draft page. """
-        s = Sultan()
-        draft_path = "/usr/share/nginx/html/analytics/ascii/drafts/" \
-            + "'" + self.tit + "'" + ".md"
-        with Sultan.load() as s:
-            s.touch(draft_path).run()
-
-    def description(self):
-        """ Asks the user for a description of the post. """
-        descript = input(color('  [D] - Write a description: ',
-                               fore='#fa2033'))
-        return descript
-
-    def tags(self):
-        """ Asks the user for the tags of the post. """
-        tgs = input(color('  [T] - Tags? ', fore='#fa2033'))
-        return tgs
-
-    def categories(self):
-        """ Asks the user for the categories of the post. """
-        cat = input(color('  [C] - Choose the Categories ', fore='#fa2033'))
-        return cat
-
-    def answers(self):
-        tit = str(self.title())
-        desc = str(self.description())
-        tags = str(self.tags())
-        cat = str(self.categories())
-        lnk = str(self.link())
-        answrs = [tit, desc, tags, cat, lnk]
-        return answrs
-
-    def connection(self):
-        self.page()
-        conn = connect(
-                host="localhost",
-                user="root",
-                password="xxxx",
-                database="dazed")
-        cur = conn.cursor()
-        query = """ INSERT INTO dazed (title, description, tags, categories, link)
-                VALUES (%s, %s, %s, %s, %s) """
-        cur.execute(query, self.answers())
-        conn.commit()
-        conn.close()
-
-
-meta = Meta('0')
-meta.connection()
+  
+  """ This class will house the functions for the creation of the\
+  post's metadata. """
+  import string
+  from sultan.api import Sultan
+  from mysql.connector import connect
+  from colr import color
+  
+  
+  class Meta():
+  
+      def __init__(self, tit):
+          self.tit = input(color('  [T] - Title? ', fore='#fa2033'))
+  
+      def title(self):
+          """ Collects the title chosen by the user and capitalizes the
+          first letter of every word. """
+          self.title = string.capwords(self.tit)  # https://bit.ly/3pMw9ew
+          return self.title
+  
+      def link(self):
+          """ Creates an entry with a link where the post will be. """
+          slug = input(color('  [S] - Slug? ', fore='#fa2033'))
+          lnk = '/usr/share/nginx/html/analytics/ascii/public/pages/posts/'\
+                + slug + ".html"
+          return lnk
+  
+      def page(self):
+          """ Creates the draft page. """
+          s = Sultan()
+          draft_path = "/usr/share/nginx/html/analytics/ascii/drafts/" \
+              + "'" + self.tit + "'" + ".md"
+          with Sultan.load() as s:
+              s.touch(draft_path).run()
+  
+      def description(self):
+          """ Asks the user for a description of the post. """
+          descript = input(color('  [D] - Write a description: ',
+                                 fore='#fa2033'))
+          return descript
+  
+      def tags(self):
+          """ Asks the user for the tags of the post. """
+          tgs = input(color('  [T] - Tags? ', fore='#fa2033'))
+          return tgs
+  
+      def categories(self):
+          """ Asks the user for the categories of the post. """
+          cat = input(color('  [C] - Choose the Categories ', fore='#fa2033'))
+          return cat
+  
+      def answers(self):
+          tit = str(self.title())
+          desc = str(self.description())
+          tags = str(self.tags())
+          cat = str(self.categories())
+          lnk = str(self.link())
+          answrs = [tit, desc, tags, cat, lnk]
+          return answrs
+  
+      def connection(self):
+          self.page()
+          conn = connect(
+                  host="localhost",
+                  user="root",
+                  password="xxxx",
+                  database="dazed")
+          cur = conn.cursor()
+          query = """ INSERT INTO dazed (title, description, tags, categories, link)
+                  VALUES (%s, %s, %s, %s, %s) """
+          cur.execute(query, self.answers())
+          conn.commit()
+          conn.close()
+  
+  
+  meta = Meta('0')
+  meta.connection()
 ```
 --------------------------------------------------------------------------------------------
 
