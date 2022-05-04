@@ -24,8 +24,6 @@ def view():
     the posts.
     """
 
-    lst = os.listdir("html_posts")
-
     cmd = "ntree html_posts"
     subprocess.run(cmd, shell=True)
 
