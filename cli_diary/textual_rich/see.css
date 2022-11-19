@@ -1,0 +1,29 @@
+Screen {
+    background: $primary-background-lighten-3;
+}
+
+#tree-view {
+    display: none;
+    scrollbar-gutter: stable;
+    width: auto;
+}
+
+See.-show-tree #tree-view {
+    display: block;
+    dock: left;
+    height: 100%;            
+    max-width: 50%;
+    background: #2E3440;    
+}
+
+DirectoryTree {
+    padding-right: 1;   
+}
+
+#posts-view {
+    overflow: auto scroll;  
+    min-width: 100%;
+}
+#posts {
+
+}
