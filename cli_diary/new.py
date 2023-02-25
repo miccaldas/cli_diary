@@ -10,7 +10,7 @@ import isort
 import snoop
 from mysql.connector import Error, connect
 from snoop import pp
-
+from db_decorator.db_information import db_information
 
 def type_watch(source, value):
     return "type({})".format(source), type(value)
@@ -18,7 +18,7 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-
+@db_information
 # @snoop
 def new():
     """
@@ -84,11 +84,14 @@ def new():
         cur.execute(query, answers)
         conn.commit()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
     finally:
         if conn:
             conn.close()
-
+        return query
 
 if __name__ == "__main__":
     new()

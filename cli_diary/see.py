@@ -5,7 +5,7 @@ markdown file in less.
 import os
 import subprocess
 import sys
-
+from db_decorator.db_information import db_information
 import click
 import isort
 import snoop
@@ -19,7 +19,7 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-
+@db_information
 # @snoop
 def see():
     """
@@ -47,7 +47,10 @@ def see():
             )
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
     finally:
         if conn:
             conn.close()
@@ -63,8 +66,10 @@ def see():
         records = cur.fetchall()
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
-
+        if err_msg:
+            return query, e
     for row in records:
         path = f"/home/mic/python/cli_diary/cli_diary/md_posts/{row[0]}.md"
         cmd = f"rich {path} --pager -w 120 -d 2 --theme nord"

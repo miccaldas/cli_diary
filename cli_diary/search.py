@@ -4,7 +4,7 @@ Searches db for query. Presents results.
 import os
 import pathlib
 import sys
-
+from db_decorator.db_information import db_information
 import click
 import isort
 import snoop
@@ -12,7 +12,7 @@ from mysql.connector import Error, connect
 from rich import print
 from rich.text import Text
 
-
+@db_information
 # @snoop
 def search():
     """
@@ -31,7 +31,10 @@ def search():
         records = cur.fetchall()
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
 
     tupfiles = []
     for i in records:

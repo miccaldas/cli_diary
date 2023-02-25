@@ -3,7 +3,7 @@ Edits an existing post.
 """
 import os
 import subprocess
-
+from db_decorator.db_information import db_information
 import click
 import isort
 import snoop
@@ -17,7 +17,7 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-
+@db_information
 # @snoop
 def edit():
     """
@@ -36,7 +36,10 @@ def edit():
             print(click.style(f"  {row[0]} - ", fg="bright_green", bold=True), click.style(row[1], fg="bright_white", bold=True))
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
 
     print("\n")
     choi = input(click.style("[*] - What is the id of the post you want to edit? ", fg="bright_green", bold=True))
@@ -55,8 +58,10 @@ def edit():
         filename_md = f"{title}.md"
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
-
+        if err_msg:
+            return query, e
     cmd = f"vim {filename_md}"
     subprocess.run(cmd, cwd="md_posts", shell=True)
 

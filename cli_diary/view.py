@@ -5,7 +5,6 @@ can be accessed by clicking them.
 import os
 import subprocess
 
-import isort
 import snoop
 from snoop import pp
 

@@ -6,7 +6,7 @@ import isort
 import snoop
 from mysql.connector import Error, connect
 from snoop import pp
-
+from db_decorator.db_information import db_information
 
 def type_watch(source, value):
     return "type({})".format(source), type(value)
@@ -14,7 +14,7 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-
+@db_information
 # @snoop
 def delete():
     """
@@ -35,7 +35,10 @@ def delete():
             print(click.style(f"  {row[0]} - ", fg="bright_green", bold=True), click.style(row[1], fg="bright_white", bold=True))
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
 
     print("\n")
     choi = input(click.style("[*] - What is the id of the post you want to delete? ", fg="bright_green", bold=True))
@@ -54,7 +57,10 @@ def delete():
         filename_md = f"{title}.md"
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, e
 
     if filename_html in os.listdir("html_posts"):
         os.remove(f"html_posts/{filename_html}")
@@ -75,7 +81,10 @@ def delete():
         conn.commit()
         conn.close()
     except Error as e:
+        err_msg = "Error while connecting to db", e
         print("Error while connecting to db", e)
+        if err_msg:
+            return query, err_msg
 
     return filename_md, filename_html
 
