@@ -7,7 +7,7 @@ import subprocess
 import sys
 from db_decorator.db_information import db_information
 import click
-import isort
+
 import snoop
 from mysql.connector import Error, connect
 from snoop import pp
