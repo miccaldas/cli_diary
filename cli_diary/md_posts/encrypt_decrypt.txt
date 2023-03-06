@@ -1,0 +1,66 @@
+# NEEDED IMPORTS
+from pythemis.exception import ThemisError
+from pythemis.scell import SCellSeal, SecureCellError
+import pickle
+import sys
+    # Loads .env's variables to this module.
+    load_dotenv()
+    # THIS VARIABLE IS FOR THE 'pwd' DATABASE. IF YOU WANT TO ENCRYPT IN ANOTHER DB, EXPORT IT TO SQLITE3. USE '~/mysql2sqlite'.
+    enc_key = os.getenv("PWD_KEY_LOC")
+
+    # Location of the Themis key.
+    with open(
+        f"{enc_key}",
+        "rb",
+    ) as g:
+        sym_key = pickle.load(g)
+        cell = SCellSeal(key=sym_key)
+
+    # SIMPLE ENCRYPTION/DECRYPTION PROCESS
+    # Encryption process.
+    # Value to encrypt. Usually a string.
+    v = ""
+    val = v.encode('latin-1')
+    # Context value. Adds another layer of security.
+    c = int()
+    context = c.to_bytes(2, sys.byteorder)
+    # Encryption command.
+    try:
+        encrypted = cell.encrypt(val, context)
+    except ThemisError as e:
+        print(e)
+    # Decryption command.
+    try:
+        dec = cell.decrypt(val, context)
+    except ThemisError as e:
+        print(e)
+
+    # DECRYPTION FROM DB.
+    # The encryption process doesn't change very much from what was shown above,
+    # we'll concentrate on decrypting. The example presuposes that db call
+    # retrived one tuple with six elements:
+
+    # Adds, after 'id', (represented in the comprehension as 'z'), another item that is
+    # a bytes version of 'id'. This is exactly the same as the 'context' value that was
+    # used to encrypt the entry.
+    context_values = [
+        (z, z.to_bytes(2, sys.byteorder), x, c, b, n, m) for z, x, c, b, n, m in records
+    ]
+
+    pwd_bytes = []
+    try:
+        for tup in context_values:
+            # tup[4] and tup[1], in the example, are correspondingly the password and context values.
+            dec = cell.decrypt(tup[4], tup[1])
+            # As it's not needed anymore, we don't collect tup[1] item from the list.
+            pwd_bytes.append((tup[0], tup[2], tup[3], dec, tup[5], tup[6]))
+    except ThemisError as e:
+        print(e)
+    # We convert the password value from bytes to strings.
+    pwd_dec = [(a, b, c, d.decode("latin-1"), e, f) for a, b, c, d, e, f in pwd_bytes]
+    # As some passwords have double quotation marks that confuse bash, we escape them.
+    pwd_strs = [(a, b, c, d.replace('"', '\\"'), e, f) for a, b, c, d, e, f in pwd_dec]
+
+    # BULK ENCRYPTION/DECRYPTION FROM DB
+    # SEE 'decrypt_column.txt' and 'encrypt_update_column.txt' in the 'partials' folder.
+
