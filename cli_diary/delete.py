@@ -6,7 +6,6 @@ import isort
 import snoop
 from mysql.connector import Error, connect
 from snoop import pp
-from db_decorator.db_information import db_information
 
 def type_watch(source, value):
     return "type({})".format(source), type(value)
@@ -14,7 +13,6 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-@db_information
 # @snoop
 def delete():
     """

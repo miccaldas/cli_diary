@@ -4,7 +4,6 @@ Searches db for query. Presents results.
 import os
 import pathlib
 import sys
-from db_decorator.db_information import db_information
 import click
 import isort
 import snoop
@@ -12,7 +11,6 @@ from mysql.connector import Error, connect
 from rich import print
 from rich.text import Text
 
-@db_information
 # @snoop
 def search():
     """

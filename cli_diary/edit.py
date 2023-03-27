@@ -3,7 +3,6 @@ Edits an existing post.
 """
 import os
 import subprocess
-from db_decorator.db_information import db_information
 import click
 import isort
 import snoop
@@ -17,7 +16,6 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-@db_information
 # @snoop
 def edit():
     """

@@ -5,7 +5,6 @@ markdown file in less.
 import os
 import subprocess
 import sys
-from db_decorator.db_information import db_information
 import click
 
 import snoop
@@ -19,7 +18,6 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-@db_information
 # @snoop
 def see():
     """
