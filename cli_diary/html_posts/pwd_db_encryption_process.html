@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Password Database Encryption Process</title>
+  <title>pwd_db_encryption_process</title>
   <style>
     html {
       line-height: 1.5;
-      font-family: Iosevka;
+      font-family: Georgia, serif;
       font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -212,12 +212,9 @@
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Password Database Encryption Process</h1>
-<p class="date">26/02/2023</p>
-</header>
-<h2 id="update">UPDATE</h2>
-<p>It is now 05/03/23, and since my last update (26/02/23), and everything<br />
+<h1 id="password-database-encryption-process">Password Database Encryption Process</h1>
+<p>26-02-2023 <br> <br> ## UPDATE<br />
+It is now 05/03/23, and since my last update (26/02/23), and everything<br />
 changed. I was very unhappy with the limitations of using MySQL’s own<br />
 encryption mechanisms. In my opinion it had the following foibles:<br />
 1. The encryption key has to be activated at the start of every session.<br />
@@ -289,48 +286,26 @@ encrypted one still has coded versions.<br />
 5. If you want more details of Encfs’ implementation, take a look at the<br />
 <a href="./config.py">config</a> file. Specifically the ‘Efs’ class.</p>
 <h3 id="encryption-workflow.">ENCRYPTION WORKFLOW.</h3>
-<pre><code>1. The user, on his Python scripts, will access the Encfs password, through  
-   environment variables, and check if the mount point is active:  
-   1. Is active. Access the files.  
-   2. It&#39;s not active. Give the &#39;mount&#39; command and recheck if it&#39;s open.  
-2. With access to the folder, get the Themis key correspondent to your  
-   database.  
-3. Use it to encrypt/decrypt data, as the case may be.  
-4. After doing whatever you wanted to do, unmount it.  
-   You can see an example, like many others, of this workflow in practice in  
-   [update](/home/mic/python/pwd_encrypted/pwd_encrypted/update.py).</code></pre>
+<ol type="1">
+<li>The user, on his Python scripts, will access the Encfs password, through<br />
+environment variables, and check if the mount point is active:<br />
+1. Is active. Access the files.<br />
+2. It’s not active. Give the ‘mount’ command and recheck if it’s open.<br />
+</li>
+<li>With access to the folder, get the Themis key correspondent to your<br />
+database.<br />
+</li>
+<li>Use it to encrypt/decrypt data, as the case may be.<br />
+</li>
+<li>After doing whatever you wanted to do, unmount it.<br />
+You can see an example, like many others, of this workflow in practice in<br />
+<a href="/home/mic/python/pwd_encrypted/pwd_encrypted/update.py">update</a>.</li>
+</ol>
 <p>This is the current state of the art. Doesn’t mean that it won’t change in a<br />
 day or two. But, for now, this is where we stand.<br />
 I’ll leave the old updates below this one, for documentation purposes.</p>
-<table>
-<thead>
-<tr class="header">
-<th>A</th>
-<th>B</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Moo</td>
-<td>boo</td>
-</tr>
-<tr class="even">
-<td>—</td>
-<td>—</td>
-</tr>
-<tr class="odd">
-<td>loo</td>
-<td>too</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><input type="checkbox" disabled="" checked="" />
-Task #56</li>
-<li>[] Another task</li>
-</ul>
 <hr />
-<h2 id="update-1">UPDATE</h2>
+<h2 id="update">UPDATE</h2>
 <p>Apparently the key variable that I made yesterday, today,wasn’t working when I started MySQL.<br />
 A little digging revealed that variables started by ‘@’ ‘, as <span class="citation" data-cites="key_str">@key_str</span> mos certainly is,<br />
 are user variables and exist only in the context of a session. To remedy this, and result of<br />
@@ -341,30 +316,30 @@ use the same starting string. That’s what defines the key and that’s the inf
 needs to be kept secret. So as to not write the key initiation string on all my scripts, I<br />
 made a environment variable called ’AES_MYSQL_KEY’, that keeps it. In order to use a<br />
 environment variable in Python, you have to do this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aeskey <span class="op">=</span> os.environ[<span class="st">&quot;AES_MYSQL_KEY&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>aeskey <span class="op">=</span> os.environ[<span class="st">&quot;AES_MYSQL_KEY&quot;</span>]</span></code></pre></div>
 <p>The MySQL query should always use prepared statements, otherwise MySQL flips with all the characters<br />
 and doesn’t accept the string. The query format I’m currently using is this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">query</span> <span class="op">=</span> <span class="ot">&quot;SET @key_str = SHA2(%s, 512)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">query</span> <span class="op">=</span> <span class="ot">&quot;SET @key_str = SHA2(%s, 512)&quot;</span></span></code></pre></div>
 <p>Then the encryption query for the ‘pwd’ database is this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>query5 <span class="op">=</span> <span class="ot">&quot;UPDATE pwd SET pwd = AES_ENCRYPT(%s, @key_str) WHERE pwdid = %s&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>query5 <span class="op">=</span> <span class="ot">&quot;UPDATE pwd SET pwd = AES_ENCRYPT(%s, @key_str) WHERE pwdid = %s&quot;</span></span></code></pre></div>
 <p>If you only want to make an encryption/decryption but don’t want to put it anywhere, you can do:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> AES_ENCRYPT(<span class="st">&#39;text_to_encrypt&#39;</span>, @str_key)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> AES_ENCRYPT(<span class="st">&#39;text_to_encrypt&#39;</span>, @str_key)</span></code></pre></div>
 <p>I’m revisiting again the idea of encrypting the ‘password’ database. Not all of it, mind you, just the specific password value. Although it’s not close to be being finished, I just wanted to jot down some information, so I don’t forget.<br />
 I’m using MySQL’s own AES encryption process, and it works like this: first you create a BLOB or VARBINARY column, to house the encrypted passwords, as they’ll be bytes objects. I created a VARBINARY(8000) column that I called ‘pwd’.<br />
 The encryption and decryption operations are only accessible through a key.<br />
 I created one with the command:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span> @key_str <span class="op">=</span> SHA2(<span class="st">&#39;Zrd</span><span class="ch">&amp;iLnyC31</span><span class="st">._)K&quot;çlk*I9h~&#39;</span>, <span class="dv">512</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span> @key_str <span class="op">=</span> SHA2(<span class="st">&#39;Zrd</span><span class="ch">&amp;iLnyC31</span><span class="st">._)K&quot;çlk*I9h~&#39;</span>, <span class="dv">512</span>);</span></code></pre></div>
 <p>The key is called ‘key_str’ and is invoked with ‘@’ before it. ‘<span class="citation" data-cites="kill_str">@kill_str</span>’.<br />
 It’s a SHA2 algorithm key, with a length of 512, and the string I generated on<br />
 the ‘password’ app.<br />
 I cloned the ‘passwd’ column, that has the original values in plain text, with this very simple command:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str)</span></code></pre></div>
 <p>If you wanted to just encrypt a specific entry, you could do, for example:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str) <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str) <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span></span></code></pre></div>
 <p>Now, if you want to decrypt all of columns values, you do:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd;</span></code></pre></div>
 <p>If you only need one value, you could do:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span>;</span></code></pre></div>
 </body>
 </html>
