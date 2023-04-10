@@ -3,13 +3,13 @@ Searches db for query. Presents results.
 """
 import os
 import pathlib
-import sys
 import click
-import isort
-import snoop
+
+# import snoop
 from mysql.connector import Error, connect
 from rich import print
 from rich.text import Text
+
 
 # @snoop
 def search():
@@ -36,7 +36,7 @@ def search():
 
     tupfiles = []
     for i in records:
-        tupfile = (i[0], i[1] + ".html")
+        tupfile = i[0], f"{i[1]}.html"
         tupfiles.append(tupfile)
 
     roads = []

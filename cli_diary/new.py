@@ -6,16 +6,18 @@ import os
 import subprocess
 import yake
 import click
-import isort
-import snoop
+
+# import snoop
 from mysql.connector import Error, connect
-from snoop import pp
 
-def type_watch(source, value):
-    return "type({})".format(source), type(value)
+# from snoop import pp
+
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
+
 
 # @snoop
 def new():
@@ -90,6 +92,7 @@ def new():
         if conn:
             conn.close()
         return query
+
 
 if __name__ == "__main__":
     new()

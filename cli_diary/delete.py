@@ -3,15 +3,18 @@ import os
 
 import click
 import isort
-import snoop
+
+# import snoop
 from mysql.connector import Error, connect
-from snoop import pp
 
-def type_watch(source, value):
-    return "type({})".format(source), type(value)
+# from snoop import pp
+
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
+
 
 # @snoop
 def delete():
@@ -62,14 +65,8 @@ def delete():
 
     if filename_html in os.listdir("html_posts"):
         os.remove(f"html_posts/{filename_html}")
-    else:
-        pass
-
     if filename_md in os.listdir("md_posts"):
         os.remove(f"md_posts/{filename_md}")
-    else:
-        pass
-
     try:
         conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
         cur = conn.cursor()

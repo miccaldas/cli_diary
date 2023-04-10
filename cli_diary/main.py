@@ -1,11 +1,12 @@
 """Where all functions are called by the user."""
 import sys
 
-import isort
 import questionary
-import snoop
+
+# import snoop
 from questionary import Separator, Style
-from snoop import pp
+
+# from snoop import pp
 
 from delete import delete
 from edit import edit
@@ -17,10 +18,10 @@ from view import view
 
 
 def type_watch(source, value):
-    return "type({})".format(source), type(value)
+    return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
 
 
 # @snoop

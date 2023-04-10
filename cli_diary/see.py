@@ -4,19 +4,21 @@ markdown file in less.
 """
 import os
 import subprocess
-import sys
+
 import click
 
-import snoop
+# import snoop
 from mysql.connector import Error, connect
-from snoop import pp
+
+# from snoop import pp
 
 
-def type_watch(source, value):
-    return "type({})".format(source), type(value)
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
+
 
 # @snoop
 def see():
@@ -31,7 +33,9 @@ def see():
     """
 
     try:
-        conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
+        conn = connect(
+            host="localhost", user="mic", password="xxxx", database="cli_diary"
+        )
         cur = conn.cursor()
         query = "SELECT id, title, k1, k2, time from cli_diary"
         cur.execute(query)
@@ -54,10 +58,14 @@ def see():
             conn.close()
 
     print("\n")
-    choice = input(click.style("  What post do you want to read? ", fg="bright_white", bold=True))
+    choice = input(
+        click.style("  What post do you want to read? ", fg="bright_white", bold=True)
+    )
 
     try:
-        conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
+        conn = connect(
+            host="localhost", user="mic", password="xxxx", database="cli_diary"
+        )
         cur = conn.cursor()
         query = f"SELECT title FROM cli_diary WHERE id = {choice}"
         cur.execute(query)
