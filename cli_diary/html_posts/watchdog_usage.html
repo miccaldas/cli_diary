@@ -8,9 +8,7 @@
   <title>Watchdog Usage</title>
   <style>
     html {
-      line-height: 1.5;
       font-family: Iosevka;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -29,10 +27,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -82,9 +86,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -135,15 +140,28 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -170,47 +188,42 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        background-color: #232629;
-        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #cfcfc2; background-color: #232629; }
+      { color: #cccccc; background-color: #303030; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #cfcfc2; } /* Normal */
-    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-    code span.an { color: #3f8058; } /* Annotation */
-    code span.at { color: #2980b9; } /* Attribute */
-    code span.bn { color: #f67400; } /* BaseN */
-    code span.bu { color: #7f8c8d; } /* BuiltIn */
-    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #3daee9; } /* Char */
-    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-    code span.co { color: #7a7c7d; } /* Comment */
-    code span.cv { color: #7f8c8d; } /* CommentVar */
-    code span.do { color: #a43340; } /* Documentation */
-    code span.dt { color: #2980b9; } /* DataType */
-    code span.dv { color: #f67400; } /* DecVal */
-    code span.er { color: #da4453; text-decoration: underline; } /* Error */
-    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #f67400; } /* Float */
-    code span.fu { color: #8e44ad; } /* Function */
-    code span.im { color: #27ae60; } /* Import */
-    code span.in { color: #c45b00; } /* Information */
-    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-    code span.op { color: #cfcfc2; } /* Operator */
-    code span.ot { color: #27ae60; } /* Other */
-    code span.pp { color: #27ae60; } /* Preprocessor */
-    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-    code span.sc { color: #3daee9; } /* SpecialChar */
-    code span.ss { color: #da4453; } /* SpecialString */
-    code span.st { color: #f44f4f; } /* String */
-    code span.va { color: #27aeae; } /* Variable */
-    code span.vs { color: #da4453; } /* VerbatimString */
-    code span.wa { color: #da4453; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -221,20 +234,35 @@
 <h1 class="title">Watchdog Usage</h1>
 <p class="date">03/05/2022</p>
 </header>
-<p>Whenever I move a project to ‘old_alternative_files’, there are a lot of files and folders that are, or specific to being a package, or unnecessary for the purposes of checking old code; such as logs for example.<br />
-I wanted something that would detect when a new folder was created in ‘old_alternative_projects’, and would erase said files and folders.<br />
-For that I found <a href="https://python-watchdog.readthedocs.io/en/stable/">Watchdog</a>. It monitors events on the filesystem and implements whatever code you want to run on the said events.</p>
+<p>Whenever I move a project to ‘old_alternative_files’, there are a lot
+of files and folders that are, or specific to being a package, or
+unnecessary for the purposes of checking old code; such as logs for
+example.<br />
+I wanted something that would detect when a new folder was created in
+‘old_alternative_projects’, and would erase said files and
+folders.<br />
+For that I found <a
+href="https://python-watchdog.readthedocs.io/en/stable/">Watchdog</a>.
+It monitors events on the filesystem and implements whatever code you
+want to run on the said events.</p>
 <h3>
 WatchOldAlternative
 </h3>
-<p>This class sets a directory to watch and runs the methods we wrote, in case of a event:</p>
+<p>This class sets a directory to watch and runs the methods we wrote,
+in case of a event:</p>
 <p>We define a directory to monitor:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>      watchDirectory <span class="op">=</span> <span class="st">&quot;/home/mic/python/old_alternative_projects&quot;</span></span></code></pre></div>
-<p>instantiate the <code>Observer</code> class, that’ll will do the monitoring of the directory:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>      watchDirectory <span class="op">=</span> <span class="st">&quot;/home/mic/python/old_alternative_projects&quot;</span></span></code></pre></div>
+<p>instantiate the <code>Observer</code> class, that’ll will do the
+monitoring of the directory:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.observer <span class="op">=</span> Observer()</span></code></pre></div>
-<p>define a method that’ll run the script with the Handler class. Note the <code>recursive=True</code> flag, it’s there in case you want to monitor the folder and sub-folders.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> run(<span class="va">self</span>):</span>
+<p>define a method that’ll run the script with the Handler class. Note
+the <code>recursive=True</code> flag, it’s there in case you want to
+monitor the folder and sub-folders.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> run(<span class="va">self</span>):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>          <span class="co">&quot;&quot;&quot;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">          Runs the handler class.</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">          &quot;&quot;&quot;</span></span>
@@ -252,24 +280,35 @@ WatchOldAlternative
 <h3>
 Handler
 </h3>
-<p>The class <code>Handler</code> defines the events to be monitored and what to do when it happens.</p>
-<p>Here we determine that if the event, that is defined as <code>on_created</code> (which monitors creation of folders or files) pertains to a directory, we’ll keep its <code>event.src_path</code>, (the directory’s full path), in a variable called <code>pth</code>.<br />
+<p>The class <code>Handler</code> defines the events to be monitored and
+what to do when it happens.</p>
+<p>Here we determine that if the event, that is defined as
+<code>on_created</code> (which monitors creation of folders or files)
+pertains to a directory, we’ll keep its <code>event.src_path</code>,
+(the directory’s full path), in a variable called
+<code>pth</code>.<br />
 We then get the folder name by isolating the tail of path.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> event.is_directory:</span>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> event.is_directory:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          pth <span class="op">=</span> event.src_path</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          pp(pth)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          tail <span class="op">=</span> os.path.basename(os.path.normpath(pth))</span></code></pre></div>
-<p>Here we have a list with the names of the folders we want to delete, if the folder has the same name as any of the entries in this list, it’ll be sent to trash.<br />
+<p>Here we have a list with the names of the folders we want to delete,
+if the folder has the same name as any of the entries in this list,
+it’ll be sent to trash.<br />
 If it ends with ‘egg-info’, send it to the trash also.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      del_dir <span class="op">=</span> [<span class="st">&quot;.git&quot;</span>, <span class="st">&quot;logs&quot;</span>, <span class="st">&quot;build&quot;</span>, <span class="st">&quot;__pycache__&quot;</span>]</span>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      del_dir <span class="op">=</span> [<span class="st">&quot;.git&quot;</span>, <span class="st">&quot;logs&quot;</span>, <span class="st">&quot;build&quot;</span>, <span class="st">&quot;__pycache__&quot;</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> tail <span class="kw">in</span> del_dir:</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          cmd <span class="op">=</span> <span class="ss">f&quot;/home/mic/.local/bin/trash-put -d </span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss">&quot;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      cmd <span class="op">=</span> <span class="ss">f&quot;/home/mic/.local/bin/trash-put </span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss">&quot;</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> tail.endswith(<span class="st">&quot;egg-info&quot;</span>):</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>          subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
-<p>If the event is new file, it’s the same procedure, only with a different list of deletable names.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
+<p>If the event is new file, it’s the same procedure, only with a
+different list of deletable names.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>          pth <span class="op">=</span> event.src_path</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>          tail <span class="op">=</span> os.path.basename(os.path.normpath(pth))</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          del_file <span class="op">=</span> [<span class="st">&quot;.gitignore&quot;</span>, <span class="st">&quot;.gitconfig&quot;</span>, <span class="st">&quot;LICENSE&quot;</span>, <span class="st">&quot;MANIFEST.in&quot;</span>, <span class="st">&quot;pyproject.toml&quot;</span>, <span class="st">&quot;setup.py&quot;</span>, <span class="st">&quot;setup.cfg&quot;</span>, <span class="st">&quot;__init__.py&quot;</span>]</span>
@@ -277,7 +316,8 @@ If it ends with ‘egg-info’, send it to the trash also.</p>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> tail <span class="kw">in</span> del_file:</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 <p>The full code:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;</span></span>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">   The &#39;old_alternative_projects&#39; is a directory for code that can be reused.</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">   When sending a package to this directory, all package related files are</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">   not needed anymore and should be deleted.&#39;</span></span>
