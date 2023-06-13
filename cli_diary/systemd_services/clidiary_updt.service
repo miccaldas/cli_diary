@@ -1,0 +1,13 @@
+[Unit]
+Description=Checks cli_diary mardown files folder to see if there is aby file that isn't in the db. Uploads if it is not.
+After=network.target
+
+[Service]
+WorkingDirectory=/home/mic/python/cli_diary/cli_diary/
+ExecStart=/usr/bin/python db_updates.py
+User=mic
+Group=mic
+
+[Install]
+WantedBy=multi-user.target
+

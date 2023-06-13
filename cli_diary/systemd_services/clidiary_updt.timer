@@ -1,0 +1,11 @@
+[Unit]
+Description=Checks cli_diary markdown files folder to see if there is posts not in the db.
+Requires=clidiary_updt.service
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
