@@ -2,7 +2,6 @@
 import os
 
 import click
-import isort
 
 # import snoop
 from mysql.connector import Error, connect
