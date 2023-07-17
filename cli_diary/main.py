@@ -1,24 +1,22 @@
 """Where all functions are called by the user."""
-import sys
-
 import questionary
 
 # import snoop
 from questionary import Separator, Style
 
-# from snoop import pp
-
 from delete import delete
 from edit import edit
-from new import new
+from new import new_main
 from search import search
 from see import see
 from update import update
-from view import view
+from view import view_main
+
+# from snoop import pp
 
 
-def type_watch(source, value):
-    return f"type({source})", type(value)
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
 # snoop.install(watch_extras=[type_watch])
@@ -66,11 +64,11 @@ def main():
     ).ask()
 
     if selection == "Exit":
-        sys.exit()
+        raise SystemExit
     if selection == "View Post":
-        view()
+        view_main()
     if selection == "Create Post":
-        new()
+        new_main()
     if selection == "Edit Post":
         edit()
     if selection == "Search Posts":

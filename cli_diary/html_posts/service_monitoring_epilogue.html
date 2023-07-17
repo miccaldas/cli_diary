@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <title>Service Monitoring Epilogue</title>
+        <style>
+html {
+    line-height: 1.5;
+    font-family: Iosevka;
+    font-size: 15pt;
+    color: #1a1a1a;
+    background-color: #fdfdfd;
+}
+    body {
+        margin: 0 auto;
+        max-width: 36em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+        body {
+            font-size: 0.9em;
+            padding: 12px;
+        }
+        h1 {
+            font-size: 1.8em;
+        }
+    }
+    @media print {
+        html {
+            background-color: white;
+        }
+        body {
+            background-color: transparent;
+            color: black;
+            font-size: 12pt;
+        }
+        p, h2, h3 {
+            orphans: 3;
+            widows: 3;
+        }
+        h2, h3, h4 {
+            page-break-after: avoid;
+        }
+    }
+    p {
+        margin: 1em 0;
+    }
+    a {
+        color: #1a1a1a;
+    }
+    a:visited {
+        color: #1a1a1a;
+    }
+    img {
+        max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 1.4em;
+    }
+    h5, h6 {
+        font-size: 1em;
+        font-style: italic;
+    }
+    h6 {
+        font-weight: normal;
+    }
+    ol, ul {
+        padding-left: 1.7em;
+        margin-top: 1em;
+    }
+    li > ol, li > ul {
+        margin-top: 0;
+    }
+    blockquote {
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
+    }
+    code {
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
+    }
+    pre {
+        margin: 1em 0;
+        overflow: auto;
+    }
+    pre code {
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
+    }
+    .sourceCode {
+        background-color: transparent;
+        overflow: visible;
+    }
+    hr {
+        background-color: #1a1a1a;
+        border: none;
+        height: 1px;
+        margin: 1em 0;
+    }
+    table {
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+        margin-bottom: 0.75em;
+    }
+    tbody {
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+        padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+        margin-bottom: 4em;
+        text-align: center;
+    }
+    #TOC li {
+        list-style: none;
+    }
+    #TOC ul {
+        padding-left: 1.3em;
+    }
+    #TOC > ul {
+        padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+        text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+        div.sourceCode { overflow: auto; }
+    }
+    @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+        { counter-reset: source-line 0; }
+    pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        background-color: #232629;
+        color: #7a7c7d;
+    }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+    div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+    @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #cfcfc2; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #3f8058; } /* Annotation */
+    code span.at { color: #2980b9; } /* Attribute */
+    code span.bn { color: #f67400; } /* BaseN */
+    code span.bu { color: #7f8c8d; } /* BuiltIn */
+    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #3daee9; } /* Char */
+    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+    code span.co { color: #7a7c7d; } /* Comment */
+    code span.cv { color: #7f8c8d; } /* CommentVar */
+    code span.do { color: #a43340; } /* Documentation */
+    code span.dt { color: #2980b9; } /* DataType */
+    code span.dv { color: #f67400; } /* DecVal */
+    code span.er { color: #da4453; text-decoration: underline; } /* Error */
+    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #f67400; } /* Float */
+    code span.fu { color: #8e44ad; } /* Function */
+    code span.im { color: #27ae60; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+    code span.op { color: #cfcfc2; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #27ae60; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #3daee9; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #f44f4f; } /* String */
+    code span.va { color: #27aeae; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
+        </style>
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header id="title-block-header">
+            <h1 class="title">Service Monitoring Epilogue</h1>
+        </header>
+        <p>Some time ago I was testing <a
+                                               href="https://docs.sourcery.ai">Sourcery’s</a> code quality application,
+                                           to get an outside opinion, as impersonal as it may be, about my code.
+                                           This hobby can be a lonely business. The results were, more or less,
+                                           lackluster but I didn’t feel to bad.<br />
+                                           I think it’s to be expected that, being an amateur and all, that really
+                                           doesn’t code that much, the results could never be stellar.<br />
+                                           All in all it was what I expected to be.<br />
+                                           Until I looked into Service Monitoring. ‘Sourcery’ was as indignant as
+                                           an unfeeling, unthinking tool can be. It was so bad it didn’t suggest
+                                           much in the way of alterations, only some earnest calls to revise and
+                                           refactor that unholy mess.<br />
+                                           Had I remembered that, apparently, I wrote long and often about the
+                                           build of that app, I might’ve gleaned some knowledge from that the
+                                           dense, dark, wall of code that, if it was meant to be used as
+                                           obfuscation, wouldn’t be any more successful.<br />
+                                           I couldn’t understand the ‘main’ function.<br />
+                                           The ‘main’ function!<br />
+                                           At my level of sophistication, everything it does is call all other
+                                           modules in order. The fact that I wrote a ‘main’ function that read as
+                                           Swahili to my some months older self, would have seemed fantastic to me.
+                                           Still, here we were.<br />
+                                           With my pride a little piqued, although I hated the tool. It’s heavy and
+                                           intrusive, I set about to make some betterments to the code. The
+                                           equivalent of a coat of paint and a Spring cleaning as it were. More
+                                           cosmetic than structural I thought.<br />
+                                           Of course what I didn’t know, but do now, is that one of the things that
+                                           makes computer engineering challenging, as opposed to tinkering idly on
+                                           projects that tickle your fancy, at your leisure, is that most code is
+                                           propping things up in companies and can’t be rewritten on a whim. If you
+                                           have a scion of hell living in your codebase, you’ll have to find a way
+                                           to live with it, because simply, nobly, morally-minded, option of
+                                           starting again, is totally out of the question. I don’t envy those poor
+                                           bastards. Me, on the other hand, don’t have any of those constraints. So
+                                           I quickly concluded that that it, for whatever it was, had to go.<br />
+                                           The first, and more challenging task of this refactoring was to
+                                           understand what subtleties and special cases were being looked into,
+                                           that justified the gongorism of the code. This was my earnest desire,
+                                           that through inexperience and enthusiasm, I had been led astray into a
+                                           wilderness of complexity that, in the end, if abstruse, showed attention
+                                           to detail and border conditions. Unfortunately that was not what I
+                                           found.<br />
+                                           The app did the things that most simple apps do, didn’t had no special
+                                           affinity for the quirky or the subtle, it thought and provided solutions
+                                           for only the more obvious scenarios. It was just badly designed by
+                                           someone that has a tendency of listening to all that’s meandering and
+                                           rambling, than to soundly planned arguments.<br />
+                                           Truth be told, the signs were there. It’s use was unbearably brittle.
+                                           What would work today, wouldn’t work tomorrow or for all cases. The
+                                           debugging was opaque, the documentation, because I had forgotten six,
+                                           six!, entries that I made here, was nonexistent. As I said, had I know
+                                           that this trove of information was here, I probably would had have been
+                                           much more conservative on my ‘redecoration’. As I didn’t, I basically
+                                           rewrote it. Some ideas are present in both projects, but that’s just
+                                           because I’m not very creative and I tend to repeat the same things to
+                                           the same people all the time, even when I’m not drunk.<br />
+                                           It was for the best I think. I can now look at it and understand what it
+                                           does.<br />
+                                           Anyone can. And that’s a good thing. Even a mechanical quality
+                                           assessment tool was offended by it.<br />
+                                           Here are some examples: ### 1 - Deleting Services Now, to be frank, on
+                                           this part I’m doing some conjecturing, I’m, brazenly, making assumptions
+                                           on what I wanted to do with that code; when it doesn’t warrant any kind
+                                           of interpretation. It’s “The Great Cloud of Unknowing”, it’s impervious
+                                           to your vain human reason. Your conclusions are, wholly, your own. But a
+                                           modicum of exegesis is in order … I, after all, did wrote it. Much to my
+                                           chagrin.<br />
+                                           What I think I was trying to do was, dealing with service deletion and
+                                           the ungodly mess that was updating a json file that was being used as a
+                                           keeper of truth for the app. Why a json file you ask? When a database,
+                                           however small, would’ve been a better solution? The truth is that I was
+                                           trying to do something different from my CRUD apps. Was trying something
+                                           new; and I had hear good things of this json fellow. Maybe he could
+                                           help.<br />
+                                           In short, it was a solution thought out in a whim, for all the wrong
+                                           (more non-existent) reasons and with no thought put into.<br />
+                                           It worked as good as you would expect.<br />
+                                           This is what I had:</p>
+        <div class="sourceCode" id="cb1"><pre
+                                class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> delete_service(<span class="va">self</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">        First stops the unit, then disables it and</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">        lastly, deletes files. If service is</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">        completely erased, it&#39;ll delete also the</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">        entry on the json file and run again the</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">        dropdown creation file.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">        The reason I repeated the &#39;stop_service&#39;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">        and &#39;daemon_reload&#39; methods, instead of</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">        simply calling them from this method, is</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">        that if I did that, there would be a lot</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">        of spurious empty and dotted lines. This</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">        way the presentation is cleaner.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        decision_lst <span class="op">=</span> []</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot;dummy_service&quot;</span> <span class="kw">not</span> <span class="kw">in</span> <span class="va">self</span>.units:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> unit <span class="kw">in</span> <span class="va">self</span>.units:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                decision <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="ss">f&quot; ++ Do you want to disable unit </span><span class="sc">{</span>unit<span class="sc">}</span><span class="ss">? [y/n] &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> decision <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                    decision_lst.append(<span class="ss">f&quot;</span><span class="sc">{</span>unit<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            deci <span class="op">=</span> <span class="bu">input</span>(click.style(<span class="st">&quot; ++ What unit(s) do you want to delete? &quot;</span>, fg<span class="op">=</span><span class="st">&quot;bright_white&quot;</span>, bold<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> deci <span class="op">==</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                sys.exit()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                decision <span class="op">=</span> deci.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> decision:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                decision_lst.append(i)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> service <span class="kw">in</span> decision_lst:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            cmd15 <span class="op">=</span> <span class="ss">f&quot;sudo systemctl stop </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd15, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            cmd16 <span class="op">=</span> <span class="ss">f&quot;sudo systemctl disable </span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd16, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            cmd18 <span class="op">=</span> <span class="ss">f&quot;sudo rm /usr/lib/systemd/system/</span><span class="sc">{</span>service<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd18, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            cmd17 <span class="op">=</span> <span class="st">&quot;sudo systemctl daemon-reload&quot;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd17, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            cmd19 <span class="op">=</span> <span class="st">&quot;sudo systemctl reset-failed&quot;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd19, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        monitor <span class="op">=</span> <span class="st">&quot;/home/mic/python/service_monitoring/service_monitoring&quot;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info.json&quot;</span>))</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data[<span class="st">&quot;dropinfo&quot;</span>])):</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> decision_lst <span class="op">==</span> data[<span class="st">&quot;dropinfo&quot;</span>][i][<span class="st">&quot;units&quot;</span>]:</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                data[<span class="st">&quot;dropinfo&quot;</span>].pop(i)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>            <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info1.json&quot;</span>, <span class="st">&quot;w&quot;</span>).write(json.dumps(data, indent<span class="op">=</span><span class="dv">4</span>, sort_keys<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info.json&quot;</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            os.rename(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info1.json&quot;</span>, <span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info.json&quot;</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>            make_dropdown()</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        tst <span class="op">=</span> [v.get(<span class="st">&quot;units&quot;</span>) <span class="cf">for</span> v <span class="kw">in</span> data[<span class="st">&quot;dropinfo&quot;</span>]]</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> decision_lst <span class="kw">not</span> <span class="kw">in</span> tst:</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> u <span class="kw">in</span> decision_lst:</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data[<span class="st">&quot;dropinfo&quot;</span>])):</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> u <span class="kw">in</span> data[<span class="st">&quot;dropinfo&quot;</span>][t][<span class="st">&quot;units&quot;</span>]:</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>                        data[<span class="st">&quot;dropinfo&quot;</span>][t][<span class="st">&quot;units&quot;</span>].remove(u)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info1.json&quot;</span>, <span class="st">&quot;w&quot;</span>).write(json.dumps(data, indent<span class="op">=</span><span class="dv">4</span>, sort_keys<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>                    os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info.json&quot;</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>                    os.rename(<span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info1.json&quot;</span>, <span class="ss">f&quot;</span><span class="sc">{</span>monitor<span class="sc">}</span><span class="ss">/dropdown_info.json&quot;</span>)</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                    make_dropdown()</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+            <p>Nothing of this, except the Systemd commands, through no fault of my
+            own, worked as expected. It kept glitching and I, for some, reason,
+            never quite got around to understanding dictionaries and json, until
+            very recently. So I was outside looking in. And when I finally, got a
+            glimpse of comprehension on those subjects, was only to conclude that
+            they shouldn’t be used here. At least no for me.<br />
+            Today I broke the function into small, simpler bits. Separated database
+            operations from service interactions, did away with the godforsaken json
+            file and put the data in the smallest, cutest, MySQL database
+            ever.<br />
+            Sqlite3 is acting out in my computer, don’t judge me!<br />
+            Got a function just for the systemd commands and commented profusely the
+            code, knowing now that, in the future Imwon’t remember to check this
+            diary for information.</p>
+            <div class="sourceCode" id="cb2"><pre
+                                    class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbdelunit(selunit):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Deletes a unit in a service in the database.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sel <span class="kw">in</span> selunit:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        delcmd <span class="op">=</span> <span class="ss">f&quot;DELETE FROM services WHERE id = </span><span class="sc">{</span>sel<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        dbcommit(delcmd)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(<span class="ss">f&quot;  &lt;X&gt; - The </span><span class="sc">{</span>selunit<span class="sc">}</span><span class="ss"> unit(s) were deleted.&quot;</span>, style<span class="op">=</span><span class="st">&quot;bold #E2C275&quot;</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> systemctldel(delservices):</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Deletes services or timers</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    from systemctl.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sel <span class="kw">in</span> delservices:</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> (<span class="ss">f&quot;sudo systemctl stop </span><span class="sc">{</span>sel<span class="sc">}</span><span class="ss">&quot;</span>,)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> (<span class="ss">f&quot;sudo systemctl disable </span><span class="sc">{</span>sel<span class="sc">}</span><span class="ss">&quot;</span>,)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        c <span class="op">=</span> (<span class="st">&quot;sudo systemctl daemon-reload&quot;</span>,)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> (<span class="ss">f&quot;sudo trash /usr/lib/systemd/system/</span><span class="sc">{</span>sel<span class="sc">}</span><span class="ss">&quot;</span>,)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        e <span class="op">=</span> <span class="st">&quot;sudo systemctl reset-failed&quot;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cmd <span class="kw">in</span> [a, b, c, d, e]:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            subprocess.run(cmd, shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f&quot;  &lt;X&gt; - The </span><span class="sc">{</span>delservices<span class="sc">}</span><span class="ss"> services were deleted from Systemctl.&quot;</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span><span class="st">&quot;bold #E2C275&quot;</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbfetch(query):</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">    Gets info from the database.</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;services&quot;</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        cur.execute(query)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> cur.fetchall()</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> conn:</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbcommit(query):</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">    Sends info to the database.</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        conn <span class="op">=</span> <span class="ex">connect</span>(host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>, user<span class="op">=</span><span class="st">&quot;mic&quot;</span>, password<span class="op">=</span><span class="st">&quot;xxxx&quot;</span>, database<span class="op">=</span><span class="st">&quot;services&quot;</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        cur.execute(query)</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> Error <span class="im">as</span> e:</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Error while connecting to db&quot;</span>, e)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> conn:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>            conn.close()</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(<span class="ss">f&quot;  The query </span><span class="sc">{</span>query<span class="sc">}</span><span class="ss"> was run.&quot;</span>, style<span class="op">=</span><span class="st">&quot;bold #E2C275&quot;</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete():</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="co">    Called by &#39;main&#39;. From information from id&#39;s and unit_names,</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co">    we&#39;ll delete by unit_name, first in Systemctl by the name</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="co">    of the service&#39;s, then by id&#39;s in the database.</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First we get information to identify the rows to delete.</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="st">&quot;SELECT id, name, unit_name FROM services&quot;</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make a db call.</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> dbfetch(query)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We print the output, so the user can choose ehat to delete.</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> data:</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f&quot;  </span><span class="sc">{</span>i[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>i[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>i[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">&quot;</span>, style<span class="op">=</span><span class="st">&quot;bold #939B62&quot;</span>, justify<span class="op">=</span><span class="st">&quot;left&quot;</span>)</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(&quot;\n&quot;)</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    delchoice <span class="op">=</span> console.<span class="bu">input</span>(<span class="st">&quot;[bold #E2C275]  { X } - Choose the id&#39;s you want: [/]&quot;</span>)</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    <span class="co"># In case we were given more than one id, we seprate them by space.</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    selunit <span class="op">=</span> delchoice.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This converts the id&#39;s into strings, which won&#39;t do. We turn them</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># back to ints.</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    delints <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> selunit]</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build a list of unit_names, names, to use when deleting in Systemctl.</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    delservices <span class="op">=</span> [i[<span class="dv">2</span>] <span class="cf">for</span> i <span class="kw">in</span> data <span class="cf">if</span> i <span class="kw">in</span> delints]</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Call the function to delete Systemctl&#39;s services.</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    systemctldel(delservices)</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Call function to delete database entries.</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    dbdelunit(delints)</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We redraw the app&#39;s presentation, with the updated number of entries.</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    make_dropdown()</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    delete()</span></code></pre></div>
+                <p>I did something similar to the ‘add service’ function, that makes
+                this look like a minimalist triumph, and rewrote the ‘main’ function,
+                that, from all things that I don’t understand, it’s the one I don’t
+                understand the most.<br />
+                But, conversations to have another time.</p>
+    </body>
+</html>

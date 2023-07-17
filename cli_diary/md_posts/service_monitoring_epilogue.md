@@ -1,3 +1,10 @@
+---
+title: Service Monitoring Epilogue
+mainfont: Iosevka
+fontsize: 17pt
+---
+
+
 Some time ago I was testing [Sourcery's](https://docs.sourcery.ai) code quality application, to get an outside opinion, as impersonal as it may be,
 about my code. This hobby can be a lonely business. The results were,
 more or less, lackluster but I didn't feel to bad.  
