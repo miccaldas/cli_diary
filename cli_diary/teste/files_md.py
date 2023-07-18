@@ -1,12 +1,12 @@
 """
-
+Module Docstring
 """
 import os
 
-import snoop
-from pynput.mouse import Button, Controller
-
 # import subprocess
+import pickle
+
+import snoop
 from snoop import pp
 
 
@@ -18,17 +18,11 @@ snoop.install(watch_extras=[type_watch])
 
 
 @snoop
-def fun():
+def files_md():
     """"""
-    mouse = Controller()
-
     mdfolder = "/home/mic/python/cli_diary/cli_diary/md_posts"
     mdfiles = os.listdir(mdfolder)
 
-    coords = (2, 2)
-    mouse.press(Button.left)
-    print(len(mdfiles))
-
 
 if __name__ == "__main__":
-    fun()
+    files_md()

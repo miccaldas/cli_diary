@@ -1,17 +1,14 @@
 """
 Module Docstring
 """
-import snoop
-from snoop import pp
-from contextlib import suppress
-import sys
-
-# from configs.config import Efs, tput_config
-# import os
+import os
 import subprocess
-from dotenv import load_dotenv
-from pynput import mouse
+import sys
+from contextlib import suppress
 
+import snoop
+from pynput import mouse
+from snoop import pp
 
 sys.tracebacklimit = 0
 
@@ -22,26 +19,15 @@ def type_watch(source, value):
 
 snoop.install(watch_extras=[type_watch])
 
-load_dotenv()
-
 
 @snoop
-def on_click(x, y, button, pressed):
+def opener():
     """"""
-    if pressed:
-        coords = (x, y)
-        print(coords)
-        if coords == (1195, 1380):
-            cmd = "frogmouth teste.md"
-            subprocess.run(cmd, shell=True)
-        if coords == (1173, 1344):
-            cmd = "frogmouth teste1.md"
-            subprocess.run(cmd, shell=True)
-        if button == mouse.Button.right:
-            return False
-        # with suppress(TypeError):
-        #     raise SystemExit
+    mdfolder = "/home/mic/python/cli_diary/cli_diary/md_posts"
+    mdfiles = os.listdir(mdfolder)
+    allpaths = [(f"{mdfolder}/{i}]", i) for i in mdfiles]
+    print(allpaths)
 
 
-with mouse.Listener(on_click=on_click) as listener:
-    listener.join()
+if __name__ == "__main__":
+    opener()
