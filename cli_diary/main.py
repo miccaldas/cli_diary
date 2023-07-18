@@ -8,7 +8,7 @@ from delete import delete
 from edit import edit
 from new import new_main
 from search import search
-from see import see
+from see import see_main
 from update import update
 from view import view_main
 
@@ -78,7 +78,7 @@ def main():
     if selection == "Update Post":
         update()
     if selection == "See Posts":
-        see()
+        see_main()
 
 
 if __name__ == "__main__":
