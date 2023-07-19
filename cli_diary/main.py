@@ -11,6 +11,7 @@ from search import search
 from see import see_main
 from update import update
 from view import view_main
+from choicecmd import dbcall, postlist, on_press
 
 # from snoop import pp
 
@@ -51,7 +52,8 @@ def main():
         use_indicator=True,
         style=custom_style_diary,
         choices=[
-            "View Post",
+            "View HTML Post",
+            "View Markdown Posts",
             "Create Post",
             "Edit Post",
             "Search Posts",
@@ -65,8 +67,12 @@ def main():
 
     if selection == "Exit":
         raise SystemExit
-    if selection == "View Post":
+    if selection == "View HTML Post":
         view_main()
+    if selection == "View Markdown Post":
+        dbcall()
+        postlist()
+        on_press()
     if selection == "Create Post":
         new_main()
     if selection == "Edit Post":
