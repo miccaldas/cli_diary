@@ -26,7 +26,6 @@ def opener():
     mdfolder = "/home/mic/python/cli_diary/cli_diary/md_posts"
     mdfiles = os.listdir(mdfolder)
     allpaths = [(f"{mdfolder}/{i}]", i) for i in mdfiles]
-    print(allpaths)
 
 
 if __name__ == "__main__":
