@@ -1,11 +1,10 @@
 """
 Like the 'View' module, but for Markdown.
-The 'sys' import and next call, is there
-to silence the publication of error messages.
 """
 import sys
 
 sys.tracebacklimit = 0
+# The 'sys' import and call are there to silence the publication of error messages.
 
 import os
 import pickle
@@ -126,15 +125,7 @@ def dbcall():
     is an object. To remedy this, we build a list
     that stores the ID values as 'Pynput' objects
     That is the objective of the 'keyboard.KeyCode'
-    code. Another consequence of using 'Pynput' is
-    that it's keyboard code interpretation is done
-    character by character, which doesn't let us id
-    the entries as we would normally do, with a
-    simple count of entries. Instead we used the
-    alphabet, uppercase and lowercase, and some
-    numbers to get us to our goal of 54 entries.
-    And this is the reason for the cumbersome but
-    practicaL 'alphanumbers' list.
+    code.
     """
     query = "SELECT title, k1, k2, time FROM cli_diary"
     data = dbdata(query, "fetch")
@@ -143,6 +134,10 @@ def dbcall():
 
     with open("idxs.bin", "wb") as f:
         pickle.dump(idxs, f)
+
+
+if __name__ == "__main__":
+    dbcall()
 
 
 # @snoop
@@ -161,8 +156,17 @@ def postlist():
         k2 = idx[2].lower()
         time = f"{idx[3].strftime('%Y-%m-%d %H:%M')}"
 
+        # We broke the Rich text formatting in chunks, so as not to write a overlong line.
+        cid = f"[bold #7C9D96]{id}[/]"
+        ctitle = f"[bold #E9B384]{title}[/]"
+        campersand = "[bold #FE0000]@[/]"
+        ck1 = f"[bold #F4E0B9]{k1}[/],"
+        ck2 = f"[bold #F4E0B9]{k2}[/] "
+        ctime = f"[bold #A1CCD1]{time}[/]"
+
         console = Console()
-        console.print(f" [bold #7C9D96]{id}[/] [bold #E9B384]{title}[/] [bold #FE0000]@[/][bold #F4E0B9]{k1}[/],[bold #FE0000]@[/][bold #F4E0B9]{k2}[/] [bold #A1CCD1]{time}[/]")
+        # The keyword values don't have spaces between them.
+        console.print(cid, ctitle, f"{campersand}{ck1}{campersand}{ck2}", ctime)
 
     console.print("\n\n  [bold #BBD6B8]\[*] - TYPE THE ID OF AN ENTRY TO READ THE POST![/]")
 
@@ -176,8 +180,8 @@ def execute(filename):
     """
     Where we wait for someone to be chosen.
     We call 'mdless', like 'mdcat', but uses
-    a pager, to read the post chosen by the user.
-    We chose to constrain the output to 90 columns.
+    a pager, to read its chosen post.
+    We constrain the output to 90 columns.
     """
     mdfolder = "/home/mic/python/cli_diary/cli_diary/md_posts"
     path = f"{mdfolder}/{filename}.md"
@@ -188,18 +192,7 @@ def execute(filename):
 # @snoop
 def on_press(entry):
     """
-    Function the waits for user keyboard input. The list of
-    tuples that concentrated all information for this module,
-    had an 'id' field a little different than usual. We used
-    id's of just one character, to identify the posts. This
-    was done so we could use the Pynput library. The fact that
-    it responds immediately to keyboard input, is a much more
-    interactive way to choose content. Akin, in a way, to
-    clicking on a html file and opening it. I wanted some of
-    that closeness, but for markdown. It awaits for user
-    input, to see if it matches the id of one of its posts. If
-    so, it starts another function that uses a cli markdown
-    reader to show its content.
+    Function that waits for user keyboard input.
     """
     with open("idxs.bin", "rb") as f:
         idxs = pickle.load(f)
