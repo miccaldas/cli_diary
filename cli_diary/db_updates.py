@@ -11,21 +11,23 @@ import pickle
 import string
 import subprocess
 from dotenv import load_dotenv
-import snoop
+
+# import snoop
 import yake
 from mysql.connector import Error, connect
-from snoop import pp
+
+# from snoop import pp
 
 
-def type_watch(source, value):
-    return f"type({source})", type(value)
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
-load_dotenv()
+# snoop.install(watch_extras=[type_watch])
+# load_dotenv()
 
 
-@snoop
+# @snoop
 def yake_processing(text):
     """
     Each note text will pass through here, the
@@ -57,7 +59,7 @@ def yake_processing(text):
     return clean_kwds
 
 
-@snoop
+# @snoop
 def dbdata(query, data):
     """
     Collects list of posts on the db.
@@ -90,7 +92,7 @@ def dbdata(query, data):
         return data
 
 
-@snoop
+# @snoop
 def db_updates():
     """
     Creates a list of files on the markdown posts directory.

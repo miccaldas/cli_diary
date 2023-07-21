@@ -1,9 +1,9 @@
 """
 Like the 'View' module, but for Markdown.
 """
-import sys
+# import sys
 
-sys.tracebacklimit = 0
+# sys.tracebacklimit = 0
 # The 'sys' import and call are there to silence the publication of error messages.
 
 import os
@@ -11,19 +11,18 @@ import pickle
 import subprocess
 from datetime import datetime
 
-# import snoop
+import snoop
 from mysql.connector import Error, connect
 from pynput import keyboard
 from rich.console import Console
-
-# from snoop import pp
-
-
-# def type_watch(source, value):
-#     return f"type({source})", type(value)
+from snoop import pp
 
 
-# snoop.install(watch_extras=[type_watch])
+def type_watch(source, value):
+    return f"type({source})", type(value)
+
+
+snoop.install(watch_extras=[type_watch])
 
 
 def dbdata(query, data):
@@ -113,7 +112,7 @@ alphanumbers = [
 ]
 
 
-# @snoop
+@snoop
 def dbcall():
     """
     We'll colect some data from the database.
@@ -140,7 +139,7 @@ if __name__ == "__main__":
     dbcall()
 
 
-# @snoop
+@snoop
 def postlist():
     """
     Creates a posts list, so users can choose
@@ -175,7 +174,7 @@ if __name__ == "__main__":
     postlist()
 
 
-# @snoop
+@snoop
 def execute(filename):
     """
     Where we wait for someone to be chosen.
@@ -189,7 +188,7 @@ def execute(filename):
     subprocess.run(cmd, shell=True)
 
 
-# @snoop
+@snoop
 def on_press(entry):
     """
     Function that waits for user keyboard input.

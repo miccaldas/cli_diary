@@ -86,7 +86,7 @@ def see():
     title = dbdata(query, "fetch")
     tit = title[0][0]
     filename = f"{tit}.md"
-    cmd = f"frogmouth md_posts/{filename}"
+    cmd = f"/usr/bin/mdless md_posts/{filename}"
     subprocess.run(cmd, cwd=os.getcwd(), shell=True)
 
 

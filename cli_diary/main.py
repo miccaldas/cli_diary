@@ -1,4 +1,6 @@
 """Where all functions are called by the user."""
+import subprocess
+
 import questionary
 
 # import snoop
@@ -7,11 +9,10 @@ from questionary import Separator, Style
 from delete import delete
 from edit import edit
 from new import new_main
-from search import search
+from search import search_main
 from see import see_main
 from update import update
 from view import view_main
-from choicecmd import dbcall, postlist, on_press
 
 # from snoop import pp
 
@@ -29,6 +30,9 @@ def main():
     We'll create a dropdown with Questionary for
     the user to access all modules. We'll call
     the ones the user chooses.
+    The 'view markdown post', has a 'pynput'
+    observer object that makes it impossible to
+    use it through import. We'll used by subprocess.
     """
 
     custom_style_diary = Style(
@@ -53,7 +57,7 @@ def main():
         style=custom_style_diary,
         choices=[
             "View HTML Post",
-            "View Markdown Posts",
+            "View Markdown Post",
             "Create Post",
             "Edit Post",
             "Search Posts",
@@ -70,15 +74,14 @@ def main():
     if selection == "View HTML Post":
         view_main()
     if selection == "View Markdown Post":
-        dbcall()
-        postlist()
-        on_press()
+        cmd = "/usr/bin/python /home/mic/python/cli_diary/cli_diary/choicemd.py"
+        subprocess.run(cmd, shell=True)
     if selection == "Create Post":
         new_main()
     if selection == "Edit Post":
         edit()
     if selection == "Search Posts":
-        search()
+        search_main()
     if selection == "Delete Post":
         delete()
     if selection == "Update Post":
