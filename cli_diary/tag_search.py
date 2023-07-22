@@ -198,6 +198,11 @@ def tag_main():
     tag_search()
     open_lst()
 
+    cmd = "/usr/bin/trash-put /home/mic/python/cli_diary/cli_diary/tagchoice.bin"
+    cmd1 = "/usr/bin/trash-put /home/mic/python/cli_diary/cli_diary/posttype.bin"
+    for i in [cmd, cmd1]:
+        subprocess.run(i, shell=True)
+
 
 if __name__ == "__main__":
     tag_main()

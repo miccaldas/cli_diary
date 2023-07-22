@@ -7,10 +7,8 @@ files are in the 'md_posts' folder, if there's something
 new, it'll be added to the db.
 """
 import os
-import pickle
 import string
 import subprocess
-from dotenv import load_dotenv
 
 # import snoop
 import yake
@@ -24,7 +22,6 @@ from mysql.connector import Error, connect
 
 
 # snoop.install(watch_extras=[type_watch])
-# load_dotenv()
 
 
 # @snoop
