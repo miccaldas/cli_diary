@@ -7,9 +7,6 @@
   <title>notes_app_rejuvenation</title>
   <style>
     html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -28,10 +25,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -81,9 +84,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -134,15 +138,29 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
@@ -150,17 +168,58 @@
   <![endif]-->
 </head>
 <body>
-<p>I just completed some deep and interesting changes to the Notes app, that I would like to talk to you about. Notes, on account of being the most used, the most taken care off, the most on demand, has suffered from an overabundance of attention. This made it the most likely space for experimentation and code decoration, of all the apps I developed. It had a lot of code that would have very little practical use, over-engineered solutions, and all this made me more wary of any type of streamlining intervention. For fear of not knowing what was responsible for what.<br />
-But lately I’ve been using more cli applications, and if until very recently I had always preferred a TUI interface, anything not to memorize commands, I’ve come to know, and love, the <a href="https://click.palletsprojects.com">Click</a> framework, taught me to trust ‘–help’ for commands.<br />
-I like more and more the simplicity of stating your arguments in one fell swoop, and the increased speed of not only time spent in task, but also in loading and unloading. It’s just a snappier alternative. And this was something that Notes was badly needing. I had put a plethora of tag and entries analytical tools that revealed themselves of no added value, but to create more bloat and add to loading time. Also the code style was the most ancient in my portfolio. I saw code patterns of when I was still very new to this.<br />
+<p>I just completed some deep and interesting changes to the Notes app,
+that I would like to talk to you about. Notes, on account of being the
+most used, the most taken care off, the most on demand, has suffered
+from an overabundance of attention. This made it the most likely space
+for experimentation and code decoration, of all the apps I developed. It
+had a lot of code that would have very little practical use,
+over-engineered solutions, and all this made me more wary of any type of
+streamlining intervention. For fear of not knowing what was responsible
+for what.<br />
+But lately I’ve been using more cli applications, and if until very
+recently I had always preferred a TUI interface, anything not to
+memorize commands, I’ve come to know, and love, the <a
+href="https://click.palletsprojects.com">Click</a> framework, taught me
+to trust ‘–help’ for commands.<br />
+I like more and more the simplicity of stating your arguments in one
+fell swoop, and the increased speed of not only time spent in task, but
+also in loading and unloading. It’s just a snappier alternative. And
+this was something that Notes was badly needing. I had put a plethora of
+tag and entries analytical tools that revealed themselves of no added
+value, but to create more bloat and add to loading time. Also the code
+style was the most ancient in my portfolio. I saw code patterns of when
+I was still very new to this.<br />
 Wanting to make it much better than it was, I set about to:<br />
-1. Get back to basics. No more analytics to satisfy idle curiosities, no more of momentary nice-to-have’s! If it didn’t have a clear purpose, it’s dead wood.<br />
-2. If it can be inputted in command line mode, it’s going to be implemented as command line! No more of my beloved option menus and input prompts. Now you memorized commands!<br />
-3. Change the UI! Although that was one of the strongest points of the old version, as it was a battle tested solution, simple but very robust; I was very open for some change.<br />
-4. As less interactions as possible per task. Up until now I was happy to noodle around with the interface, if that made the usage less taxing. I was creating all new pages showing available information, once, twice, thrice, as many times as I needed it. So I would never have to remember or learn nothing new. I now decided that the app should be, not difficult, but not easier than it needs to be.</p>
-<p>As I already said, I trusted Click with all data collection duties, and used <a href="https://blessed.readthedocs.io/">Blessed</a> and <a href="https://rich.readthedocs.io">Rich</a> to present the results. I had some bad experiences with both some time ago; but that was more result of my inexperience and wanting them to do something they aren’t made to do.<br />
-Before this project, I’ve been creating projects with <a href="https://linux.die.net/man/1/tput">Tput</a>, which is a fairly low-end tool. But that simplicity made it simple to grasp and, after you grok it, surprisingly capable. Not in the sense that I would recommend it as a framework, but as a learning opportunity.<br />
-Now, all things seemed simpler and easier to achieve; although that’s also because I was asking for simple things. Which helps.<br />
-I also deleted a lot files and flattened a lot of folders, reaching a much clear and maintainable project structure.</p>
+1. Get back to basics. No more analytics to satisfy idle curiosities, no
+more of momentary nice-to-have’s! If it didn’t have a clear purpose,
+it’s dead wood.<br />
+2. If it can be inputted in command line mode, it’s going to be
+implemented as command line! No more of my beloved option menus and
+input prompts. Now you memorized commands!<br />
+3. Change the UI! Although that was one of the strongest points of the
+old version, as it was a battle tested solution, simple but very robust;
+I was very open for some change.<br />
+4. As less interactions as possible per task. Up until now I was happy
+to noodle around with the interface, if that made the usage less taxing.
+I was creating all new pages showing available information, once, twice,
+thrice, as many times as I needed it. So I would never have to remember
+or learn nothing new. I now decided that the app should be, not
+difficult, but not easier than it needs to be.</p>
+<p>As I already said, I trusted Click with all data collection duties,
+and used <a href="https://blessed.readthedocs.io/">Blessed</a> and <a
+href="https://rich.readthedocs.io">Rich</a> to present the results. I
+had some bad experiences with both some time ago; but that was more
+result of my inexperience and wanting them to do something they aren’t
+made to do.<br />
+Before this project, I’ve been creating projects with <a
+href="https://linux.die.net/man/1/tput">Tput</a>, which is a fairly
+low-end tool. But that simplicity made it simple to grasp and, after you
+grok it, surprisingly capable. Not in the sense that I would recommend
+it as a framework, but as a learning opportunity.<br />
+Now, all things seemed simpler and easier to achieve; although that’s
+also because I was asking for simple things. Which helps.<br />
+I also deleted a lot files and flattened a lot of folders, reaching a
+much clear and maintainable project structure.</p>
 </body>
 </html>

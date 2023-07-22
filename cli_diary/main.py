@@ -3,16 +3,16 @@ import subprocess
 
 import questionary
 
-# import snoop
+import snoop
 from questionary import Separator, Style
 
 from delete import delete
 from edit import edit
+from html_view import view
 from new import new_main
-from search import search_main
-from see import see_main
+from search import search
+from tag_search import tag_main
 from update import update
-from view import view_main
 
 # from snoop import pp
 
@@ -56,14 +56,13 @@ def main():
         use_indicator=True,
         style=custom_style_diary,
         choices=[
-            "View HTML Post",
-            "View Markdown Post",
+            "Open HTML Post",
             "Create Post",
             "Edit Post",
             "Search Posts",
+            "Search Posts By Tag",
             "Delete Post",
             "Update Post",
-            "See Posts",
             Separator(),
             "Exit",
         ],
@@ -71,23 +70,20 @@ def main():
 
     if selection == "Exit":
         raise SystemExit
-    if selection == "View HTML Post":
-        view_main()
-    if selection == "View Markdown Post":
-        cmd = "/usr/bin/python /home/mic/python/cli_diary/cli_diary/choicemd.py"
-        subprocess.run(cmd, shell=True)
+    if selection == "Open HTML Post":
+        view()
     if selection == "Create Post":
         new_main()
     if selection == "Edit Post":
         edit()
     if selection == "Search Posts":
-        search_main()
+        search()
+    if selection == "Search Posts By Tag":
+        tag_main()
     if selection == "Delete Post":
         delete()
     if selection == "Update Post":
         update()
-    if selection == "See Posts":
-        see_main()
 
 
 if __name__ == "__main__":

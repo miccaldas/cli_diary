@@ -1,117 +1,64 @@
 """
-Searches db for query. Presents results.
+Searches Markdown and HTML collections, with the help of 'fzf'.
 """
 import os
-import pickle
-from datetime import datetime
+import subprocess
 
-# import snoop
-from mysql.connector import Error, connect
-from rich import box
-from rich.console import Console
-from rich.table import Table
+import questionary
+import snoop
+from questionary import Separator, Style
+from snoop import pp
 
 
-def dbdata(query, data):
-    """
-    Collects list of posts on the db.
-    We'll use this function as a template,
-    letting the functions that call on it
-    to define its structure. That being
-    the query and if using .fetchall()
-    or .commit()
-    This permits writing just one db function
-    per module.
-    """
-    try:
-        conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
-        cur = conn.cursor()
-        cur.execute(query)
-        if data == "fetch":
-            data = cur.fetchall()
-        if data == "commit":
-            data = conn.commit()
-    except Error as e:
-        print("Error while connecting to db", e)
-    finally:
-        if conn:
-            conn.close()
-
-    return data
+def type_watch(source, value):
+    return f"type({source})", type(value)
 
 
-# @snoop
-def dbcall():
-    """
-    Uses MySQL queries with fulltext to search the database.
-    """
-    console = Console()
-    ask = console.input("[bold #5E8B7E]\[*] - What do you want to search? [/]")
-
-    query = f"SELECT title, time FROM cli_diary WHERE MATCH(title, k1, k2) AGAINST ('{ask}')"
-    srchrslt = dbdata(query, "fetch")
-
-    with open("srchrslt.bin", "wb") as f:
-        pickle.dump(srchrslt, f)
+snoop.install(watch_extras=[type_watch])
 
 
-# @snoop
+@snoop
 def search():
     """
-    Gets information from the database, the html files and makdown files.
-    The first supplies the datetime values and titles, the other link to
-    the html version and the latter is used as a preview.
+    Just calling fzf inside the md and html folders.
+    To open a file, just hover it and press 'F1'.
     """
-    with open("srchrslt.bin", "rb") as f:
-        srchrslt = pickle.load(f)
-
-    htmlfolder = f"{os.getcwd()}/html_posts"
-    mdfolder = f"{os.getcwd()}/md_posts"
-
-    table = Table(
-        box=box.HEAVY_EDGE,
-        padding=1,
-        highlight=True,
-        show_lines=True,
-        style="#69a297",
-        header_style="bold #f5e8e0",
+    custom_style_diary = Style(
+        [
+            ("qmark", "fg:#FF6363 bold"),
+            ("question", "fg:#069A8E bold"),
+            ("answer", "fg:#A1E3D8"),
+            ("pointer", "fg:#F8B400 bold"),
+            ("highlighted", "fg:#F7FF93 bold"),
+            ("selected", "fg:#FAF5E4 bold"),
+            ("separator", "fg:#069A8E"),
+            ("instruction", "fg:#A1E3D8"),
+            ("text", "fg:#FAF5E4 bold"),
+        ]
     )
-    table.add_column("Datetime", vertical="middle", justify="center")
-    table.add_column("Link", vertical="middle", justify="center")
-    table.add_column("Preview", justify="full", style="#fff2cc", max_width=80)
 
-    for entry in srchrslt:
-        # The title kept in the db is the same used in naming the files.
-        filename = entry[0]
-        # These turn a filename in a real title.
-        tspace = filename.replace("_", " ")
-        upper = tspace.title()
-        # Datetime data in human format.
-        date = f"{entry[1].strftime('%Y-%m-%d %H:%M')}"
-        # From the md file we take out the first 500 bytes, to serve as preview.
-        with open(f"{mdfolder}/{filename}.md", "r") as g:
-            mdtxt = g.readlines(500)
-        mdtext = " ".join(mdtxt)
-        # Loop that'll create the table with the former information.
-        table.add_row(
-            f"[bold #5E8B7E]{date}[/]",
-            f"[bold #B2B8A3][link=file://{os.getcwd()}/html_posts/{filename}.html]{upper}[/link]",
-            mdtext,
-        )
-    console = Console()
-    console.print(table)
+    selection = questionary.select(
+        "What do you want to search?",
+        qmark=" [X]",
+        pointer="»»",
+        use_indicator=True,
+        style=custom_style_diary,
+        choices=[
+            "HTML Posts",
+            "Markdown Posts",
+            Separator(),
+            "Exit",
+        ],
+    ).ask()
 
-
-# @snoop
-def search_main():
-    """
-    Calls all other functions in module.
-    """
-    dbcall()
-    search()
-
-    os.remove("srchrslt.bin")
+    cmd = "fzf"
+    if selection == "Exit":
+        raise SystemExit
+    if selection == "HTML Posts":
+        subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/html_posts", shell=True)
+    if selection == "Markdown Posts":
+        subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/md_posts", shell=True)
 
 
 if __name__ == "__main__":
-    search_main()
+    search()

@@ -1,149 +1,171 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2022-06-05" />
-  <title>Yt Player Presentation</title>
-  <style>
-    html {
-      line-height: 1.5;
-      font-family: Iosevka;
-      font-size: 20px;
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="dcterms.date" content="2022-06-05" />
+        <title>Yt Player Presentation</title>
+        <style>
+html {
+    font-family: Iosevka;
+    color: #1a1a1a;
+    background-color: #fdfdfd;
+    line-height: 1.5;
+}
     body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
+        margin: 0 auto;
+        max-width: 45em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
     }
     @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 1em;
-      }
+        body {
+            font-size: 0.9em;
+            padding: 12px;
+        }
+        h1 {
+            font-size: 1.8em;
+        }
     }
     @media print {
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
+        html {
+            background-color: white;
+        }
+        body {
+            background-color: transparent;
+            color: black;
+            font-size: 12pt;
+        }
+        p, h2, h3 {
+            orphans: 3;
+            widows: 3;
+        }
+        h2, h3, h4 {
+            page-break-after: avoid;
+        }
     }
     p {
-      margin: 1em 0;
+        margin: 1em 0;
     }
     a {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     a:visited {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     img {
-      max-width: 100%;
+        max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
+        margin-top: 1.4em;
     }
     h5, h6 {
-      font-size: 1em;
-      font-style: italic;
+        font-size: 1em;
+        font-style: italic;
     }
     h6 {
-      font-weight: normal;
+        font-weight: normal;
     }
     ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
+        padding-left: 1.7em;
+        margin-top: 1em;
     }
     li > ol, li > ul {
-      margin-top: 0;
+        margin-top: 0;
     }
     blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
-      font-size: 85%;
-      margin: 0;
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
     }
     pre {
-      margin: 1em 0;
-      overflow: auto;
+        margin: 1em 0;
+        overflow: auto;
     }
     pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
     }
     .sourceCode {
-     background-color: transparent;
-     overflow: visible;
+        background-color: transparent;
+        overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
+        background-color: #1a1a1a;
+        border: none;
+        height: 1px;
+        margin: 1em 0;
     }
     table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
     }
     table caption {
-      margin-bottom: 0.75em;
+        margin-bottom: 0.75em;
     }
     tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
     }
     th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
     }
     td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
+        padding: 0.125em 0.5em 0.25em 0.5em;
     }
     header {
-      margin-bottom: 4em;
-      text-align: center;
+        margin-bottom: 4em;
+        text-align: center;
     }
     #TOC li {
-      list-style: none;
+        list-style: none;
+    }
+    #TOC ul {
+        padding-left: 1.3em;
+    }
+    #TOC > ul {
+        padding-left: 0;
     }
     #TOC a:not(:hover) {
-      text-decoration: none;
+        text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -152,30 +174,30 @@
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
     @media screen {
-    div.sourceCode { overflow: auto; }
+        div.sourceCode { overflow: auto; }
     }
     @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
-      { counter-reset: source-line 0; }
+        { counter-reset: source-line 0; }
     pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
+        { position: relative; left: -4em; counter-increment: source-line; }
     pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
+        { content: counter(source-line);
         position: relative; left: -1em; text-align: right; vertical-align: baseline;
         border: none; display: inline-block;
         -webkit-touch-callout: none; -webkit-user-select: none;
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-      }
+    }
     pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #cccccc; background-color: #303030; }
+        { color: #cccccc; background-color: #303030; }
     @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
     code span.al { color: #ffcfaf; } /* Alert */
     code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
@@ -206,38 +228,62 @@
     code span.va { } /* Variable */
     code span.vs { color: #cc9393; } /* VerbatimString */
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<header id="title-block-header">
-<h1 class="title">Yt Player Presentation</h1>
-<p class="date">06/05/2022</p>
-</header>
-<p>I created an app that searches, downloads and plays audios taken from YouTube.<br />
-I used the libraries <a href="https://pypi.org/project/youtube-search-python/">youtube-search-python</a> to search results and <a href="https://github.com/pytube/pytube">Pytube</a> to download the chosen search results.<br />
-The app is divided in the following modules:</p>
-<h3>
-search.py
-</h3>
-<p>In short, this function asks user for a query, prepares the query string to be a folder name, asks how many results does the user wants. By default it searches 30 results. From these results it takes the values of video id, builds a youtube url with it, and the title and duration values in the search result. Returns them.</p>
-<ol type="1">
-<li>This puts underscores in lieu of spaces, so as to use it as folder names.</li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    fldr_name <span class="op">=</span> query.replace(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
-<p><br> <br> 2. Questionary text questions returns a string, even if you input a integral. We need to turn it to one so as to, later, when we compare this value with an enumerated list of search results, they match in type.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    number_of_searches <span class="op">=</span> <span class="bu">int</span>(lmt)</span></code></pre></div>
-<p><br> <br> 3. Create an instance of ‘youtube-search-python’. The class ‘Search’, searches for all types of content on YouTube.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    srch <span class="op">=</span> Search(query, limit<span class="op">=</span>number_of_searches)</span></code></pre></div>
-<p><br> <br> 4. Create a variable that houses all the search results.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> srch.result()</span></code></pre></div>
-<p><br> <br> 5. Now we will loop through a named dictionary that has as value a list of dictionaries. Its structure is something like this:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  results <span class="op">=</span> {<span class="st">&#39;result&#39;</span>: [{<span class="st">&#39;id&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, <span class="st">&#39;title&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, ...}, {<span class="st">&#39;id&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, <span class="st">&#39;title&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, ...}, {...}]}</span></code></pre></div>
-<p>‘Duration’, in some cases doesn’t exist in the results, like in the case of content from playlists, for instance. We put it inside a try/except block, so as not stop the program execution. To reach the values inside the list by their key, we use this syntax:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(results[<span class="st">&quot;result&quot;</span>])):</span>
+        </style>
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header id="title-block-header">
+            <h1 class="title">Yt Player Presentation</h1>
+            <p class="date">06/05/2022</p>
+        </header>
+        <p>I created an app that searches, downloads and plays audios taken from
+        YouTube.<br />
+        I used the libraries <a
+                                     href="https://pypi.org/project/youtube-search-python/">youtube-search-python</a>
+        to search results and <a
+                                      href="https://github.com/pytube/pytube">Pytube</a> to download the
+                                  chosen search results.<br />
+                                  The app is divided in the following modules:</p>
+        <h3>
+            search.py
+        </h3>
+        <p>In short, this function asks user for a query, prepares the query
+        string to be a folder name, asks how many results does the user wants.
+        By default it searches 30 results. From these results it takes the
+        values of video id, builds a youtube url with it, and the title and
+        duration values in the search result. Returns them.</p>
+        <ol type="1">
+            <li>This puts underscores in lieu of spaces, so as to use it as folder
+                names.</li>
+        </ol>
+        <div class="sourceCode" id="cb1"><pre
+                                class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    fldr_name <span class="op">=</span> query.replace(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+            <p><br> <br> 2. Questionary text questions returns a string, even if you
+            input a integral. We need to turn it to one so as to, later, when we
+            compare this value with an enumerated list of search results, they match
+            in type.</p>
+            <div class="sourceCode" id="cb2"><pre
+                                    class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    number_of_searches <span class="op">=</span> <span class="bu">int</span>(lmt)</span></code></pre></div>
+                <p><br> <br> 3. Create an instance of ‘youtube-search-python’. The class
+                ‘Search’, searches for all types of content on YouTube.</p>
+                <div class="sourceCode" id="cb3"><pre
+                                        class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    srch <span class="op">=</span> Search(query, limit<span class="op">=</span>number_of_searches)</span></code></pre></div>
+                    <p><br> <br> 4. Create a variable that houses all the search
+                    results.</p>
+                    <div class="sourceCode" id="cb4"><pre
+                                            class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> srch.result()</span></code></pre></div>
+                        <p><br> <br> 5. Now we will loop through a named dictionary that has as
+                        value a list of dictionaries. Its structure is something like this:</p>
+                        <div class="sourceCode" id="cb5"><pre
+                                                class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  results <span class="op">=</span> {<span class="st">&#39;result&#39;</span>: [{<span class="st">&#39;id&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, <span class="st">&#39;title&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, ...}, {<span class="st">&#39;id&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, <span class="st">&#39;title&#39;</span>: <span class="op">&lt;</span>some_value<span class="op">&gt;</span>, ...}, {...}]}</span></code></pre></div>
+                            <p>‘Duration’, in some cases doesn’t exist in the results, like in the
+                            case of content from playlists, for instance. We put it inside a
+                            try/except block, so as not stop the program execution. To reach the
+                            values inside the list by their key, we use this syntax:</p>
+                            <div class="sourceCode" id="cb6"><pre
+                                                    class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(results[<span class="st">&quot;result&quot;</span>])):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>     ident <span class="op">=</span> results[<span class="st">&quot;result&quot;</span>][i][<span class="st">&quot;id&quot;</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     url <span class="op">=</span> <span class="ss">f&quot;https://www.youtube.com/watch?v=</span><span class="sc">{</span>ident<span class="sc">}</span><span class="ss">&quot;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     tit <span class="op">=</span> results[<span class="st">&quot;result&quot;</span>][i][<span class="st">&quot;title&quot;</span>]</span>
@@ -245,13 +291,19 @@ search.py
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         dur <span class="op">=</span> results[<span class="st">&quot;result&quot;</span>][i][<span class="st">&quot;duration&quot;</span>]</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>     <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="cf">pass</span></span></code></pre></div>
-<p><br> <br> 6. We gather the variables we took from the search results in to a tuple and put them in a list.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  tup <span class="op">=</span> (url, tit, dur)</span>
+                                <p><br> <br> 6. We gather the variables we took from the search results
+                                in to a tuple and put them in a list.</p>
+                                <div class="sourceCode" id="cb7"><pre
+                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  tup <span class="op">=</span> (url, tit, dur)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  tup_lst.append(tup)</span></code></pre></div>
-<p><br> <br> 7. The function returns a tuple with the folder name and the list of tuples with the search results data. This information will be needed in the ‘download.py’ module.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> fldr_name, tup_lst</span></code></pre></div>
-<p><br> <br> <br> Full code:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Searches Youtube for a query.&quot;&quot;&quot;</span></span>
+                                    <p><br> <br> 7. The function returns a tuple with the folder name and
+                                    the list of tuples with the search results data. This information will
+                                    be needed in the ‘download.py’ module.</p>
+                                    <div class="sourceCode" id="cb8"><pre
+                                                            class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">return</span> fldr_name, tup_lst</span></code></pre></div>
+                                        <p><br> <br> <br> Full code:</p>
+                                        <div class="sourceCode" id="cb9"><pre
+                                                                class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Searches Youtube for a query.&quot;&quot;&quot;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> isort</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> questionary</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> snoop</span>
@@ -324,24 +376,41 @@ search.py
 <span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
 <span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>    search()</span></code></pre></div>
-<br> <br> <br>
-<h3>
-download.py
-</h3>
-<p>The ‘download’ module receives query and tuple with url, title and duration of each search result, asks the user to choose what results he wants to download by choosing the id of a enumerated search results list, checks for the tuple with the corresponding id, checks if there’s already a folder in ‘music’ with the query’s name, if yes, it downloads to it, if not, it creates a folder and downloads to it.</p>
-<ol type="1">
-<li>We create an instance of the ‘search’ function:</li>
-</ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>    tups <span class="op">=</span> search()</span></code></pre></div>
-<p><br> <br> 2. Define a list of all subfolders inside the folder ‘music’, where all downloads go. ‘os.walk’ returns a tuple with <code>(dirs, files)</code>, if we take only the first element, we get a list of folders.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a> music_folders <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> os.walk(<span class="st">&quot;music&quot;</span>)]</span></code></pre></div>
-<p><br> <br> 3. We print an enumerated version of the list of data we collected for each search result. This is so we have a way to identify each entry easily.<br />
-It enumerates through <code>tups[1]</code> because <code>tups[0]</code> is the folder name variable.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> tup <span class="kw">in</span> <span class="bu">enumerate</span>(tups[<span class="dv">1</span>]):</span>
+                                            <br> <br> <br>
+                                            <h3>
+                                                download.py
+                                            </h3>
+                                            <p>The ‘download’ module receives query and tuple with url, title and
+                                            duration of each search result, asks the user to choose what results he
+                                            wants to download by choosing the id of a enumerated search results
+                                            list, checks for the tuple with the corresponding id, checks if there’s
+                                            already a folder in ‘music’ with the query’s name, if yes, it downloads
+                                            to it, if not, it creates a folder and downloads to it.</p>
+                                            <ol type="1">
+                                                <li>We create an instance of the ‘search’ function:</li>
+                                            </ol>
+                                            <div class="sourceCode" id="cb10"><pre
+                                                                    class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>    tups <span class="op">=</span> search()</span></code></pre></div>
+                                                <p><br> <br> 2. Define a list of all subfolders inside the folder
+                                                ‘music’, where all downloads go. ‘os.walk’ returns a tuple with
+                                                <code>(dirs, files)</code>, if we take only the first element, we get a
+                                                list of folders.</p>
+                                                <div class="sourceCode" id="cb11"><pre
+                                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a> music_folders <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> os.walk(<span class="st">&quot;music&quot;</span>)]</span></code></pre></div>
+                                                    <p><br> <br> 3. We print an enumerated version of the list of data we
+                                                    collected for each search result. This is so we have a way to identify
+                                                    each entry easily.<br />
+                                                    It enumerates through <code>tups[1]</code> because <code>tups[0]</code>
+                                                    is the folder name variable.</p>
+                                                    <div class="sourceCode" id="cb12"><pre
+                                                                            class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> tup <span class="kw">in</span> <span class="bu">enumerate</span>(tups[<span class="dv">1</span>]):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(color(<span class="ss">f&quot; (**) - </span><span class="sc">{</span>tup<span class="sc">}</span><span class="ss">&quot;</span>, fore<span class="op">=</span><span class="st">&quot;#A2B38B&quot;</span>))</span></code></pre></div>
-<p><br> <br> 4. We ask the user what are the entries he wants to download. He inputs the corresponding enumerate id’s.<br />
-As the output, in case of several id’s being chosen, is a string with this format: ‘id1 id2 …’, we need to separate them into a list.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a> entry_ids <span class="op">=</span> questionary.text(</span>
+                                                        <p><br> <br> 4. We ask the user what are the entries he wants to
+                                                        download. He inputs the corresponding enumerate id’s.<br />
+                                                        As the output, in case of several id’s being chosen, is a string with
+                                                        this format: ‘id1 id2 …’, we need to separate them into a list.</p>
+                                                        <div class="sourceCode" id="cb13"><pre
+                                                                                class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a> entry_ids <span class="op">=</span> questionary.text(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;What ids do you want to choose?&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>     qmark<span class="op">=</span><span class="st">&quot;(**)&quot;</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>     style<span class="op">=</span>custom_style_download,</span>
@@ -350,17 +419,24 @@ As the output, in case of several id’s being chosen, is a string with this for
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> lst_id <span class="op">=</span> entry_ids.split(<span class="st">&quot; &quot;</span>)</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> int_id <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> lst_id]</span></code></pre></div>
-<p><br> <br> 5. If there’s no folder with the query’s name, we create it.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> new_fldr <span class="op">=</span> <span class="ss">f&quot;music/</span><span class="sc">{</span>tups[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
+                                                            <p><br> <br> 5. If there’s no folder with the query’s name, we create
+                                                            it.</p>
+                                                            <div class="sourceCode" id="cb14"><pre
+                                                                                    class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> new_fldr <span class="op">=</span> <span class="ss">f&quot;music/</span><span class="sc">{</span>tups[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> new_fldr <span class="kw">not</span> <span class="kw">in</span> music_folders:</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     os.mkdir(new_fldr)</span></code></pre></div>
-<p><br> <br> 6. We look for the search results that correspond to the chosen id’s, and use pytube to, from the available streams, ‘get_audio_only()’, which chooses the best quality audio stream, and we download it to the folder defined in ‘output_path’.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> int_id:</span>
+                                                                <p><br> <br> 6. We look for the search results that correspond to the
+                                                                chosen id’s, and use pytube to, from the available streams,
+                                                                ‘get_audio_only()’, which chooses the best quality audio stream, and we
+                                                                download it to the folder defined in ‘output_path’.</p>
+                                                                <div class="sourceCode" id="cb15"><pre
+                                                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> int_id:</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> tup <span class="kw">in</span> <span class="bu">enumerate</span>(tups[<span class="dv">1</span>]):</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> <span class="bu">id</span> <span class="op">==</span> tup[<span class="dv">0</span>]:</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>             YouTube(tup[<span class="dv">1</span>][<span class="dv">0</span>]).streams.get_audio_only().download(output_path<span class="op">=</span>new_fldr)</span></code></pre></div>
-<p><br> <br> <br> Full code:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Downloads Youtube audios.&quot;&quot;&quot;</span></span>
+                                                                    <p><br> <br> <br> Full code:</p>
+                                                                    <div class="sourceCode" id="cb16"><pre
+                                                                                            class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Downloads Youtube audios.&quot;&quot;&quot;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> os</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> isort</span>
@@ -437,15 +513,21 @@ As the output, in case of several id’s being chosen, is a string with this for
 <span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
 <span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>      download()</span></code></pre></div>
-<br> <br> <br>
-<h3>
-player.py
-</h3>
-<p>The player module gets paths to all files and folders in ‘music’, puts them in a enumerated list for easy identification, asks the user the ids of the paths.<br />
-If path is a directory, it’ll play the full contents of the directory, if path is files, it’ll play files.</p>
-<ol type="1">
-<li><p>First we create a list with all subfolders and files in the ‘music’ folder and print it, questioning the user what entries he would like to play:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a> music_lst <span class="op">=</span> []</span>
+                                                                        <br> <br> <br>
+                                                                        <h3>
+                                                                            player.py
+                                                                        </h3>
+                                                                        <p>The player module gets paths to all files and folders in ‘music’,
+                                                                        puts them in a enumerated list for easy identification, asks the user
+                                                                        the ids of the paths.<br />
+                                                                        If path is a directory, it’ll play the full contents of the directory,
+                                                                        if path is files, it’ll play files.</p>
+                                                                        <ol type="1">
+                                                                            <li><p>First we create a list with all subfolders and files in the
+                                                                                ‘music’ folder and print it, questioning the user what entries he would
+                                                                                like to play:</p>
+                                                                                <div class="sourceCode" id="cb17"><pre
+                                                                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a> music_lst <span class="op">=</span> []</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(<span class="st">&quot;music&quot;</span>):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> d <span class="kw">in</span> dirs:</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         folder <span class="op">=</span> os.path.relpath(os.path.join(root, d), <span class="st">&quot;music&quot;</span>)</span>
@@ -458,13 +540,19 @@ If path is a directory, it’ll play the full contents of the directory, if path
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(color(music, fore<span class="op">=</span><span class="st">&quot;#A2B38B&quot;</span>))</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a> <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a> music_id <span class="op">=</span> questionary.text(<span class="st">&quot;What are the ids of the music you want to hear?&quot;</span>, qmark<span class="op">=</span><span class="st">&quot;(**)&quot;</span>, style<span class="op">=</span>custom_style_player).ask()</span></code></pre></div>
-<p><br> <br></p></li>
-<li><p>We turn the answer received into a list and convert its items to integrals.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a> id_lst <span class="op">=</span> music_id.split(<span class="st">&quot; &quot;</span>)</span>
+                                                                                    <p><br> <br></p></li>
+                                                                            <li><p>We turn the answer received into a list and convert its items to
+                                                                                integrals.</p>
+                                                                                <div class="sourceCode" id="cb18"><pre
+                                                                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a> id_lst <span class="op">=</span> music_id.split(<span class="st">&quot; &quot;</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a> int_lst <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> id_lst]</span></code></pre></div>
-<p><br> <br></p></li>
-<li><p>We compare the id’s the user chosen now, with the id’s of the search results. If they match we check to see if it’s a directory or a file, and open the <a href="https://mpv.io">mpv</a> player with correspondingly adequate commands.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> i <span class="kw">in</span> int_lst:</span>
+                                                                                    <p><br> <br></p></li>
+                                                                            <li><p>We compare the id’s the user chosen now, with the id’s of the
+                                                                                search results. If they match we check to see if it’s a directory or a
+                                                                                file, and open the <a href="https://mpv.io">mpv</a> player with
+                                                                                correspondingly adequate commands.</p>
+                                                                                <div class="sourceCode" id="cb19"><pre
+                                                                                                        class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> i <span class="kw">in</span> int_lst:</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> e <span class="kw">in</span> enum_lst:</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> i <span class="op">==</span> e[<span class="dv">0</span>]:</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>             <span class="cf">if</span> os.path.isdir(e[<span class="dv">1</span>]):</span>
@@ -473,9 +561,10 @@ If path is a directory, it’ll play the full contents of the directory, if path
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>             <span class="cf">else</span>:</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                 cmd2 <span class="op">=</span> <span class="ss">f&quot;mpv --no-audio-display &#39;</span><span class="sc">{</span>e[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">&#39;&quot;</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                 subprocess.run(cmd2, cwd<span class="op">=</span><span class="st">&quot;music&quot;</span>, shell<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
-<p><br> <br> <br> Full code:</p></li>
-</ol>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Shows content of the &#39;music&#39; folder and plays the users choice.&quot;&quot;&quot;</span></span>
+                                                                                    <p><br> <br> <br> Full code:</p></li>
+                                                                        </ol>
+                                                                        <div class="sourceCode" id="cb20"><pre
+                                                                                                class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;Shows content of the &#39;music&#39; folder and plays the users choice.&quot;&quot;&quot;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -542,5 +631,5 @@ If path is a directory, it’ll play the full contents of the directory, if path
 <span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
 <span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>    player()</span></code></pre></div>
-</body>
+    </body>
 </html>

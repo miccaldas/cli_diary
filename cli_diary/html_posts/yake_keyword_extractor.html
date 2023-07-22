@@ -7,9 +7,7 @@
   <title>Yake Keyword Extractor</title>
   <style>
     html {
-      line-height: 1.5;
       font-family: Iosevka;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -28,10 +26,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -81,9 +85,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -134,15 +139,31 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -169,47 +190,42 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        background-color: #232629;
-        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #cfcfc2; background-color: #232629; }
+      { color: #cccccc; background-color: #303030; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #cfcfc2; } /* Normal */
-    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-    code span.an { color: #3f8058; } /* Annotation */
-    code span.at { color: #2980b9; } /* Attribute */
-    code span.bn { color: #f67400; } /* BaseN */
-    code span.bu { color: #7f8c8d; } /* BuiltIn */
-    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #3daee9; } /* Char */
-    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-    code span.co { color: #7a7c7d; } /* Comment */
-    code span.cv { color: #7f8c8d; } /* CommentVar */
-    code span.do { color: #a43340; } /* Documentation */
-    code span.dt { color: #2980b9; } /* DataType */
-    code span.dv { color: #f67400; } /* DecVal */
-    code span.er { color: #da4453; text-decoration: underline; } /* Error */
-    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #f67400; } /* Float */
-    code span.fu { color: #8e44ad; } /* Function */
-    code span.im { color: #27ae60; } /* Import */
-    code span.in { color: #c45b00; } /* Information */
-    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-    code span.op { color: #cfcfc2; } /* Operator */
-    code span.ot { color: #27ae60; } /* Other */
-    code span.pp { color: #27ae60; } /* Preprocessor */
-    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-    code span.sc { color: #3daee9; } /* SpecialChar */
-    code span.ss { color: #da4453; } /* SpecialString */
-    code span.st { color: #f44f4f; } /* String */
-    code span.va { color: #27aeae; } /* Variable */
-    code span.vs { color: #da4453; } /* VerbatimString */
-    code span.wa { color: #da4453; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -220,53 +236,96 @@
 <h1 class="title">Yake Keyword Extractor</h1>
 <p class="date">29/04/2022</p>
 </header>
-<p>As I have had several projects that implied bulk uploads to databases, the problem of generating, as automatically as possible, keywords has been on my mind.<br />
-I tried some NLP tools to see if they could help; NLTK for word frequency, spaCy for keyword extraction and some others. The best for beginners is, without a doubt, <a href="https://github.com/LIAAD/yake">Yake</a>. It had the best results of all the tools that I tried.<br />
+<p>As I have had several projects that implied bulk uploads to
+databases, the problem of generating, as automatically as possible,
+keywords has been on my mind.<br />
+I tried some NLP tools to see if they could help; NLTK for word
+frequency, spaCy for keyword extraction and some others. The best for
+beginners is, without a doubt, <a
+href="https://github.com/LIAAD/yake">Yake</a>. It had the best results
+of all the tools that I tried.<br />
 Here I’ll explain how I implemented it on the ‘notes’ app.</p>
-<p>‘Notes’ is structured like a class that has as first method, two prompts asking for the title and the text of the note. Immediately after having the note text inputted, we initiate the tag suggestion method. It starts with instancing the yake extractor:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span></code></pre></div>
-<p>We reference the note body as a ‘text’ variable. Just because some code was already written with that name and I didn’t felt like reviewing it.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>   text <span class="op">=</span> <span class="va">self</span>.note</span></code></pre></div>
+<p>‘Notes’ is structured like a class that has as first method, two
+prompts asking for the title and the text of the note. Immediately after
+having the note text inputted, we initiate the tag suggestion method. It
+starts with instancing the yake extractor:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   kw_extractor <span class="op">=</span> yake.KeywordExtractor()</span></code></pre></div>
+<p>We reference the note body as a ‘text’ variable. Just because some
+code was already written with that name and I didn’t felt like reviewing
+it.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>   text <span class="op">=</span> <span class="va">self</span>.note</span></code></pre></div>
 <p>The language used is English.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   language <span class="op">=</span> <span class="st">&#39;en&#39;</span></span></code></pre></div>
-<p>‘Max Ngram Size’ refers to the number of words that can be accounted as keywords. Setting it to 1 means that the keywords will be one word only.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>          max_ngram_size <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
-<p>A ‘deduplication threshold’ of 0.9, means that it’s permitted to repeat similar words in the keyword list. Although logically setting it to 0.1 and not permit duplications seems more reasonable, my short experience showed me that a lot of good content is lost with that option.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>          deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>   language <span class="op">=</span> <span class="st">&#39;en&#39;</span></span></code></pre></div>
+<p>‘Max Ngram Size’ refers to the number of words that can be accounted
+as keywords. Setting it to 1 means that the keywords will be one word
+only.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>          max_ngram_size <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+<p>A ‘deduplication threshold’ of 0.9, means that it’s permitted to
+repeat similar words in the keyword list. Although logically setting it
+to 0.1 and not permit duplications seems more reasonable, my short
+experience showed me that a lot of good content is lost with that
+option.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>          deduplication_threshold <span class="op">=</span> <span class="fl">0.9</span></span></code></pre></div>
 <p>This defines how many keyword suggestions will be outputted.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>          numOfKeywords <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>          numOfKeywords <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
 <p>We define the extractor with the characteristics previously seen:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>      custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>      custom_kw_extractor <span class="op">=</span> yake.KeywordExtractor(lan<span class="op">=</span>language, n<span class="op">=</span>max_ngram_size, dedupLim<span class="op">=</span>deduplication_threshold, top<span class="op">=</span>numOfKeywords, features<span class="op">=</span><span class="va">None</span>)</span></code></pre></div>
 <p>And house the keywords in a variable list called ‘keywords’.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>          keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span></code></pre></div>
-<p>Each keyword is presented as a tuple made of a string, the name of the keyword, and a number, the fitness of the keyword. As we are only interested in the strings, we isolate them in a new list.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>          keywords <span class="op">=</span> custom_kw_extractor.extract_keywords(text)</span></code></pre></div>
+<p>Each keyword is presented as a tuple made of a string, the name of
+the keyword, and a number, the fitness of the keyword. As we are only
+interested in the strings, we isolate them in a new list.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> kw <span class="kw">in</span> keywords:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              kwds.append(kw[<span class="dv">0</span>])</span></code></pre></div>
-<p>In order to have a simple way to choose the keywords, we assign a number to each one, through the method ‘Enumerate’, and ask the user if he wants to choose up to three options.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
+<p>In order to have a simple way to choose the keywords, we assign a
+number to each one, through the method ‘Enumerate’, and ask the user if
+he wants to choose up to three options.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span> idx, kwd <span class="kw">in</span> <span class="bu">enumerate</span>(kwds):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          <span class="bu">print</span>(idx, kwd)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      kwdcho <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot;If you want to keep any of three keywords, type their number. &quot;</span>, lexer, formatter))</span></code></pre></div>
-<p>If the user chose some keywords, we begin by splitting the output by the with spaces, as it returns a string with this format: ‘2 3’. As we split it, we end up with a list of two strings, as per the example: [‘2’, ‘3’].</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
+<p>If the user chose some keywords, we begin by splitting the output by
+the with spaces, as it returns a string with this format: ‘2 3’. As we
+split it, we end up with a list of two strings, as per the example:
+[‘2’, ‘3’].</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> kwdcho <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              kwdchoi <span class="op">=</span> kwdcho.split(<span class="st">&quot; &quot;</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
-<p>We now have a list of strings but we need a list of integers. We convert it here.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>              kwd_choice <span class="op">=</span> []</span>
+<p>We now have a list of strings but we need a list of integers. We
+convert it here.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>              kwd_choice <span class="op">=</span> []</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> num <span class="kw">in</span> kwdchoi:</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  kwd_choice.append(<span class="bu">int</span>(num))</span></code></pre></div>
 <p>We recuperate the tuples of the choices:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> i <span class="kw">in</span> kwd_choice:</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  choice <span class="op">=</span> [(idx, val) <span class="cf">for</span> (idx, val) <span class="kw">in</span> <span class="bu">enumerate</span>(kwds) <span class="cf">if</span> idx <span class="op">==</span> i]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  choices.append(choice)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
-<p>Here we flatten ‘choices’, as it consists of list of tuples within a list.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>              flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span></code></pre></div>
+<p>Here we flatten ‘choices’, as it consists of list of tuples within a
+list.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>              flatter_choices <span class="op">=</span> [i <span class="cf">for</span> sublist <span class="kw">in</span> choices <span class="cf">for</span> i <span class="kw">in</span> sublist]</span></code></pre></div>
 <p>We isolate the keywords strings of the choices:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>              kwd_names <span class="op">=</span> []</span>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>              kwd_names <span class="op">=</span> []</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> f <span class="kw">in</span> flatter_choices:</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  kwd_names.append(f[<span class="dv">1</span>])</span></code></pre></div>
-<p>Depending on the length of the list of keywords, we ask to define as many keywords as needed to get to the number three.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
+<p>Depending on the length of the list of keywords, we ask to define as
+many keywords as needed to get to the number three.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> <span class="bu">len</span>(kwd_names) <span class="op">==</span> <span class="dv">1</span>:</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
@@ -278,13 +337,16 @@ Here I’ll explain how I implemented it on the ‘notes’ app.</p>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k1 <span class="op">=</span> kwd_names[<span class="dv">0</span>]</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k2 <span class="op">=</span> kwd_names[<span class="dv">1</span>]</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                  <span class="va">self</span>.k3 <span class="op">=</span> kwd_names[<span class="dv">2</span>]</span></code></pre></div>
-<p>And, finally, if the user didn’t chose any of the suggestions, we prompt him to input three keywords.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span>:</span>
+<p>And, finally, if the user didn’t chose any of the suggestions, we
+prompt him to input three keywords.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span>:</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k1 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose a keyword » &quot;</span>, lexer, formatter))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k2 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; Choose another... » &quot;</span>, lexer, formatter))</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="va">self</span>.k3 <span class="op">=</span> <span class="bu">input</span>(highlight(<span class="st">&quot; And another... » &quot;</span>, lexer, formatter))</span></code></pre></div>
 <p>For context, here it is the full code of the class:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Collects user input, checks keywords for similarity, if they&#39;re new and their frequency.</span></span>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Collects user input, checks keywords for similarity, if they&#39;re new and their frequency.</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">  Sends information to the database and creates the md and html pages.&quot;&quot;&quot;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> time</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> time <span class="im">import</span> sleep</span>

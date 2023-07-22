@@ -119,6 +119,7 @@ def htmlfile():
     # So, we can put an element in any index position, and all the other elements are
     # preserved. Here we add, in line 13, a css definition of line-hright.
     content.insert(13, "      line-height: 1.5;\n")
+    content.insert(17, "        max-width: 45em;\n")
     # To rewrite the file with the added line, we use 'writelines()', that writes list objects
     # to a file.
     with open(f"html_posts/{unders}.html", "w") as g:

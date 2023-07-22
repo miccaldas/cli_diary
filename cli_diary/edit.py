@@ -3,6 +3,7 @@ Edits an existing post.
 """
 import os
 import subprocess
+
 import click
 
 # import snoop
@@ -67,17 +68,25 @@ def edit():
     """
     records = dbchoices()
     for row in records:
-        print(click.style(f"  {row[0]} - ", fg="bright_green", bold=True), click.style(row[1], fg="bright_white", bold=True))
+        print(
+            click.style(f"  {row[0]} - ", fg="bright_green", bold=True),
+            click.style(row[1], fg="bright_white", bold=True),
+        )
 
     print("\n")
-    choi = input(click.style("[*] - What is the id of the post you want to edit? ", fg="bright_green", bold=True))
+    choi = input(
+        click.style(
+            "[*] - What is the id of the post you want to edit? ",
+            fg="bright_green",
+            bold=True,
+        )
+    )
     choice = int(choi)
 
     query = f"SELECT title FROM cli_diary WHERE id = {choice}"
     record = dbdata(query, "fetch")
 
-    title_str = " "
-    title = title_str.join(record)
+    title = "".join(f"{record[0][0]}")
     filename_html = f"{title}.html"
     filename_md = f"{title}.md"
 

@@ -2,11 +2,11 @@
 Updates database entries.
 """
 import click
-
-# import snoop
+import snoop
 from mysql.connector import Error, connect
 
 # from snoop import pp
+
 
 # def type_watch(source, value):
 #     return f"type({source})", type(value)
