@@ -7,9 +7,7 @@
   <title>Auto</title>
   <style>
     html {
-      line-height: 1.5;
       font-family: Iosevka;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -28,10 +26,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -81,9 +85,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -134,15 +139,31 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -169,47 +190,42 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        background-color: #232629;
-        color: #7a7c7d;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #cfcfc2; background-color: #232629; }
+      { color: #cccccc; background-color: #303030; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #cfcfc2; } /* Normal */
-    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-    code span.an { color: #3f8058; } /* Annotation */
-    code span.at { color: #2980b9; } /* Attribute */
-    code span.bn { color: #f67400; } /* BaseN */
-    code span.bu { color: #7f8c8d; } /* BuiltIn */
-    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #3daee9; } /* Char */
-    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-    code span.co { color: #7a7c7d; } /* Comment */
-    code span.cv { color: #7f8c8d; } /* CommentVar */
-    code span.do { color: #a43340; } /* Documentation */
-    code span.dt { color: #2980b9; } /* DataType */
-    code span.dv { color: #f67400; } /* DecVal */
-    code span.er { color: #da4453; text-decoration: underline; } /* Error */
-    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #f67400; } /* Float */
-    code span.fu { color: #8e44ad; } /* Function */
-    code span.im { color: #27ae60; } /* Import */
-    code span.in { color: #c45b00; } /* Information */
-    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-    code span.op { color: #cfcfc2; } /* Operator */
-    code span.ot { color: #27ae60; } /* Other */
-    code span.pp { color: #27ae60; } /* Preprocessor */
-    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-    code span.sc { color: #3daee9; } /* SpecialChar */
-    code span.ss { color: #da4453; } /* SpecialString */
-    code span.st { color: #f44f4f; } /* String */
-    code span.va { color: #27aeae; } /* Variable */
-    code span.vs { color: #da4453; } /* VerbatimString */
-    code span.wa { color: #da4453; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -219,33 +235,64 @@
 <header id="title-block-header">
 <h1 class="title">Auto</h1>
 </header>
-<p>I am very sure that I must not be the first person that stopped writing in a blog, because tinkering with it took all the time he had.<br />
-I understand now the emphasis some people give to a clean environment to write in, free from distractions.<br />
-That is not the environment that I’m in right now. Making the blog as I go along, has pushed me in several directions, all of them interesting, all of them adding something to the site and, all orthogonal to each other.<br />
+<p>I am very sure that I must not be the first person that stopped
+writing in a blog, because tinkering with it took all the time he
+had.<br />
+I understand now the emphasis some people give to a clean environment to
+write in, free from distractions.<br />
+That is not the environment that I’m in right now. Making the blog as I
+go along, has pushed me in several directions, all of them interesting,
+all of them adding something to the site and, all orthogonal to each
+other.<br />
 So, to take a breather, I stopped to write this post.<br />
-After trying the simplicity of the flat files and static sites, I noticed wistfully, that this system did without a database. In fact it was one of its selling points. No added complexity from managing a database, they say. Well, after trying their solution I was reminded that their simplicity comes at the cost of ease of use, as is so many times the case. Or, more realistically, it’s just a reflection of my own ignorance. I was having a difficult time understanding the management and manipulation of the metadata. In the static files solutions, it’s all done with files that get information through JavaScript template tricks that I didn’t understand at all.<br />
-That was another thing that started tugging at me. Learn a bit of JavaScript.<br />
-A database I understand. At least I understand those that cater to my simple needs.<br />
-So I created a small python class to help collect and keep some metadata on my posts, that I’ll keep on a mysql database.<br />
+After trying the simplicity of the flat files and static sites, I
+noticed wistfully, that this system did without a database. In fact it
+was one of its selling points. No added complexity from managing a
+database, they say. Well, after trying their solution I was reminded
+that their simplicity comes at the cost of ease of use, as is so many
+times the case. Or, more realistically, it’s just a reflection of my own
+ignorance. I was having a difficult time understanding the management
+and manipulation of the metadata. In the static files solutions, it’s
+all done with files that get information through JavaScript template
+tricks that I didn’t understand at all.<br />
+That was another thing that started tugging at me. Learn a bit of
+JavaScript.<br />
+A database I understand. At least I understand those that cater to my
+simple needs.<br />
+So I created a small python class to help collect and keep some metadata
+on my posts, that I’ll keep on a mysql database.<br />
 This is what I did:</p>
 <ol type="1">
-<li>I imported <a href="https://www.journaldev.com/23788/python-string-module">string</a>, to capitalize words without having to worry with errors coming from apostrophes, <a href="https://sultan.readthedocs.io/en/latest/">Sultan</a>, because it’s easier than Subprocess, mysql.connector to link to the db and <a href="https://github.com/welbornprod/colr">Colr</a> to make it less drab.</li>
+<li>I imported <a
+href="https://www.journaldev.com/23788/python-string-module">string</a>,
+to capitalize words without having to worry with errors coming from
+apostrophes, <a
+href="https://sultan.readthedocs.io/en/latest/">Sultan</a>, because it’s
+easier than Subprocess, mysql.connector to link to the db and <a
+href="https://github.com/welbornprod/colr">Colr</a> to make it less
+drab.</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> string</span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> string</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> sultan.api <span class="im">import</span> Sultan</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> mysql.connector <span class="im">import</span> <span class="ex">connect</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> colr <span class="im">import</span> color</span></code></pre></div>
 <ol start="2" type="1">
-<li>Opened the class and defined the global variable ‘tit’ for title, because it soon became clear that it would be needed for a lot of methods.</li>
+<li>Opened the class and defined the global variable ‘tit’ for title,
+because it soon became clear that it would be needed for a lot of
+methods.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> Meta():</span>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> Meta():</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, tit):</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.tit <span class="op">=</span> <span class="bu">input</span>(color(<span class="st">&#39;  [T] - Title? &#39;</span>, fore<span class="op">=</span><span class="st">&#39;#fa2033&#39;</span>))</span></code></pre></div>
 <ol start="3" type="1">
-<li>Title method. Collects the title chosen by the user and capitalizes the first letter of every word.</li>
+<li>Title method. Collects the title chosen by the user and capitalizes
+the first letter of every word.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> title(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> title(<span class="va">self</span>):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Collects the title chosen by the user and capitalizes the</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">      first letter of every word. &quot;&quot;&quot;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.title <span class="op">=</span> string.capwords(<span class="va">self</span>.tit)  <span class="co"># https://bit.ly/3pMw9ew</span></span>
@@ -253,7 +300,8 @@ This is what I did:</p>
 <ol start="4" type="1">
 <li>Create a db entry with the URL of the post.</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> link(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> link(<span class="va">self</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Creates an entry with a link where the post will be. &quot;&quot;&quot;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      slug <span class="op">=</span> <span class="bu">input</span>(color(<span class="st">&#39;  [S] - Slug? &#39;</span>, fore<span class="op">=</span><span class="st">&#39;#fa2033&#39;</span>))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      lnk <span class="op">=</span> <span class="st">&#39;/usr/share/nginx/html/analytics/ascii/public/pages/posts/&#39;</span>\</span>
@@ -262,7 +310,8 @@ This is what I did:</p>
 <ol start="5" type="1">
 <li>Create a draft page.</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> page(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> page(<span class="va">self</span>):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Creates the draft page. &quot;&quot;&quot;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      s <span class="op">=</span> Sultan()</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      draft_path <span class="op">=</span> <span class="st">&quot;/usr/share/nginx/html/analytics/ascii/drafts/&quot;</span> \</span>
@@ -272,7 +321,8 @@ This is what I did:</p>
 <ol start="6" type="1">
 <li>Asks the user for a description of the post.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> description(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> description(<span class="va">self</span>):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Asks the user for a description of the post. &quot;&quot;&quot;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      descript <span class="op">=</span> <span class="bu">input</span>(color(<span class="st">&#39;  [D] - Write a description: &#39;</span>,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                             fore<span class="op">=</span><span class="st">&#39;#fa2033&#39;</span>))</span>
@@ -280,21 +330,25 @@ This is what I did:</p>
 <ol start="7" type="1">
 <li>Ask for tags.</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> tags(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> tags(<span class="va">self</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Asks the user for the tags of the post. &quot;&quot;&quot;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      tgs <span class="op">=</span> <span class="bu">input</span>(color(<span class="st">&#39;  [T] - Tags? &#39;</span>, fore<span class="op">=</span><span class="st">&#39;#fa2033&#39;</span>))</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> tgs</span></code></pre></div>
 <ol start="8" type="1">
 <li>Asks for categories.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> categories(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> categories(<span class="va">self</span>):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; Asks the user for the categories of the post. &quot;&quot;&quot;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      cat <span class="op">=</span> <span class="bu">input</span>(color(<span class="st">&#39;  [C] - Choose the Categories &#39;</span>, fore<span class="op">=</span><span class="st">&#39;#fa2033&#39;</span>))</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> cat</span></code></pre></div>
 <ol start="9" type="1">
-<li>Turns all function results in strings so it can be sent as a query.</li>
+<li>Turns all function results in strings so it can be sent as a
+query.</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> answers(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> answers(<span class="va">self</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>      tit <span class="op">=</span> <span class="bu">str</span>(<span class="va">self</span>.title())</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      desc <span class="op">=</span> <span class="bu">str</span>(<span class="va">self</span>.description())</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      tags <span class="op">=</span> <span class="bu">str</span>(<span class="va">self</span>.tags())</span>
@@ -305,7 +359,8 @@ This is what I did:</p>
 <ol start="10" type="1">
 <li>Send it to the database.</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> connection(<span class="va">self</span>):</span>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> connection(<span class="va">self</span>):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.page()</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      conn <span class="op">=</span> <span class="ex">connect</span>(</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              host<span class="op">=</span><span class="st">&quot;localhost&quot;</span>,</span>
@@ -319,7 +374,8 @@ This is what I did:</p>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      conn.commit()</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      conn.close()</span></code></pre></div>
 <p>Here is the whole code:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  </span>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot; This class will house the functions for the creation of the</span><span class="ch">\</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">  post&#39;s metadata. &quot;&quot;&quot;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> string</span>
@@ -398,6 +454,9 @@ This is what I did:</p>
 <span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  meta.connection()</span></code></pre></div>
 <hr />
 <h2 id="update">UPDATE</h2>
-<p>It is now 21-08-2021 and I rediscovered this project that I think is very cool. There is no way to get it back as the ‘dazed’ database doesn’t exist anymore. But it’s a pity. I would have liked very much to revisit this project.</p>
+<p>It is now 21-08-2021 and I rediscovered this project that I think is
+very cool. There is no way to get it back as the ‘dazed’ database
+doesn’t exist anymore. But it’s a pity. I would have liked very much to
+revisit this project.</p>
 </body>
 </html>

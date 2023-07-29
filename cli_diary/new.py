@@ -33,9 +33,7 @@ def dbdata(query, data):
     per module.
     """
     try:
-        conn = connect(
-            host="localhost", user="mic", password="xxxx", database="cli_diary"
-        )
+        conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
         cur = conn.cursor()
         cur.execute(query)
         if data == "fetch":
@@ -60,11 +58,7 @@ def titlename():
     as a version to be used as file name, we'll define
     them both here and make them available in a pickle file.
     """
-    title = input(
-        click.style(
-            " [X] - What is the title of your post? ", fg="bright_green", bold=True
-        )
-    )
+    title = input(click.style(" [X] - What is the title of your post? ", fg="bright_green", bold=True))
     low = title.lower()
     unders = low.replace(" ", "_")
     titles = [title, unders]
@@ -97,7 +91,7 @@ def mdfile():
         g.write(f"title: {title}\n")
         g.write(f"date: {now}\n")
         g.write("mainfont: Iosevka\n")
-        g.write("fontsize: 15pt\n")
+        g.write("fontsize: 13pt\n")
         g.write("---\n\n\n\n")
 
     cmd = f"vim {flpth}"

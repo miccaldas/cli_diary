@@ -12,9 +12,12 @@ import subprocess
 
 # import snoop
 import yake
+from dotenv import load_dotenv
 from mysql.connector import Error, connect
 
 # from snoop import pp
+
+from db import dbdata
 
 
 # def type_watch(source, value):
@@ -22,6 +25,7 @@ from mysql.connector import Error, connect
 
 
 # snoop.install(watch_extras=[type_watch])
+load_dotenv()
 
 
 # @snoop
@@ -57,39 +61,6 @@ def yake_processing(text):
 
 
 # @snoop
-def dbdata(query, data):
-    """
-    Collects list of posts on the db.
-    We'll use this function as a template,
-    letting the functions that call on it
-    to define its structure. That being
-    the query and if using .fetchall()
-    or .commit()
-    This permits writing just one db
-    function per module.
-    """
-    try:
-        conn = connect(host="localhost", user="mic", password="xxxx", database="cli_diary")
-        cur = conn.cursor()
-        cur.execute(query)
-        if data == "fetch":
-            data = cur.fetchall()
-        if data == "leave":
-            # The 'data' variable is here only because Python was outputing
-            # error messages because 'data' is mentioned in the 'if' clause
-            # in the line above, and wasn't defined. This way it shuts up.
-            data = conn.commit()
-    except Error as e:
-        print("Error while connecting to db", e)
-    finally:
-        if conn:
-            conn.close()
-
-    if data:
-        return data
-
-
-# @snoop
 def db_updates():
     """
     Creates a list of files on the markdown posts directory.
@@ -102,7 +73,6 @@ def db_updates():
     diary = os.getenv("CLIDIARY")
     mdpth = f"{diary}md_posts"
     mdlist = os.listdir(mdpth)
-
     query = "SELECT title FROM cli_diary"
     data = dbdata(query, "fetch")
 
@@ -114,12 +84,14 @@ def db_updates():
         for post in newentries:
             with open(f"{mdpth}/{post}", "r") as h:
                 text = h.read()
+                print(text)
                 yake = yake_processing(text)
                 newdata.append([post[:-3], yake[0], yake[1]])
-
+    for i in newdata:
+        print(i)
     for i in newdata:
         query1 = f"INSERT INTO cli_diary (title, k1, k2) VALUES ('{i[0]}', '{i[1]}', '{i[2]}')"
-        dbdata(query1, "leave")
+        dbdata(query1, "commit")
 
 
 if __name__ == "__main__":

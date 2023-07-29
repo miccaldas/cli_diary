@@ -5,19 +5,21 @@ import os
 import subprocess
 
 import questionary
-import snoop
+
+# import snoop
 from questionary import Separator, Style
-from snoop import pp
+
+# from snoop import pp
 
 
-def type_watch(source, value):
-    return f"type({source})", type(value)
+# def type_watch(source, value):
+#     return f"type({source})", type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
 
 
-@snoop
+# @snoop
 def search():
     """
     Just calling fzf inside the md and html folders.

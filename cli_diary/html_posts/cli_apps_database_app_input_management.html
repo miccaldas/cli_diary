@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cli Apps Database App - Input Management</title>
+  <style>
+    html {
+      font-family: Iosevka;
+      font-size: 13pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cli Apps Database App - Input Management</h1>
+<p class="date">29-07-2023 02:10</p>
+</header>
+<p>For a long time the <em>cli_apps</em> project never had a database
+app. And by that I mean the usual CRUD I do for all my projects. It was
+a project where all interest for me was in automations, not to be used
+as a means of personal perusal. Then I started thinking that that might
+be because the old means of searching were not creating interesting
+output in this database. If I could make it with more questions than
+only the initial one and cross-examine other information, even from the
+same database, that would create a more engaging proposition.<br />
+With that in mind, I started building a program that could:</p>
+<ol type="1">
+<li><p>Simultaneously collect information as:<br />
+1.1 Keywords. To define as many tags as I wanted.<br />
+1.2 Names. To search by how many program names I wanted.<br />
+1.3 Id’s. Search by how many id’s I wanted.<br />
+1.4 Queries. Make as many natural searches as required.</p></li>
+<li><p>Aggregate all information collected.<br />
+I don’t want to have one output for <em>keywords</em> and another for
+<em>queries</em>. I want one view for all the information.</p></li>
+<li><p>Add other sources of information beyond the database.<br />
+Even if I don’t want to keep this information, I should have access to
+it.</p></li>
+<li><p>Presented this information with a modicum of style.<br />
+It should be pretty to look at.</p></li>
+</ol>
+<p>Not surprisingly, it’s point 4, the one that is most lacking at this
+moment. But, I’ll try once more to make it less visually horrible.<br />
+In order for me not to get lost in a over-long post, I intend to split
+it in two: one for input management and another for the analysis and
+enrichment of the information. After we have all the input cleaned and
+organized.</p>
+<h3>
+DATA COLLECTION
+</h3>
+<p>I felt that a command line solution for this idea would be a perfect
+fit. With all the alternatives, a TUI would have been a slow slog
+through menus and clicks. This way you get all the asks in one fell
+swoop.<br />
+I’m using <a
+href="https://click.palletsprojects.com/en/8.1.x/">Click</a>, as usual,
+and I structured the data collection the following way:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">@click.command</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">@click.argument</span>(<span class="st">&quot;keywords&quot;</span>, nargs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-q&quot;</span>, <span class="st">&quot;--queries&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-i&quot;</span>, <span class="st">&quot;--ids&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;id&quot;</span>, default<span class="op">=</span>[], <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-n&quot;</span>, <span class="st">&quot;--names&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;--req / --no-req&quot;</span>, default<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<p>You’ll notice that <em>keywords</em> are an argument, not an option;
+that’s because only arguments are allowed an indeterminate number of
+entries. And I feel that you can get to interesting places by being
+associative with words, seeing where they get you.<br />
+All the options are optional, it wouldn’t make sense any other way, and
+accept multiple values.<br />
+I prepared to receive multiple input in these forms; separated by
+spaces, separated by commas and a space, separated by commas. I’m sure
+that there’s more ways to input them, but I expect that I’m going to be
+a good user and honour these premises.<br />
+The last option: <em>–req, –no-req</em>, serves to flag the user’s
+interest in seeing the dependencies of his chosen programs. This implies
+a different workflow, and it helps to be aware of it from the
+start.<br />
+I haven’t gotten around to arrange a pithy command-line command, so a
+maximalist query would look something like this:</p>
+<pre class="shell"><code>python main.py cli python -q click -q mysql -i 3274 -i 23 -n flake8 -n jinja2</code></pre>
+<p>This means that the user is looking for the <em>cli</em> and
+<em>python</em> keywords, notice that as they are an argument they don’t
+have a flag before them. After, we have two natural search queries;
+<em>click</em> and <em>mysql</em>, two id’s numbered <em>3274</em> and
+<em>23</em> respectively and, finally, two app names to search: *
+flake8* and <em>jinja2</em>.<br />
+You have to put the option command before every choice.
+<code>-i 23 2374</code> won’t work, only
+<code>-i 2374 -i 23</code>.<br />
+The first thing that <code>main.py</code> does when it gets the queries
+is to distribute it to the correct management modules:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@click.command</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">@click.argument</span>(<span class="st">&quot;keywords&quot;</span>, nargs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-q&quot;</span>, <span class="st">&quot;--queries&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-i&quot;</span>, <span class="st">&quot;--ids&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;id&quot;</span>, default<span class="op">=</span>[], <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-n&quot;</span>, <span class="st">&quot;--names&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;--req / --no-req&quot;</span>, default<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">@snoop</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_query(keywords, queries, ids, names, req):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Because we want to deal with complex queries, we&#39;ll define that we can receive,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    in the same query, an indefinite number of keywords, queries for natural:</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    language search, several id&#39;s and names. This module will receive the information</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    and send output to different functions.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    cwd <span class="op">=</span> os.getcwd()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>cwd<span class="sc">}</span><span class="ss">/data_files&quot;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    required <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>cwd<span class="sc">}</span><span class="ss">/required_files&quot;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    keys <span class="op">=</span> kwd_mngmnt(keywords)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> queries <span class="op">!=</span> ():</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        queries_mngmnt(queries)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ids <span class="op">!=</span> ():</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        ids_mngmnt(ids)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    names_mngmnt(names)</span></code></pre></div>
+<p>You can also see code creating variables containing some paths that
+are used often. I define them at the beginning of the function and use
+them as needed.</p>
+<h3>
+INPUT MANAGEMENT
+</h3>
+Although the objective is to be holistic with the data presentation,
+their treatment still has different silos, and that’s how it should
+be.<br />
+For each of the content options, I created a <em>management</em> module,
+that coordinates helper functions that enrich and transform the
+data.<br />
+Here is an example of one of the more complex, the <em>names</em> one,
+so you can see the structure of the management process, that is rather
+similar between the options:<br />
+
+<h4>
+Names Management Module:
+</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> names_mngmnt(names):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Calls all functions regarding names.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> names:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;names.bin&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            pickle.dump(names, f)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        sql_expression(<span class="st">&quot;names.bin&quot;</span>, <span class="st">&quot;nqy.bin&quot;</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        get(<span class="st">&quot;nqy.bin&quot;</span>, <span class="st">&quot;nlst.bin&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        question <span class="op">=</span> input_decision(<span class="st">&quot;Do you want to see a list of names?[y/n]? &quot;</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> question <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            column_content(<span class="st">&quot;SELECT name FROM cli_apps&quot;</span>, <span class="st">&quot;allnm.bin&quot;</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            show_column(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;allnm.bin&quot;</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Choose Some Names!&quot;</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;names.bin&quot;</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            sql_expression(<span class="st">&quot;names.bin&quot;</span>, <span class="st">&quot;nqy.bin&quot;</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            get(<span class="st">&quot;nqy.bin&quot;</span>, <span class="st">&quot;nlst.bin&quot;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="st">&quot;names.bin&quot;</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="st">&quot;nqy.bin&quot;</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="st">&quot;allnm.bin&quot;</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    names_mngmnt()</span></code></pre></div>
+<p>The first thing it does is create a pickled list with all the name
+queries from the user. This way several functions can use the
+information without having to make function calls that are not
+needed.<br />
+Then it builds a SQL query from user input, makes the database call and,
+again, pickles the results<br />
+Off course some housekeeping is important, as these binary files can not
+last long, or the next query will be contaminated by the latter.<br />
+Let’s see each of these functions in detail:</p>
+<h5>
+sql_expression
+</h5>
+<p>This, and the next functions, serve all management modules. It
+creates a single SQL query that uses all the command-line inputs.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sql_expression(in_binary, out_binary):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    We&#39;ll see what content there are</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    in the output of the arguments/options,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    and turn them to a sql expression. that</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    we&#39;ll pickle.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>in_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        asks <span class="op">=</span> pickle.load(f)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    collection <span class="op">=</span> []</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> in_binary <span class="op">==</span> <span class="st">&quot;queries.bin&quot;</span>:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        qry <span class="op">=</span> <span class="st">&quot;SELECT * FROM cli_apps WHERE MATCH(name, presentation) AGAINST (&#39;dummy&#39;) &quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> in_binary <span class="op">==</span> <span class="st">&quot;keywords.bin&quot;</span>:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        qry <span class="op">=</span> <span class="st">&#39;SELECT * FROM cli_apps WHERE t1 = &quot;dummy&quot; OR t2 = &quot;dummy&quot; OR t3 = &quot;dummy&quot; OR t4 = &quot;dummy&quot;&#39;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> in_binary <span class="op">==</span> <span class="st">&quot;ids.bin&quot;</span>:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        qry <span class="op">=</span> <span class="st">&quot;SELECT * FROM cli_apps WHERE id = dummy&quot;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> in_binary <span class="op">==</span> <span class="st">&quot;names.bin&quot;</span>:</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        qry <span class="op">=</span> <span class="st">&quot;SELECT * FROM cli_apps WHERE name = &#39;dummy&#39;&quot;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ask <span class="kw">in</span> asks:</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This is for keywords.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot;t1&quot;</span> <span class="kw">in</span> qry:</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            kqry <span class="op">=</span> qry.replace(<span class="st">&quot;dummy&quot;</span>, ask)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            collection.append(kqry)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Same for names.</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot;name = &#39;dummy&#39;&quot;</span> <span class="kw">in</span> qry:</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            nqry <span class="op">=</span> qry.replace(<span class="st">&quot;dummy&quot;</span>, ask)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            collection.append(nqry)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Id&#39;s</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot;id = dummy&quot;</span> <span class="kw">in</span> qry:</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            iqry <span class="op">=</span> qry.replace(<span class="st">&quot;dummy&quot;</span>, <span class="bu">str</span>(ask))</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            collection.append(iqry)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Queries.</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot;(&#39;dummy&#39;)&quot;</span> <span class="kw">in</span> qry:</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            qqry <span class="op">=</span> qry.replace(<span class="st">&quot;dummy&quot;</span>, ask)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            collection.append(qqry)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If there&#39;s morethan one choice we link them with &#39;UNION&#39;, that eliminates repeats.</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        collection.append(<span class="st">&quot; UNION&quot;</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># There&#39;ll be one &#39;UNION&#39; to many. This deletes it.</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    collection.pop(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &#39;Order&#39; in a mysql expression comes at the end. We add it now.</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    collection.append(<span class="st">&quot; ORDER BY time&quot;</span>)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We turn this list to string, so it&#39;s accepted as sql query.</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    collection_str <span class="op">=</span> <span class="st">&quot; &quot;</span>.join(collection)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>out_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> g:</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        pickle.dump(collection_str, g)</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    sql_expression()</span></code></pre></div>
+<p><em>sql_expression</em> has as arguments: what is the file with the
+user input?, where do you want me to put it? Or, in other words:
+<code>in_binary</code> and <code>out_binary</code> respectively.<br />
+Depending from where the information comes, its created a template SQL
+query, that’ll be looped through each one of the user’s queries, so as
+to insert in the them the names of said queries.<br />
+Although we have several valid SQL expressions, they might, probably,
+overlap, causing repetitions in the output. To remedy this, we’ll unite
+each of these with <code>UNION</code> SQL commands, that join the
+information from the several expressions without repetitions.<br />
+It has the added advantage that it aggregates the output.<br />
+This method creates an unnecessary <code>UNION</code> clause at the end
+of the expression list. We pop it out.<br />
+Finally, we transform everything into a string, and its ready to
+use!</p>
+<h5>
+get
+</h5>
+<p>Makes the necessary database calls.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get(in_binary, out_binary):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    The db call, which expression is</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    taken from a pickled file, is made</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    here. We pickle its results.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>in_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        query <span class="op">=</span> pickle.load(f)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    qr <span class="op">=</span> dbdata(query, <span class="st">&quot;fetch&quot;</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>out_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> g:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        pickle.dump(qr, g)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    get()</span></code></pre></div>
+<p>As in the case of the latter function, all it needs to know is where
+to get the information and where to put it.<br />
+The database code is another module that serves all the others. I’m
+always about to start a post on it but I keep forgetting. Hope to do it
+soon.<br />
+For now let’s just say that <em>fetch</em> indicates that the
+<code>cur.fetchall()</code> option is to be used.</p>
+<p>Before doing anything more with the data, the program, if it realizes
+that the user didn’t chose any keywords or names, will ask you if you
+want to see a list of either. If the user says yes, the chosen lists
+will show <em>keywords</em> or <em>names</em>, as the case may be, and
+it’ll be possible to add any selections done now, to your original
+selection. The next functions are used only if you answered ‘yes’ to
+seeing any of the list.</p>
+<h5>
+column_content
+</h5>
+<p>Makes the database call to get the data to show the user.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> column_content(query, out_binary):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    We&#39;ll make a db call for the asked</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    column and return it.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    qrysrch <span class="op">=</span> dbdata(query, <span class="st">&quot;fetch&quot;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    qs <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> qrysrch]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>out_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        pickle.dump(qs, f)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    column_content()</span></code></pre></div>
+<h5>
+show_column
+</h5>
+<p>Aggregates and shows data of the four tag columns in the
+database.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_column(in_binary, fzftitle, out_binary):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    With the columns content from &#39;column_content&#39;,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    we format them with &#39;rich&#39; and present them.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>in_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        lst <span class="op">=</span> pickle.load(f)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    fzf <span class="op">=</span> FzfPrompt()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    newcont <span class="op">=</span> fzf.prompt(</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        lst,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f&#39;--border bold --border-label=&quot;╢</span><span class="sc">{</span>fzftitle<span class="sc">}</span><span class="ss">╟&quot; --border-label-pos bottom&#39;</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> newcont <span class="op">!=</span> []:</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>out_binary<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            pickle.dump(newcont, f)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    show_column()</span></code></pre></div>
+<p>It needs to know where the information is, <code>in_binary</code>,
+the <a href="https://github.com/junegunn/fzf">fzf</a> title to use,
+<code>fzftitle</code> and where to put the results,
+<code>out_binary</code>.<br />
+I’m using <a href="https://github.com/nk412/pyfzf">pyfzf</a>, which is
+this charming little wrapper around <em>fzf</em>, that let’s you use
+<em>python’s</em> objects as source of information for it. In this case
+I’m showing the lists results in <em>fzf</em>.</p>
+<p>When this process ends, and if we used all command-line options, as
+we did in our example, we end with four binary files:<br />
+<strong>qlst.bin</strong> for queries,<br />
+<strong>klst.bin</strong> for keywords,<br />
+<strong>ilst.bin</strong> for id’s,<br />
+<strong>nlst.bin</strong> for names.<br />
+These will be the ‘ur’ files for all the other methods. But that’s for
+another post.</p>
+</body>
+</html>
