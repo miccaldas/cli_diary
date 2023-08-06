@@ -2,7 +2,7 @@
 title: Cli Apps Database App - Input Management
 date: 29-07-2023 02:10
 mainfont: Iosevka
-fontsize: 15pt
+fontsize: 13pt
 ---
 
 
@@ -341,4 +341,5 @@ example, we end with four binary files:
 **ilst.bin** for id's,  
 **nlst.bin** for names.  
 These will be the 'ur' files for all the other methods. But that's for another
-post.
+post.  
+
