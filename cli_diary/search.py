@@ -2,9 +2,9 @@
 Searches Markdown and HTML collections, with the help of 'fzf'.
 """
 import os
-import subprocess
 
 import questionary
+from pyfzf.pyfzf import FzfPrompt
 
 # import snoop
 from questionary import Separator, Style
@@ -53,13 +53,21 @@ def search():
         ],
     ).ask()
 
+    fzf = FzfPrompt()
+    mds = "/home/mic/python/cli_diary/cli_diary/md_posts/"
+    htmls = "/home/mic/python/cli_diary/cli_diary/html_posts/"
+    lhtmls = os.listdir(htmls)
+    lmds = os.listdir(mds)
+
     cmd = "fzf"
     if selection == "Exit":
         raise SystemExit
     if selection == "HTML Posts":
-        subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/html_posts", shell=True)
+        hl = fzf.prompt(lhtmls)
+        os.system(f"xdg-open {htmls}{hl[0]}")
     if selection == "Markdown Posts":
-        subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/md_posts", shell=True)
+        chc = fzf.prompt(lmds)
+        os.system(f"vim {mds}{chc[0]}")
 
 
 if __name__ == "__main__":
