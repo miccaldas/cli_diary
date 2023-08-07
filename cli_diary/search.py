@@ -2,7 +2,6 @@
 Searches Markdown and HTML collections, with the help of 'fzf'.
 """
 import os
-
 import questionary
 from pyfzf.pyfzf import FzfPrompt
 
@@ -38,7 +37,6 @@ def search():
             ("text", "fg:#FAF5E4 bold"),
         ]
     )
-
     selection = questionary.select(
         "What do you want to search?",
         qmark=" [X]",
@@ -58,7 +56,6 @@ def search():
     htmls = "/home/mic/python/cli_diary/cli_diary/html_posts/"
     lhtmls = os.listdir(htmls)
     lmds = os.listdir(mds)
-
     cmd = "fzf"
     if selection == "Exit":
         raise SystemExit

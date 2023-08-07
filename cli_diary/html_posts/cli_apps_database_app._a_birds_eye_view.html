@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cli Apps Database App. A Bird’s Eye View</title>
+  <style>
+    html {
+      font-family: Iosevka;
+      font-size: 13pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cli Apps Database App. A Bird’s Eye View</h1>
+<p class="date">07-08-2023 07:21</p>
+</header>
+<p>This is a short post but, I think, an important one.<br />
+At least important to understand the structure of the
+<em>database_app’s</em> logic.<br />
+As the other posts on this theme tend to delve deep into each of the
+parts of the app, this post aims to explain how they interact and,
+hopefully, elucidate why the app has this structure and not another.
+i</p>
+<p>As I said in another post, the overarching aim for the app was to
+find a new search paradigm that did more than consume data in database
+approved formats, to one that levers the associative nature of human
+thinking.<br />
+If a database encourages, and quite rightly so, an analytical and
+compartmentalized view of information, we, as humans, revel in free, and
+not so free, associations, explanations tying together improbable and
+foreign bits of data, experimental, failure-prone, iterative processes
+that, in ways dimly comprehended, seem to pry knowledge from an
+agglomeration of half truths, full lies and poorly understood
+aphorisms.<br />
+In short, the process is messy but fruitful.</p>
+<p>I wanted to create a search method that aided the creation of the
+associative processes that fuel imagination.</p>
+<p>With this in mind, I reached some organizational principles:</p>
+<ol type="1">
+<li><p><strong><em>Everything must connect to
+everything.</em></strong><br />
+Instead of silos, let’s create a linked system, that you can traverse in
+its entirety, just by querying the available data points. This leads me
+right to the second point, that is:<br />
+</p></li>
+<li><p><strong><em>Information should be combined.</em></strong><br />
+As the ancients from the East have said, time and again, identity is an
+illusion.<br />
+The database model reificates this error of perception, by leading us in
+mistaking the starkly separated, non-fungible, classes needed to catalog
+and store information, as having ontological reality, not letting us see
+them as the mere artefacts of <em>count and store</em> process.</p>
+<p>Paraphrasing a poem of <a
+href="https://en.wikipedia.org/wiki/Philip_Larkin">Philip Larkin</a>:
+<em>they don’t mean to; but they do</em>.</p>
+<p>Truth is, at least for me, and I’m the only one here; is that
+information has a deeply transient and context indebted nature, and to
+take it from this rich and dynamic environment, cristallyzes it to
+death.<br />
+This is not the database’s fault.<br />
+They were never meant as templates for the architecture of
+thought.<br />
+They are, and rightly so, intent on preserving and protecting
+information. All laudable objectives, but not very amenable to fostering
+use or growth.</p>
+<p>The problems start when the living with these tools, for so long, so
+absent mindedly, so <em>innate</em> is their presence, that we seem them
+as natural occurrences and first principles.<br />
+But they’re not. And we must be vigilant to not let ourselves be
+subsumed in the logic of the tool.<br />
+</p></li>
+<li><p><strong><em>There is no such thing as too much
+depth.</em></strong><br />
+Rabbit holes are there to be followed. If I want to drill down on a
+package dependencies and follow who depends on whom, for as long as the
+thread may run, I should.</p></li>
+</ol>
+<p>To get to the heights of these lofty ideals, I created a structure
+that, around a globally available data source, that I called, with a lot
+of hubris, <code>allinfo</code>, run queries and requests, in the shape
+of function loops that, aided by a group of collectively available
+helper methods, extract information in a dynamic, associative way.<br />
+The structure is composed of the following elements:</p>
+<ol type="1">
+<li><strong><em>Query reception.</em></strong><br />
+Where we make available, and incentivize its use, several data points,
+heterogeneous in nature.<br />
+</li>
+<li><strong><em>Data management.</em></strong><br />
+What I call <em>data management</em> is the still, compartmentalized,
+treatment of each option of the query; with the objectives of:<br />
+2.1. converting it into a <em>SQL</em> expression,<br />
+2.2. clean the output,<br />
+2.3. return a file with its findings.<br />
+For each option there is a specific management module. Although they
+share all important functions.<br />
+</li>
+<li><strong><em>Initial funnel.</em></strong><br />
+A sequence of functions that:<br />
+3.1. <em>Checks for availability of management information.</em> They
+see if the files that have their output are present. If at least one is,
+a list is made of the available files.<br />
+3.2. <em>Aggregate available information</em>. It’s the birth of
+<code>allinfo</code>. All the information needed during this session is
+here.<br />
+3.3. <em>User’s choice.</em>. Of this retrieved pack of data, the user
+will choose what he wants to see. Usually is always a subset.<br />
+3.4. <em>Visualizing the data.</em> The user is presented with the
+content of its choices. Based on this knowledge he’ll be:<br />
+3.5. <em>Asked what he wants to do with it.</em>. At the moment I have
+built two data loops that consume these results. The user can choose one
+or the two, but they’ll always be present in the others loop, making
+cross referencing the two data sources, almost inevitable.<br />
+They are:<br />
+</li>
+<li><strong><em>Dependencies.</em></strong><br />
+This loop will let you scan through package dependencies, for one or
+more packages, drilling into its required files, as deep as the user
+wants. As I said, at any moment this information can be crossed with the
+other loop, that asks:<br />
+</li>
+<li><strong><em>Locations.</em></strong><br />
+If you want to see a package location on the computer. If you say yes,
+it’ll open the directory and ask you if you want to open any file. This
+process can be repeated as many times as you want, or interrupted to
+search for more dependencies.</li>
+</ol>
+<p>The only thing I haven’t mentioned, are the methods that power these
+loops.<br />
+There’s an interesting collection of little, some not so little,
+functions to aid them on their endeavours. Some have proven so useful,
+that I’m thinking in putting them in the <em>reusable_files</em>
+directory, so I can access them whenever I want.<br />
+Anyway, I leave you with a diagram of what I see when I talk about the
+architecture of this solution:</p>
+<figure>
+<img src="/home/mic/python/cli_diary/cli_diary/imgs/dbapp_diagram.png"
+title="db_app diagram" alt="Diagram" />
+<figcaption aria-hidden="true">Diagram</figcaption>
+</figure>
+</body>
+</html>

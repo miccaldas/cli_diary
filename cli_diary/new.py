@@ -161,9 +161,9 @@ def new_main():
     Calls all functions on the module.
     """
     titlename()
+    dbcall()
     mdfile()
     htmlfile()
-    dbcall()
 
     os.remove("titles.bin")
 
