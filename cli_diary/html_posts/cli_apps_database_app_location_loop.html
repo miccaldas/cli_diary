@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cli Apps Database App. Function Loops</title>
+  <style>
+    html {
+      font-family: Iosevka;
+      font-size: 13pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cli Apps Database App. Function Loops</h1>
+<p class="date">08-08-2023 07:44</p>
+</header>
+<p>In what I think it will the be the last post on
+<em>database_app</em>, I will show the function loops that query the
+<code>allinfo</code> data collection.<br />
+They are started if the user responds positively to any of the
+<em>req_decision</em> or <em>loc_decision</em> questions. The first
+fires the <code>required_loop</code>, (dedicated to retrieving
+information on dependencies), and the second, the
+<code>location_loop</code>, (aimed at finding and showing folder and
+files content). I’m going to post the entirety of the <em>main</em>
+module, so you can understand when and where this things come into
+play:</p>
+<h4>
+<u>main</u>
+</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">@click.command</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">@click.argument</span>(<span class="st">&quot;keywords&quot;</span>, nargs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-q&quot;</span>, <span class="st">&quot;--queries&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-i&quot;</span>, <span class="st">&quot;--ids&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;id&quot;</span>, default<span class="op">=</span>[], <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">@click.option</span>(<span class="st">&quot;-n&quot;</span>, <span class="st">&quot;--names&quot;</span>, multiple<span class="op">=</span><span class="va">True</span>, is_flag<span class="op">=</span><span class="va">False</span>, flag_value<span class="op">=</span><span class="st">&quot;query&quot;</span>, default<span class="op">=</span>[])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_query(keywords, queries, ids, names):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Because we want to deal with complex queries, we&#39;ll get, in the same query, an</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    indefinite number of keywords, queries for natural language search, several</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    id&#39;s and names. This module will receive the information and send output to</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    different functions.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This the management code block. Each option/argument, has a allocated management</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># function, that&#39;s tasked of cleaning the input and making the db calls for each</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># query. Some will ask you if you want to see a given type of data, regardless if</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># you chose it in the command line or not. Others are more reserved.</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    keys <span class="op">=</span> kwd_mngmnt(keywords)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> queries <span class="op">!=</span> ():</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        queries_mngmnt(queries)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ids <span class="op">!=</span> ():</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        ids_mngmnt(ids)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    names_mngmnt(names)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This is the initiation block. When you get a new query, that&#39;s what has to happen.</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    filelst <span class="op">=</span> os.listdir(da)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The names of pickled files that are created by the management modules.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;qlst.bin&quot;</span> <span class="kw">or</span> <span class="st">&quot;klst.bin&quot;</span> <span class="kw">or</span> <span class="st">&quot;ilst.bin&quot;</span> <span class="kw">or</span> <span class="st">&quot;nlst.bin&quot;</span> <span class="kw">in</span> filelst:</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Checks to see what files, from the above list, are present in the directory.</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        checkinfo()</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Joins the information in one document called &#39;allinfo&#39;.</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        aggregate_info()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Uses &#39;fzf&#39; to let the user check the results and choose what he wants to see from</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the output.</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        srch_allinfo()</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shows a prettified version of the chosen information.</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        show_info(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">data_files&quot;</span>, <span class="st">&quot;PACKAGES IN DATA_FILES&quot;</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># # Two questions: do you want to see file dependencies or their location?</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        re <span class="op">=</span> req_decision()</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        lc <span class="op">=</span> loc_decision()</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># # Depending on the answer, you&#39;ll be sent in a loop of functions that&#39;ll expose you</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># # to the information you wanted.</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> re <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            required_loop()</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> lc <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>            location_loop(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">data_files&quot;</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # This thing produces binary files like a motherfucker. Cleaning is in order.</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    delete_all_files()</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    get_query()</span></code></pre></div>
+<p>The loop structure is defined in a module called
+<strong><em>use_paths</em></strong>, because that’s what they really
+are: the directions that define of what’s used in
+<em>database_app</em>.<br />
+This is a heavily commented file, and I’ll just let it speak for
+itself.</p>
+<h4>
+<u>use_paths</u>
+</h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">Module that define the functions that&#39;ll be served</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">depending on user&#39;s choices. If the user chooses</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;locations&#39; or &#39;dependencies&#39;, it&#39;ll have different</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">information presented to him. We define what</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">information it is and in what way is shown.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">At the moment I put a limit of 10 in the capacity to</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">ask again the same type of question. But when I feel</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">more sure about the workings of this solution I would</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">like it to be limitless.</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> snoop</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> snoop <span class="im">import</span> pp</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> location <span class="im">import</span> dislocation, package_location, show_dirpath</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> methods <span class="im">import</span> loc_decision, pip_info, req_decision, yay_info</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> required_by <span class="im">import</span> choice_processing, collect_deps_info, get_lst, show</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> type_watch(source, value):</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f&quot;type(</span><span class="sc">{</span>source<span class="sc">}</span><span class="ss">)&quot;</span>, <span class="bu">type</span>(value)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>snoop.install(watch_extras<span class="op">=</span>[type_watch])</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> required_loop():</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">    This is the structure of the loop to run</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">    if user only wants to see dependencies.</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">    The basic concept is for the user to be</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">    able to repeat its dependencies searches</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">    as much as he wants, going as deep as he</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">    likes. You can leave the loop if you don&#39;t</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">    answer the questions or, by the program&#39;s</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">    will, if there&#39;s a problem with the code.</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The first call to dependencies is done when</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># there&#39;s only package files in &#39;data_files&#39;.</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># After that is always in &#39;required_files&#39;. We</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># needed to have a first look at the files still</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># in &#39;data_files&#39;. That&#39;s the reason why there&#39;s</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a get_lst() call before the loop.</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> get_lst(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">data_files&quot;</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> out <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            show()</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            choice_processing(<span class="st">&quot;choice_deps.bin&quot;</span>)</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            srch <span class="op">=</span> collect_deps_info()</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            yay_info(srch)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            pip_info(srch)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            <span class="co"># So as not to break the loop, we took out the SystemExit</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we had for when there was an error, and replaced it with</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># &#39;return&#39; statements. If there&#39;s an error get_lst()</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>            <span class="co"># returns &#39;n&#39;, if everything went correctly, it outputs &#39;y&#39;.</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>            <span class="co"># This way the flow is controlled when designing the loop,</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># making it easier to change when needed.</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>            gl <span class="op">=</span> get_lst(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">required_files&quot;</span>)</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> gl <span class="op">!=</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># After the loop has ran, we ask the user if he wants to see</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the packages locations. In the &#39;location&#39; loop it&#39;s the</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other way around.</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    loc <span class="op">=</span> loc_decision()</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If it starts after the &#39;required_loop&#39; having ran, we know that</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the last information is in &#39;required_files&#39;. So we set the</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &#39;location_loop&#39; location to it.</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> loc <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        location_loop(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">required_files&quot;</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    required_loop()</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="at">@snoop</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> location_loop(folder):</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="co">    Loop for the &#39;location&#39; module. Here,</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="co">    because we don&#39;t have to create data</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co">    from one location to another, we can</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="co">    leave it for the callers of the loop</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">    the decision on what folder to use.</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>        inner <span class="op">=</span> package_location(folder)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> inner <span class="op">!=</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>        dislocation()</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>        show_dirpath()</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    req <span class="op">=</span> req_decision()</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> req <span class="op">==</span> <span class="st">&quot;y&quot;</span>:</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>        required_loop()</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    location_loop()</span></code></pre></div>
+<h3>
+<u>LOCATION LOOP</u>
+</h3>
+<p>I’ll show you the <code>location_loop</code>, just for you to get a
+feel of how I’m querying <code>allinfo</code>.<br />
+The fact that is the smallest and easier to explain weighed nothing on
+my choice.<br />
+<code>location_loop()</code> needs as an argument the folder where to
+get the data, <em>data_files</em> or <em>required_files</em>.<br />
+For the time being, both loops are limited to ten iterations, just until
+I get all the kinks out of the code.<br />
+After it’ll be a <code>while</code> loop that’ll only stop by
+<code>break</code> statements triggered inside a function.</p>
+<p>We start here:</p>
+<figure>
+<img src="/home/mic/python/cli_diary/cli_diary/imgs/paths_path.png"
+alt="Start" />
+<figcaption aria-hidden="true">Start</figcaption>
+</figure>
+<h4>
+<u>package_location</u>
+</h4>
+<p><code>package_location()</code> opens local directories of a chosen
+package. It returns <em>y</em> if everything went smoothly and
+<em>n</em> if it did not.<br />
+The results will decide if we continue the loop or not.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> package_location(folder):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Opens local locations of a chosen</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    installed package.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    console <span class="op">=</span> Console()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    reqs <span class="op">=</span> folder</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    reqfiles <span class="op">=</span> os.listdir(reqs)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    locations <span class="op">=</span> []</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> reqfiles <span class="op">!=</span> []:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> r <span class="kw">in</span> reqfiles:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>reqs<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>r<span class="sc">}</span><span class="ss">&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                content <span class="op">=</span> f.readlines()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(content)):</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> content[<span class="dv">0</span>]:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># First line has the package name. This gets rid of the &quot;Name: &quot; prefix.</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                        nm <span class="op">=</span> content[<span class="dv">0</span>][<span class="dv">6</span>:].strip()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> content[m].startswith(<span class="st">&quot;Location:&quot;</span>):</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Same as above. Getting rid of the &quot;Location: &quot; prefix.</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                        loc <span class="op">=</span> content[m][<span class="dv">10</span>:].strip()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> loc:</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># This eliminates the identification suffixes, like &#39;_yay&#39; in &#39;data_files&#39;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># or the name of the package that the dependencies belong to.</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                            pref <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>r<span class="sc">.</span>split(<span class="st">&#39;_&#39;</span>)[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Creates a tuple with the package name and a full link to its location.</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                            locations.append((<span class="ss">f&quot;</span><span class="sc">{</span>pref<span class="sc">}</span><span class="ss">&quot;</span>, <span class="ss">f&quot;</span><span class="sc">{</span>loc<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>nm<span class="sc">}</span><span class="ss">&quot;</span>))</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We&#39;ll need to have a numeric version of &#39;locations&#39; because, two functions ahead,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># there&#39;ll be a need to identify location paths by their index number.</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        idlocs <span class="op">=</span> <span class="bu">enumerate</span>(locations)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">idlocs.bin&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> d:</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            pickle.dump(idlocs, d)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> locations <span class="op">!=</span> []:</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            console.<span class="bu">print</span>(</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                Padding(<span class="st">&quot;[bold]CHOOSE WHERE YOU WANT TO GO:[/]&quot;</span>, (<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">10</span>)),</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                justify<span class="op">=</span><span class="st">&quot;center&quot;</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> idx, pth <span class="kw">in</span> <span class="bu">enumerate</span>(locations):</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                console.<span class="bu">print</span>(Padding(<span class="ss">f&quot;</span><span class="ch">\n</span><span class="ss">[bold]</span><span class="sc">{</span>pth[<span class="dv">0</span>]<span class="sc">.</span>upper()<span class="sc">}</span><span class="ss">[/]&quot;</span>, (<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>)))</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                console.<span class="bu">print</span>(Padding(<span class="ss">f&quot;[bold]\[</span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">][/] - [bold]</span><span class="sc">{</span>pth[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">[/]&quot;</span>, (<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>)))</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            visits <span class="op">=</span> input_decision(<span class="st">&quot;Choose a number(s) to visit. Press Enter to leave:&quot;</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> visits <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">visits.bin&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                    pickle.dump(visits, f)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                <span class="co"># These return statements are read in the loop management module, and if</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                <span class="co"># negative, it&#39;ll break the loop.</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="st">&quot;y&quot;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="st">&quot;n&quot;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>            console.<span class="bu">print</span>(</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;[bold #E48586]          location.package_location(): We couldn&#39;t find any information regarding location of these files: &quot;</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>                <span class="op">*</span>reqfiles,</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">&quot;n&quot;</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f&quot;[bold #E48586]    location.package_location(): </span><span class="sc">{</span>folder<span class="sc">}</span><span class="ss"> is empty.&quot;</span>)</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">SystemExit</span></span></code></pre></div>
+<figure>
+<img src="/home/mic/python/cli_diary/cli_diary/imgs/files.png"
+alt="Directories" />
+<figcaption aria-hidden="true">Directories</figcaption>
+</figure>
+<h4>
+<u>dislocation</u>
+</h4>
+<p>Where we open a file or, in case it’s a folder, see its content.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dislocation():</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Where we open a file or, in case it&#39;s</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    a folder, just see its contents.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    console <span class="op">=</span> Console()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">idlocs.bin&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> g:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        idlocs <span class="op">=</span> pickle.load(g)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &#39;visits.bin&#39; it&#39;s one string with several numbers inside.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we want to turn it to a list of integers. First we pass</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># it through choice_processing() that turns it to a list of</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strings.</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    choice_processing(<span class="st">&quot;visits.bin&quot;</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &#39;choice.bin&#39; is the outpu of &quot;choice_processing&quot;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &#39;filelst&#39; has to be placed after the choice_processing() call,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># or it won&#39;t see the newly created &#39;chocie.bin&#39;.</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    filelst <span class="op">=</span> os.listdir(da)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;choice.bin&quot;</span> <span class="kw">in</span> filelst:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">choice.bin&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> v:</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            choice <span class="op">=</span> pickle.load(v)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The pickle results come as strings. We need to convert them.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The problem with this is if we transform &#39;0&#39; to integer, it&#39;s</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># interpreted as a null value, and returns an error saying that</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the variable &#39;choice&#39; is not set. This is a workaround.</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> choice <span class="op">!=</span> <span class="st">&quot;0&quot;</span>:</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        chc <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> choice]</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># &#39;t&#39; is composed of package name and path. We only need the latter.</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        pths <span class="op">=</span> [t[<span class="dv">1</span>] <span class="cf">for</span> i, t <span class="kw">in</span> idlocs <span class="cf">if</span> i <span class="kw">in</span> chc]</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        pths <span class="op">=</span> [t[<span class="dv">1</span>] <span class="cf">for</span> i, t <span class="kw">in</span> idlocs <span class="cf">if</span> <span class="bu">str</span>(i) <span class="op">==</span> <span class="st">&quot;0&quot;</span>]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pth <span class="kw">in</span> pths:</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> os.path.exists(pth):</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> os.path.isfile(pth):</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                os.system(<span class="ss">f&quot;vim </span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> os.path.isdir(pth):</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If I used the standard way of opening a file, I couldn&#39;t put the</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                <span class="co"># paths to the locations atop of the &#39;ls -l&#39; output. It turns out</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                <span class="co"># that, even if you put it first, a write() order inside a context</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                <span class="co"># manager, in comparison with a substring() command in the same place,</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                <span class="co"># will always run after subprocess. I imagine that the write order is</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                <span class="co"># only given when closing the statement.</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                <span class="co"># So, I had to turn to this, very cumbersome, method, to make sure that</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                <span class="co"># things printed in the desired order.</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                p <span class="op">=</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>, <span class="st">&quot;a&quot;</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                p.write(<span class="ss">f&quot;</span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>                p.close()</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>                v <span class="op">=</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>, <span class="st">&quot;a&quot;</span>)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>                v.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>                v.close()</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                os.system(<span class="ss">f&quot;ls -l </span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss"> &gt;&gt; </span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>                u <span class="op">=</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>, <span class="st">&quot;a&quot;</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>                u.write(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>                u.close()</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>            console.<span class="bu">print</span>(<span class="ss">f&quot;[bold #E48586]    location.dislocation(): The path </span><span class="sc">{</span>pth<span class="sc">}</span><span class="ss"> does not exist.&quot;</span>)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">SystemExit</span></span></code></pre></div>
+<h4>
+<u>open_dirs_files</u>
+</h4>
+<p>If inside a folder chosen by the user, it asks if he wants to open a
+file. If yes, it opens it in an editor.<br />
+This function is called by the next one,
+<code>show_dirpath()</code>.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> open_dirs_files(result):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Asks if the user wants to open any of</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    the files presented in &#39;dirpath.txt&#39;.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    If yes, it opens it in a editor.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    fil <span class="op">=</span> input_decision(<span class="st">&quot;Choose a file to open:&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    fllst <span class="op">=</span> []</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    paths <span class="op">=</span> []</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> fil <span class="op">!=</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># &#39;fil returns a string. If it has spaces in it, it&#39;s beccause</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># it&#39;s a list.</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot; &quot;</span> <span class="kw">in</span> fil:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># In the &#39;required_by&#39; module, I created a function,</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># &#39;choice_processing, &#39;that turns strings with entries</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># separated by spaces in lists of strings. It receives</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># a binary file and outputs another.</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">fil.bin&quot;</span>, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                pickle.dump(fil, f)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            choice_processing(<span class="st">&quot;fil.bin&quot;</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">choice.bin&quot;</span>, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> g:</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                fllst <span class="op">=</span> pickle.load(g)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The id&#39;s in the presentation are structured in the following</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># way, each location path is indexed,, and the each line</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># representing a file in said location has an id composed of,</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># first, the location id, second, its own id inside the list of</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># files in the path. Let&#39;s say we have a location that is the second</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># in the location list. That means that its id will be &#39;1&#39;, as we&#39;re</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># counting from &#39;0&#39;. Let&#39;s choose a file, in this location, that&#39;s,</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># also, second on its list. That&#39;ll mean that its id will &#39;11&#39;.</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># One for its location id,  and One for its own.</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> fl <span class="kw">in</span> fllst:</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            result_idx <span class="op">=</span> <span class="bu">int</span>(fl[<span class="dv">0</span>])</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            sublst_idx <span class="op">=</span> <span class="bu">int</span>(fl[<span class="dv">1</span>:])</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            <span class="co"># With these two numbers we can reconstruct the id&#39;s of the original</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>            <span class="co"># list, and access them with ease.</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            <span class="co"># &#39;chc&#39; will be a line like this:</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>            <span class="co"># &quot;-rw-r--r-- 1 mic mic 18560 May 20 18:21 cookies.py&quot;</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># We just want the file name, so we split the string in spaces and</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>            <span class="co"># collect the last one.</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>            chc <span class="op">=</span> result[result_idx][sublst_idx]</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>            splt <span class="op">=</span> chc.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>            <span class="bu">file</span> <span class="op">=</span> splt[<span class="op">-</span><span class="dv">1</span>].strip()</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>            <span class="co"># To facilitate the presentation of data, the lists were not stripped</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>            <span class="co"># of linebreaks. We do that here.</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            path <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>result[result_idx][<span class="dv">0</span>]<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="bu">file</span><span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>            paths.append(path)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> p <span class="kw">in</span> paths:</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>                os.system(<span class="ss">f&quot;vim </span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># In case of being just one choice.</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">&quot; &quot;</span> <span class="kw">not</span> <span class="kw">in</span> fil:</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            result_idx <span class="op">=</span> <span class="bu">int</span>(fil[<span class="dv">0</span>])</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            sublst_idx <span class="op">=</span> <span class="bu">int</span>(fil[<span class="dv">1</span>:])</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>            chc <span class="op">=</span> result[result_idx][sublst_idx]</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>            splt <span class="op">=</span> chc.split(<span class="st">&quot; &quot;</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>            <span class="bu">file</span> <span class="op">=</span> splt[<span class="op">-</span><span class="dv">1</span>].strip()</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>            path <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>result[result_idx][<span class="dv">0</span>]<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="bu">file</span><span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>            os.system(<span class="ss">f&quot;vim </span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">SystemExit</span></span></code></pre></div>
+<h4>
+<u>show_dirpath</u>
+</h4>
+<p>The end of a loop iteration. Prettifies the output of the text file
+that has the folder information.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_dirpath():</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Prettifies the output in &#39;dirpath.txt&#39;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> os.getenv(<span class="st">&quot;DA&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    temp_lst <span class="op">=</span> []</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    console <span class="op">=</span> Console()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    filelst <span class="op">=</span> os.listdir(da)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;dirpath.txt&quot;</span> <span class="kw">in</span> filelst:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            dirs <span class="op">=</span> f.readlines()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># To separate each directory output for presentation</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># purposes, we&#39;re going to create sublists with only</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the content of one directory. As we know that</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># there&#39;s a blank line separating each directory,</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we&#39;ll create a final and a temporary list. The</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># temporary one will be appending all the entries it</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="co"># finds. If it finds a line that is only a linebreak,</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the final list will append all content of the</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            <span class="co"># temporary, wich is immediately emptied of previous</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># content, when starting a new loop..</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> dirs:</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> i <span class="op">==</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>:</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                    temp_lst.append(i)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                    results.append(temp_lst)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                    temp_lst <span class="op">=</span> []</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                    temp_lst.append(i)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            console.<span class="bu">print</span>(Padding(<span class="st">&quot;[bold]LOCATIONS[/]&quot;</span>, (<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>)), justify<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> idx, r <span class="kw">in</span> <span class="bu">enumerate</span>(results):</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>                <span class="co"># &#39;results&#39; is a list of lists. One for each location. That&#39;s why we</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                <span class="co"># have this additional step.</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">enumerate</span>(r):</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># This defines the formatting for the line that has the path.</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> t.startswith(<span class="st">&quot;/&quot;</span>):</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                        console.<span class="bu">print</span>(</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                            Padding(</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                                <span class="ss">f&quot;[bold #A0C49D][link=file://</span><span class="sc">{</span>t<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">]</span><span class="ch">\n</span><span class="sc">{</span>t<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">[/link][/]&quot;</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                                (<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                            )</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># This corresponds to the file name lines.</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> t.startswith(<span class="st">&quot;-r&quot;</span>):</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                        console.<span class="bu">print</span>(Padding(<span class="ss">f&quot;[bold]\[</span><span class="sc">{</span>idx<span class="sc">}{</span>i<span class="sc">}</span><span class="ss">]   </span><span class="sc">{</span>t<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">[/]&quot;</span>, (<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>)))</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># And this is a &#39;total&#39; line, that I don&#39;t know what it does, and tried</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># very hard to get rid of it. But it seemed to only make maatters worst.</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># So there it is.</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> t.startswith(<span class="st">&quot;total&quot;</span>):</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>                        console.<span class="bu">print</span>(Padding(<span class="ss">f&quot;[bold]</span><span class="sc">{</span>t<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">[/]&quot;</span>, (<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>)))</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>            open_dirs_files(results)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">dirpath.txt&quot;</span>)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">idlocs.bin&quot;</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">choice.bin&quot;</span>)</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>            os.remove(<span class="ss">f&quot;</span><span class="sc">{</span>da<span class="sc">}</span><span class="ss">visits.bin&quot;</span>)</span></code></pre></div>
+<figure>
+<img src="/home/mic/python/cli_diary/cli_diary/imgs/initial_path.png"
+alt="Folder Content" />
+<figcaption aria-hidden="true">Folder Content</figcaption>
+</figure>
+<p>As you can see from <em>use_paths</em>, access to the other loop is
+never far behind and, as you can see by the functions printed above,
+there’s a constant dialogue with the user, to try to tailor the next
+steps as close at what he wants as possible.</p>
+</body>
+</html>

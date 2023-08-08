@@ -1,151 +1,154 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>notes_app_rejuvenation</title>
-  <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <title>Notes App Rejuvenation</title>
+        <style>
+html {
+    font-family: Iosevka;
+    font-size: 13pt;
+    color: #1a1a1a;
+    background-color: #fdfdfd;
+    line-height: 1.5;
+}
     body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
+        margin: 0 auto;
+        max-width: 45em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
     }
     @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
+        body {
+            font-size: 0.9em;
+            padding: 12px;
+        }
+        h1 {
+            font-size: 1.8em;
+        }
     }
     @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
+        html {
+            background-color: white;
+        }
+        body {
+            background-color: transparent;
+            color: black;
+            font-size: 12pt;
+        }
+        p, h2, h3 {
+            orphans: 3;
+            widows: 3;
+        }
+        h2, h3, h4 {
+            page-break-after: avoid;
+        }
     }
     p {
-      margin: 1em 0;
+        margin: 1em 0;
     }
     a {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     a:visited {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     img {
-      max-width: 100%;
+        max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
+        margin-top: 1.4em;
     }
     h5, h6 {
-      font-size: 1em;
-      font-style: italic;
+        font-size: 1em;
+        font-style: italic;
     }
     h6 {
-      font-weight: normal;
+        font-weight: normal;
     }
     ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
+        padding-left: 1.7em;
+        margin-top: 1em;
     }
     li > ol, li > ul {
-      margin-top: 0;
+        margin-top: 0;
     }
     blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
     }
     pre {
-      margin: 1em 0;
-      overflow: auto;
+        margin: 1em 0;
+        overflow: auto;
     }
     pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
     }
     .sourceCode {
-     background-color: transparent;
-     overflow: visible;
+        background-color: transparent;
+        overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
+        background-color: #1a1a1a;
+        border: none;
+        height: 1px;
+        margin: 1em 0;
     }
     table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
     }
     table caption {
-      margin-bottom: 0.75em;
+        margin-bottom: 0.75em;
     }
     tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
     }
     th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
     }
     td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
+        padding: 0.125em 0.5em 0.25em 0.5em;
     }
     header {
-      margin-bottom: 4em;
-      text-align: center;
+        margin-bottom: 4em;
+        text-align: center;
     }
     #TOC li {
-      list-style: none;
+        list-style: none;
     }
     #TOC ul {
-      padding-left: 1.3em;
+        padding-left: 1.3em;
     }
     #TOC > ul {
-      padding-left: 0;
+        padding-left: 0;
     }
     #TOC a:not(:hover) {
-      text-decoration: none;
+        text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -156,70 +159,92 @@
        override a similar rule in reveal.js */
     ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<p>I just completed some deep and interesting changes to the Notes app,
-that I would like to talk to you about. Notes, on account of being the
-most used, the most taken care off, the most on demand, has suffered
-from an overabundance of attention. This made it the most likely space
-for experimentation and code decoration, of all the apps I developed. It
-had a lot of code that would have very little practical use,
-over-engineered solutions, and all this made me more wary of any type of
-streamlining intervention. For fear of not knowing what was responsible
-for what.<br />
-But lately I’ve been using more cli applications, and if until very
-recently I had always preferred a TUI interface, anything not to
-memorize commands, I’ve come to know, and love, the <a
-href="https://click.palletsprojects.com">Click</a> framework, taught me
-to trust ‘–help’ for commands.<br />
-I like more and more the simplicity of stating your arguments in one
-fell swoop, and the increased speed of not only time spent in task, but
-also in loading and unloading. It’s just a snappier alternative. And
-this was something that Notes was badly needing. I had put a plethora of
-tag and entries analytical tools that revealed themselves of no added
-value, but to create more bloat and add to loading time. Also the code
-style was the most ancient in my portfolio. I saw code patterns of when
-I was still very new to this.<br />
-Wanting to make it much better than it was, I set about to:<br />
-1. Get back to basics. No more analytics to satisfy idle curiosities, no
-more of momentary nice-to-have’s! If it didn’t have a clear purpose,
-it’s dead wood.<br />
-2. If it can be inputted in command line mode, it’s going to be
-implemented as command line! No more of my beloved option menus and
-input prompts. Now you memorized commands!<br />
-3. Change the UI! Although that was one of the strongest points of the
-old version, as it was a battle tested solution, simple but very robust;
-I was very open for some change.<br />
-4. As less interactions as possible per task. Up until now I was happy
-to noodle around with the interface, if that made the usage less taxing.
-I was creating all new pages showing available information, once, twice,
-thrice, as many times as I needed it. So I would never have to remember
-or learn nothing new. I now decided that the app should be, not
-difficult, but not easier than it needs to be.</p>
-<p>As I already said, I trusted Click with all data collection duties,
-and used <a href="https://blessed.readthedocs.io/">Blessed</a> and <a
-href="https://rich.readthedocs.io">Rich</a> to present the results. I
-had some bad experiences with both some time ago; but that was more
-result of my inexperience and wanting them to do something they aren’t
-made to do.<br />
-Before this project, I’ve been creating projects with <a
-href="https://linux.die.net/man/1/tput">Tput</a>, which is a fairly
-low-end tool. But that simplicity made it simple to grasp and, after you
-grok it, surprisingly capable. Not in the sense that I would recommend
-it as a framework, but as a learning opportunity.<br />
-Now, all things seemed simpler and easier to achieve; although that’s
-also because I was asking for simple things. Which helps.<br />
-I also deleted a lot files and flattened a lot of folders, reaching a
-much clear and maintainable project structure.</p>
-</body>
+        </style>
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header id="title-block-header">
+            <h1 class="title">Notes App Rejuvenation</h1>
+            <p class="date">08-08-2023 16:59</p>
+        </header>
+        <p>I just completed some deep and interesting changes to the Notes app,
+            that I would like to talk to you about.<br />
+            Notes, on account of being the most used, the most taken care off, the
+            most on demand app I have, has suffered from an overabundance of
+            attention.<br />
+            This made it the most likely space for experimentation and code
+            decoration, for spurious reasons.<br />
+            It had a lot of code that would have very little practical use, the code
+            seemed to be trying new things, every three lines, and it was obvious
+            that many things were tried, and some of them failed.<br />
+            Lately I’ve been using more cli applications, and if until very recently
+            I had always preferred a TUI interface, anything not to memorize
+            commands, I’ve come to know, and love <a
+                                                        href="https://click.palletsprojects.com">Click</a> framework, that
+                                                    taught me to trust <code>--help</code>.<br />
+                                                    I like more and more the simplicity of stating your arguments in one
+                                                    fell swoop, and the increased speed of not only time spent in task, but
+                                                    also in loading and unloading. It’s just a snappier alternative. And
+                                                    this was something that Notes was badly needing. I created several
+                                                    analytical tools to study tags and posts, that revealed themselves of no
+                                                    use added value; only able to create more bloat and add to loading time.
+                                                    Also the code style was the most ancient in my portfolio.</p>
+        <p>Wanting to make it much better than it was, I set about to:</p>
+        <ol type="1">
+            <li><h4>
+                    <u>Get back to basics</u>
+                </h4>
+                . No more analytics to satisfy idle curiosities, no more of momentary
+                nice-to-have’s! If it doesn’t have a clear purpose, it’s dead
+                wood.<br />
+            </li>
+            <li><h4>
+                    <u>If it can be inputted in command line mode, it’s going to be
+                        implemented as command line</u>
+                </h4>
+                . No more of my beloved option menus and input prompts. Now you
+                memorized commands!<br />
+            </li>
+            <li><h4>
+                    <u>Change the UI</u>
+                </h4>
+                . Although that was one of the strongest points of the old version, as
+                it was a battle tested solution, simple but very robust; I was very open
+                for some change.<br />
+            </li>
+            <li><h4>
+                    <u>Less interactions as possible per task</u>
+                </h4>
+                . Up until now I was happy to noodle around with the interface, if that
+                made the usage less taxing. I was creating all new pages showing
+                available information, once, twice, thrice, as many times as I needed
+                it. So I would never have to remember or learn nothing new. I now
+                decided that the app should be, not difficult, but not easier than it
+                needs to be.</li>
+        </ol>
+        <p>As I already said, I trusted Click with all data collection duties,
+            and used <a href="https://blessed.readthedocs.io/">Blessed</a> and <a
+                        href="https://rich.readthedocs.io">Rich</a> to present the
+                    results.<br />
+                    I had some bad experiences with both some time ago; but that was more
+                    result of my inexperience, and wanting them to do something they aren’t
+                    made to do.<br />
+                    Before this I’d been creating projects with <a
+                                                                      href="https://linux.die.net/man/1/tput">Tput</a>, which is a fairly
+                                                                  low-end tool. But that simplicity made it simple to grasp and, after you
+                                                                  grok it, surprisingly capable. Not in the sense that I would recommend
+                                                                  it as a framework, but as a learning opportunity.<br />
+                                                                  Now, all things seemed simpler and easier to achieve; although that’s
+                                                                  also because I was asking for simple things. Which helps.<br />
+                                                                  I also deleted a lot files and flattened a lot of folders, reaching a
+                                                                  much clear and maintainable project structure.</p>
+    </body>
 </html>

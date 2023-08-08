@@ -9,9 +9,9 @@ fontsize: 13pt
 My aim with this post is to make, to use what I think is architectural jargon, a
 <strong><em>descriptive memory</em></strong>, of a phase that comes after
 data management, but before proper data analysis.  
+  
 You'll notice a profuse use of pickled files. Even if a bit notorious and, in my
-view, unjustly maligned, they have two qualities that trump, for my use case,
-all objections:  
+view, unjustly maligned, they have two qualities that trump all objections:  
   
 1. <strong>They provide availability.</strong>  
    Suddenly you don't have to run *n* functions to get a bit of information you

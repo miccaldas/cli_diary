@@ -98,6 +98,22 @@ def edit():
     cmd1 = f"pandoc --highlight-style=zenburn -s -o html_posts/{filename_html} md_posts/{filename_md}"
     subprocess.run(cmd1, shell=True)
 
+    # Reads the html file.
+    with open(f"html_posts/{filename_html}", "r") as f:
+        content = f.readlines()
+    # As 'readlines()' creates a list object, we can use list functions to manipulate it.
+    # So, we can put an element in any index position, and all the other elements are
+    # preserved. Here we add, in line 13, a css definition of line-height.
+    content.insert(13, "      line-height: 1.5;\n")
+    # It's different with 'max_width', as we are replacing, not inserting a line.
+    content[17] = "      max-width: 45em;\n"
+    # A little margin around the code. So they're not sticking to the border.
+    content[174] = "     pre.sourceCode { margin: 1em; }\n"
+    # To rewrite the file with the added line, we use 'writelines()', that writes list objects
+    # to a file.
+    with open(f"html_posts/{filename_html}", "w") as g:
+        g.writelines(content)
+
 
 if __name__ == "__main__":
     edit()

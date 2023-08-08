@@ -1,165 +1,168 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="generator" content="pandoc" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-        <title>Service Monitoring Epilogue</title>
-        <style>
-html {
-    line-height: 1.5;
-    font-family: Iosevka;
-    font-size: 15pt;
-    color: #1a1a1a;
-    background-color: #fdfdfd;
-}
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Service Monitoring Epilogue</title>
+  <style>
+    html {
+      font-family: Iosevka;
+      font-size: 13pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+      line-height: 1.5;
+    }
     body {
-        margin: 0 auto;
-        max-width: 36em;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        hyphens: auto;
-        overflow-wrap: break-word;
-        text-rendering: optimizeLegibility;
-        font-kerning: normal;
+      margin: 0 auto;
+      max-width: 45em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
     }
     @media (max-width: 600px) {
-        body {
-            font-size: 0.9em;
-            padding: 12px;
-        }
-        h1 {
-            font-size: 1.8em;
-        }
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
     }
     @media print {
-        html {
-            background-color: white;
-        }
-        body {
-            background-color: transparent;
-            color: black;
-            font-size: 12pt;
-        }
-        p, h2, h3 {
-            orphans: 3;
-            widows: 3;
-        }
-        h2, h3, h4 {
-            page-break-after: avoid;
-        }
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
     }
     p {
-        margin: 1em 0;
+      margin: 1em 0;
     }
     a {
-        color: #1a1a1a;
+      color: #1a1a1a;
     }
     a:visited {
-        color: #1a1a1a;
+      color: #1a1a1a;
     }
     img {
-        max-width: 100%;
+      max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
-        margin-top: 1.4em;
+      margin-top: 1.4em;
     }
     h5, h6 {
-        font-size: 1em;
-        font-style: italic;
+      font-size: 1em;
+      font-style: italic;
     }
     h6 {
-        font-weight: normal;
+      font-weight: normal;
     }
     ol, ul {
-        padding-left: 1.7em;
-        margin-top: 1em;
+      padding-left: 1.7em;
+      margin-top: 1em;
     }
     li > ol, li > ul {
-        margin-top: 0;
+      margin-top: 0;
     }
     blockquote {
-        margin: 1em 0 1em 1.7em;
-        padding-left: 1em;
-        border-left: 2px solid #e6e6e6;
-        color: #606060;
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
     }
     code {
-        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-        font-size: 85%;
-        margin: 0;
-        hyphens: manual;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
     }
     pre {
-        margin: 1em 0;
-        overflow: auto;
+      margin: 1em 0;
+      overflow: auto;
     }
     pre code {
-        padding: 0;
-        overflow: visible;
-        overflow-wrap: normal;
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
     }
     .sourceCode {
-        background-color: transparent;
-        overflow: visible;
+     background-color: transparent;
+     overflow: visible;
     }
     hr {
-        background-color: #1a1a1a;
-        border: none;
-        height: 1px;
-        margin: 1em 0;
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
     }
     table {
-        margin: 1em 0;
-        border-collapse: collapse;
-        width: 100%;
-        overflow-x: auto;
-        display: block;
-        font-variant-numeric: lining-nums tabular-nums;
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
     }
     table caption {
-        margin-bottom: 0.75em;
+      margin-bottom: 0.75em;
     }
     tbody {
-        margin-top: 0.5em;
-        border-top: 1px solid #1a1a1a;
-        border-bottom: 1px solid #1a1a1a;
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
     }
     th {
-        border-top: 1px solid #1a1a1a;
-        padding: 0.25em 0.5em 0.25em 0.5em;
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
     }
     td {
-        padding: 0.125em 0.5em 0.25em 0.5em;
+      padding: 0.125em 0.5em 0.25em 0.5em;
     }
     header {
-        margin-bottom: 4em;
-        text-align: center;
+      margin-bottom: 4em;
+      text-align: center;
     }
     #TOC li {
-        list-style: none;
+      list-style: none;
     }
     #TOC ul {
-        padding-left: 1.3em;
+      padding-left: 1.3em;
     }
     #TOC > ul {
-        padding-left: 0;
+      padding-left: 0;
     }
     #TOC a:not(:hover) {
-        text-decoration: none;
+      text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
-        width: 0.8em;
-        margin: 0 0.8em 0.2em -1.6em;
-        vertical-align: middle;
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
@@ -169,155 +172,170 @@ html {
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
+     pre.sourceCode { margin: 1em; }
     @media screen {
-        div.sourceCode { overflow: auto; }
+    div.sourceCode { overflow: auto; }
     }
     @media print {
-        pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
-        { counter-reset: source-line 0; }
+      { counter-reset: source-line 0; }
     pre.numberSource code > span
-        { position: relative; left: -4em; counter-increment: source-line; }
+      { position: relative; left: -4em; counter-increment: source-line; }
     pre.numberSource code > span > a:first-child::before
-        { content: counter(source-line);
+      { content: counter(source-line);
         position: relative; left: -1em; text-align: right; vertical-align: baseline;
         border: none; display: inline-block;
         -webkit-touch-callout: none; -webkit-user-select: none;
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        background-color: #232629;
-        color: #7a7c7d;
-    }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-        { color: #cfcfc2; background-color: #232629; }
+      { color: #cccccc; background-color: #303030; }
     @media screen {
-        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #cfcfc2; } /* Normal */
-    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-    code span.an { color: #3f8058; } /* Annotation */
-    code span.at { color: #2980b9; } /* Attribute */
-    code span.bn { color: #f67400; } /* BaseN */
-    code span.bu { color: #7f8c8d; } /* BuiltIn */
-    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #3daee9; } /* Char */
-    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-    code span.co { color: #7a7c7d; } /* Comment */
-    code span.cv { color: #7f8c8d; } /* CommentVar */
-    code span.do { color: #a43340; } /* Documentation */
-    code span.dt { color: #2980b9; } /* DataType */
-    code span.dv { color: #f67400; } /* DecVal */
-    code span.er { color: #da4453; text-decoration: underline; } /* Error */
-    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #f67400; } /* Float */
-    code span.fu { color: #8e44ad; } /* Function */
-    code span.im { color: #27ae60; } /* Import */
-    code span.in { color: #c45b00; } /* Information */
-    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-    code span.op { color: #cfcfc2; } /* Operator */
-    code span.ot { color: #27ae60; } /* Other */
-    code span.pp { color: #27ae60; } /* Preprocessor */
-    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-    code span.sc { color: #3daee9; } /* SpecialChar */
-    code span.ss { color: #da4453; } /* SpecialString */
-    code span.st { color: #f44f4f; } /* String */
-    code span.va { color: #27aeae; } /* Variable */
-    code span.vs { color: #da4453; } /* VerbatimString */
-    code span.wa { color: #da4453; } /* Warning */
-        </style>
-        <!--[if lt IE 9]>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <header id="title-block-header">
-            <h1 class="title">Service Monitoring Epilogue</h1>
-        </header>
-        <p>Some time ago I was testing <a
-                                               href="https://docs.sourcery.ai">Sourcery’s</a> code quality application,
-                                           to get an outside opinion, as impersonal as it may be, about my code.
-                                           This hobby can be a lonely business. The results were, more or less,
-                                           lackluster but I didn’t feel to bad.<br />
-                                           I think it’s to be expected that, being an amateur and all, that really
-                                           doesn’t code that much, the results could never be stellar.<br />
-                                           All in all it was what I expected to be.<br />
-                                           Until I looked into Service Monitoring. ‘Sourcery’ was as indignant as
-                                           an unfeeling, unthinking tool can be. It was so bad it didn’t suggest
-                                           much in the way of alterations, only some earnest calls to revise and
-                                           refactor that unholy mess.<br />
-                                           Had I remembered that, apparently, I wrote long and often about the
-                                           build of that app, I might’ve gleaned some knowledge from that the
-                                           dense, dark, wall of code that, if it was meant to be used as
-                                           obfuscation, wouldn’t be any more successful.<br />
-                                           I couldn’t understand the ‘main’ function.<br />
-                                           The ‘main’ function!<br />
-                                           At my level of sophistication, everything it does is call all other
-                                           modules in order. The fact that I wrote a ‘main’ function that read as
-                                           Swahili to my some months older self, would have seemed fantastic to me.
-                                           Still, here we were.<br />
-                                           With my pride a little piqued, although I hated the tool. It’s heavy and
-                                           intrusive, I set about to make some betterments to the code. The
-                                           equivalent of a coat of paint and a Spring cleaning as it were. More
-                                           cosmetic than structural I thought.<br />
-                                           Of course what I didn’t know, but do now, is that one of the things that
-                                           makes computer engineering challenging, as opposed to tinkering idly on
-                                           projects that tickle your fancy, at your leisure, is that most code is
-                                           propping things up in companies and can’t be rewritten on a whim. If you
-                                           have a scion of hell living in your codebase, you’ll have to find a way
-                                           to live with it, because simply, nobly, morally-minded, option of
-                                           starting again, is totally out of the question. I don’t envy those poor
-                                           bastards. Me, on the other hand, don’t have any of those constraints. So
-                                           I quickly concluded that that it, for whatever it was, had to go.<br />
-                                           The first, and more challenging task of this refactoring was to
-                                           understand what subtleties and special cases were being looked into,
-                                           that justified the gongorism of the code. This was my earnest desire,
-                                           that through inexperience and enthusiasm, I had been led astray into a
-                                           wilderness of complexity that, in the end, if abstruse, showed attention
-                                           to detail and border conditions. Unfortunately that was not what I
-                                           found.<br />
-                                           The app did the things that most simple apps do, didn’t had no special
-                                           affinity for the quirky or the subtle, it thought and provided solutions
-                                           for only the more obvious scenarios. It was just badly designed by
-                                           someone that has a tendency of listening to all that’s meandering and
-                                           rambling, than to soundly planned arguments.<br />
-                                           Truth be told, the signs were there. It’s use was unbearably brittle.
-                                           What would work today, wouldn’t work tomorrow or for all cases. The
-                                           debugging was opaque, the documentation, because I had forgotten six,
-                                           six!, entries that I made here, was nonexistent. As I said, had I know
-                                           that this trove of information was here, I probably would had have been
-                                           much more conservative on my ‘redecoration’. As I didn’t, I basically
-                                           rewrote it. Some ideas are present in both projects, but that’s just
-                                           because I’m not very creative and I tend to repeat the same things to
-                                           the same people all the time, even when I’m not drunk.<br />
-                                           It was for the best I think. I can now look at it and understand what it
-                                           does.<br />
-                                           Anyone can. And that’s a good thing. Even a mechanical quality
-                                           assessment tool was offended by it.<br />
-                                           Here are some examples: ### 1 - Deleting Services Now, to be frank, on
-                                           this part I’m doing some conjecturing, I’m, brazenly, making assumptions
-                                           on what I wanted to do with that code; when it doesn’t warrant any kind
-                                           of interpretation. It’s “The Great Cloud of Unknowing”, it’s impervious
-                                           to your vain human reason. Your conclusions are, wholly, your own. But a
-                                           modicum of exegesis is in order … I, after all, did wrote it. Much to my
-                                           chagrin.<br />
-                                           What I think I was trying to do was, dealing with service deletion and
-                                           the ungodly mess that was updating a json file that was being used as a
-                                           keeper of truth for the app. Why a json file you ask? When a database,
-                                           however small, would’ve been a better solution? The truth is that I was
-                                           trying to do something different from my CRUD apps. Was trying something
-                                           new; and I had hear good things of this json fellow. Maybe he could
-                                           help.<br />
-                                           In short, it was a solution thought out in a whim, for all the wrong
-                                           (more non-existent) reasons and with no thought put into.<br />
-                                           It worked as good as you would expect.<br />
-                                           This is what I had:</p>
-        <div class="sourceCode" id="cb1"><pre
-                                class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> delete_service(<span class="va">self</span>):</span>
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Service Monitoring Epilogue</h1>
+</header>
+<p>Some time ago I was testing <a
+href="https://docs.sourcery.ai">Sourcery’s</a> code quality application,
+to get an outside opinion, as impersonal as it may be, about my code.
+This hobby can be a lonely business.<br />
+The results were, more or less, lackluster but I didn’t feel to
+bad.<br />
+I think it was to be expected. Being an amateur who doesn’t code that
+much, the results could never have been stellar.<br />
+All in all it was what I expected to be.</p>
+<p>Until I looked inside the <code>service_monitoring</code>
+project.<br />
+<em>Sourcery</em> was as indignant as an unfeeling, unthinking tool can
+be.<br />
+It was so bad it didn’t suggest much in the way of changes, only some
+earnest calls to revise and refactor that unholy mess.<br />
+Had I remembered that, apparently, I wrote long and often about the
+build of that app, I might’ve shed some light on that the dense, dark,
+wall of code, that, if meant to be used as obfuscation,<br />
+it wouldn’t have been more successful.</p>
+<p>I couldn’t understand the <code>main</code> function.<br />
+The <code>main</code> function!<br />
+At my level of coding sophistication, everything it does is call all
+other modules in order.<br />
+The fact that I wrote a <code>main</code> function that was totally
+opaque to my, five or six months older self, would have seemed fantastic
+to me.<br />
+Still, here we were.</p>
+<p>With my pride a little piqued, I set about to make some betterments
+to the code.<br />
+The equivalent of a coat of paint and a Spring cleaning as it
+were.<br />
+More cosmetic than structural, I thought.<br />
+Of course what I didn’t know, but do now, is that one of the things that
+makes computer engineering challenging, as opposed to tinkering idly on
+projects that tickle your fancy, is the fact that, most serious code is
+propping things up in companies and can’t be rewritten on a whim.<br />
+You may have the scion of Hell living in your codebase, but you’ll just
+have to find ways of passing time together.</p>
+<p>Because the simple, noble, morally righteous, option of starting
+afresh, is totally out of the question.</p>
+<p>I don’t envy those poor bastards.<br />
+We, the tinkerers, on the other hand, don’t have any such qualms.<br />
+So I quickly concluded that that <code>service_monitoring</code> project
+had to go.</p>
+<p>The first, and more challenging task of refactoring, was to
+understand what border cases were there, that justified the gongorism of
+the code.</p>
+<p>This thought represented my earnest desire, that, through
+inexperience and enthusiasm, I had been led astray into a wilderness of
+complexity that, in the end, if abstruse, showed attention to detail and
+limit conditions.<br />
+Unfortunately that was not what I found.</p>
+<p>The app did the things that most simple apps do. Didn’t had no
+special affinity for the quirky or the subtle, it thought and provided
+solutions for only the more obvious scenarios. If you muscled through
+the spaghetti code, you’d understand that the only thing worthy of note
+on this app, was how unfathomable it was.<br />
+Like a stupid person who acts mysteriously.</p>
+<p>Truth be told, the signs were there. It’s use was unbearably brittle.
+What would work today, wouldn’t work tomorrow or for all cases.<br />
+The debugging was dim and grey, the documentation, was
+nonexistent.<br />
+Even though I did find the time to write six, six, posts on the matter
+here, and then promptly forget about it.<br />
+Had I know that this trove of information was here, I probably would had
+have been much more conservative on my <em>remodeling</em>.<br />
+As I didn’t, I basically rewrote it.<br />
+Some ideas are present in both projects, but that’s just because I’m not
+very creative and I tend to repeat things to the same people all the
+time. Even when not drunk.</p>
+<p>It was for the best I think. I can now look at it and understand what
+it does.<br />
+Anyone can. And that’s a good thing.<br />
+Here are some examples:</p>
+<h3>
+<u>1 - Deleting Services</u>
+</h3>
+<p>Now, to be frank, I’m doing some conjecturing, I’m, brazenly making
+assumptions on what I wanted, some months ago, to do with that code;
+when it, probably, doesn’t warrant any kind of interpretation.<br />
+MY conclusions are, wholly, my own. They don’t oblige my old code to
+anything. We’re complete strangers, and your guess is as good as
+mine.</p>
+<p>But a modicum of exegesis is in order … I, after all, did wrote it.
+Much to my chagrin.</p>
+<p>What I think I was trying to do was: to deal with services deletion
+and the ungodly mess that updating a json file became.<br />
+I was using it, the json file, as the single source of truth for the
+app.<br />
+Why a json file you ask? The truth is that I was looking to do something
+different from my CRUD apps.<br />
+Something new; exciting… and I had heard good things of this
+<em>json</em> business. Maybe it could help.<br />
+In short, it was a solution thought in a whim, for all the wrong (more
+non-existent), reasons and with no thought put into it.<br />
+It worked as good as you would expect.</p>
+<p>This is what I had:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> delete_service(<span class="va">self</span>):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">        First stops the unit, then disables it and</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">        lastly, deletes files. If service is</span></span>
@@ -382,22 +400,20 @@ html {
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                    make_dropdown()</span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-            <p>Nothing of this, except the Systemd commands, through no fault of my
-            own, worked as expected. It kept glitching and I, for some, reason,
-            never quite got around to understanding dictionaries and json, until
-            very recently. So I was outside looking in. And when I finally, got a
-            glimpse of comprehension on those subjects, was only to conclude that
-            they shouldn’t be used here. At least no for me.<br />
-            Today I broke the function into small, simpler bits. Separated database
-            operations from service interactions, did away with the godforsaken json
-            file and put the data in the smallest, cutest, MySQL database
-            ever.<br />
-            Sqlite3 is acting out in my computer, don’t judge me!<br />
-            Got a function just for the systemd commands and commented profusely the
-            code, knowing now that, in the future Imwon’t remember to check this
-            diary for information.</p>
-            <div class="sourceCode" id="cb2"><pre
-                                    class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
+<p>Nothing of this, except the <em>Systemd</em> commands, through no
+fault of my own, worked as expected. It kept glitching and I, for some,
+reason, never quite got around to understanding dictionaries and
+<em>json</em>, until very recently.<br />
+So I was outside looking in.</p>
+<p>Today I broke the function into small, simpler bits. Separated
+database operations from service interactions, did away with the
+godforsaken <em>json</em> file and put the data in the smallest, cutest,
+<em>MySQL</em> database ever.<br />
+Got a function just for the <em>systemd</em> commands and commented
+profusely the code, knowing now that, in the future I won’t remember to
+check this diary for information.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @snoop</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbdelunit(selunit):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Deletes a unit in a service in the database.</span></span>
@@ -505,10 +521,8 @@ html {
 <span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
 <span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    delete()</span></code></pre></div>
-                <p>I did something similar to the ‘add service’ function, that makes
-                this look like a minimalist triumph, and rewrote the ‘main’ function,
-                that, from all things that I don’t understand, it’s the one I don’t
-                understand the most.<br />
-                But, conversations to have another time.</p>
-    </body>
+<p>I also rewrote the<code>'main</code> function, that,<br />
+from all things that I don’t understand,<br />
+it’s the one I don’t understand the most.</p>
+</body>
 </html>

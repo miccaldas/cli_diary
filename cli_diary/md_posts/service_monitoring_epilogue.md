@@ -1,81 +1,103 @@
 ---
 title: Service Monitoring Epilogue
 mainfont: Iosevka
-fontsize: 17pt
+fontsize: 13pt
 ---
 
 
 Some time ago I was testing [Sourcery's](https://docs.sourcery.ai) code quality application, to get an outside opinion, as impersonal as it may be,
-about my code. This hobby can be a lonely business. The results were,
-more or less, lackluster but I didn't feel to bad.  
-I think it's to be expected that, being an amateur and all, that really doesn't 
-code that much, the results could never be stellar.  
+about my code. This hobby can be a lonely business.  
+The results were, more or less, lackluster but I didn't feel to bad.  
+I think it was to be expected. Being an amateur who doesn't  code that much, the results could never have been stellar.  
 All in all it was what I expected to be.  
-Until I looked into Service Monitoring. 'Sourcery' was as indignant as an unfeeling,
-unthinking tool can be. It was so bad it didn't suggest much in the way of alterations, only some earnest calls to revise
+  
+Until I looked inside the `service_monitoring` project.  
+*Sourcery* was as indignant as an unfeeling, unthinking tool can be.  
+It was so bad it didn't suggest much in the way of changes, only some earnest calls to revise
 and refactor that unholy mess.  
 Had I remembered that, apparently, I wrote long and often about the build of
-that app, I might've gleaned some knowledge from that the dense, dark, wall
-of code that, if it was meant to be used as obfuscation, wouldn't be any more
-successful.  
-I couldn't understand the 'main' function.  
-The 'main' function!  
-At my level of sophistication, everything it does is call all other modules in
-order. The fact that I wrote a 'main' function that read as Swahili to my some
-months older self, would have seemed fantastic to me. Still, here we were.  
-With my pride a little piqued, although I hated the tool. It's heavy and
-intrusive, I set about to make some betterments to the code. The equivalent of
-a coat of paint and a Spring cleaning as it were. More cosmetic than structural
-I thought.  
+that app, I might've shed some light on that the dense, dark, wall of code,  that,
+if meant to be used as obfuscation,  
+it wouldn't have been more successful.  
+  
+I couldn't understand the `main` function.  
+The `main` function!  
+At my level of coding sophistication, everything it does is call all other modules in
+order.  
+The fact that I wrote a `main` function that was totally opaque to my, five or six
+months older self, would have seemed fantastic to me.  
+Still, here we were.  
+  
+With my pride a little piqued, I set about to make some betterments to the code.  
+The equivalent of a coat of paint and a Spring cleaning as it were.  
+More cosmetic than structural, I thought.  
 Of course what I didn't know, but do now, is that one of the things that makes
 computer engineering challenging, as opposed to tinkering idly on projects that
-tickle your fancy, at your leisure, is that most code is propping things up in
-companies and can't be rewritten on a whim. If you have a scion of hell living
-in your codebase, you'll have to find a way to live with it, because simply,
-nobly, morally-minded, option of starting again, is totally out of
-the question. I don't envy those poor bastards. Me, on the other hand, don't
-have any of those constraints. So I quickly concluded that that it,
-for whatever it was, had to go.  
-The first, and more challenging task of this refactoring was
-to understand what subtleties and special cases were being looked into, that
-justified the gongorism of the code. This was my earnest desire, that through
-inexperience and enthusiasm, I had been led astray into a wilderness of
-complexity that, in the end, if abstruse, showed attention to detail and border
-conditions. Unfortunately that was not what I found.  
-The app did the things that most simple apps do, didn't had no special affinity
+tickle your fancy, is the fact that, most serious code is propping things up in
+companies and can't be rewritten on a whim.  
+You may have the scion of Hell living in your codebase, but you'll just have to find ways of passing time together.  
+  
+Because the simple, noble, morally righteous, option of starting afresh, is totally out of
+the question.  
+  
+I don't envy those poor bastards.  
+We, the tinkerers, on the other hand, don't have any such qualms.  
+So I quickly concluded that that `service_monitoring` project had to go.  
+  
+The first, and more challenging task of refactoring, was to understand what border cases were there, that
+justified the gongorism of the code.  
+  
+This thought represented my earnest desire, that, through inexperience and enthusiasm, I had been led astray into a wilderness of
+complexity that, in the end, if abstruse, showed attention to detail and limit
+conditions.  
+Unfortunately that was not what I found.  
+  
+The app did the things that most simple apps do. Didn't had no special affinity
 for the quirky or the subtle, it thought and provided solutions for only the more
-obvious scenarios. It was just badly designed by someone that has a tendency of
-listening to all that's meandering and rambling, than to soundly planned
-arguments.  
+obvious scenarios. If you muscled through the spaghetti code, you'd understand
+that the only thing worthy of note on this app, was how unfathomable it was.  
+Like a stupid person who acts mysteriously.  
+  
 Truth be told, the signs were there. It's use was unbearably brittle. What would
-work today, wouldn't work tomorrow or for all cases. The debugging was opaque,
-the documentation, because I had forgotten six, six!, entries that I made here,
-was nonexistent. As I said, had I know that this trove of information was here,
-I probably would had have been much more conservative on my 'redecoration'. As
-I didn't, I basically rewrote it. Some ideas are present in both projects, but
-that's just because I'm not very creative and I tend to repeat the same things
-to the same people all the time, even when I'm not drunk.  
+work today, wouldn't work tomorrow or for all cases.  
+The debugging was dim and grey, the documentation, was nonexistent.  
+Even though I did find the time to write six, six, posts on the matter here, and
+then  promptly forget about it.  
+Had I know  that this trove of information was here, I probably would had have been
+much more conservative on my *remodeling*.  
+As I didn't, I basically rewrote it.  
+Some ideas are present in both projects, but that's just because I'm not very creative and I tend to repeat things
+to the same people all the time. Even when not drunk.  
+  
 It was for the best I think. I can now look at it and understand what it does.  
-Anyone can. And that's a good thing. Even a mechanical quality assessment tool
-was offended by it.  
+Anyone can. And that's a good thing.  
 Here are some examples:
-### 1 - Deleting Services
-Now, to be frank, on this part I'm doing some conjecturing, I'm, brazenly,
-making assumptions on what I wanted to do with that code; when it doesn't
-warrant any kind of interpretation. It's "The Great Cloud of Unknowing", it's
-impervious to your vain human reason. Your conclusions are, wholly, your own.
+  
+  
+<h3><u>1 - Deleting Services</u></h3>  
+  
+  
+Now, to be frank, I'm doing some conjecturing, I'm, brazenly making assumptions on what I wanted, some months ago,
+to do with that code; when it, probably, doesn't warrant any kind of interpretation.  
+MY conclusions are, wholly, my own. They don't oblige my old code to anything.
+We're complete strangers, and your guess is as good as mine.  
+  
 But a modicum of exegesis is in order ... I, after all, did wrote it. Much to my
 chagrin.  
-What I think I was trying to do was, dealing with service deletion and the
-ungodly mess that was updating a json file that was being used as a keeper of
-truth for the app. Why a json file you ask? When a database, however small,
-would've been a better solution? The truth is that I was trying to do something
-different from my CRUD apps. Was trying something new; and I had hear good
-things of this json fellow. Maybe he could help.  
-In short, it was a solution thought out in a whim, for all the wrong (more
-non-existent) reasons and with no thought put into.  
+  
+What I think I was trying to do was: to deal with services deletion and the ungodly mess that updating a json file
+became.  
+I was using it, the json file, as the single source of truth for the app.  
+Why a json file you ask? The truth is that I was looking to do something
+different from my CRUD apps.  
+Something new; exciting... and I had heard good things of this *json* business. Maybe it could help.  
+In short, it was a solution thought in a whim, for all the wrong (more non-existent), 
+reasons and with no thought put into it.  
 It worked as good as you would expect.  
+  
+  
 This is what I had:
+  
 ```python
   def delete_service(self):
         """
@@ -143,18 +165,18 @@ This is what I had:
 
         print("\n\n")
 ```
-Nothing of this, except the Systemd commands, through no fault of my own, worked
+  
+  
+Nothing of this, except the *Systemd* commands, through no fault of my own, worked
 as expected. It kept glitching and I, for some, reason, never quite got around
-to understanding dictionaries and json, until very recently. So I was outside
-looking in. And when I finally, got a glimpse of comprehension on those
-subjects, was only to conclude that they shouldn't be used here. At least no for
-me.  
+to understanding dictionaries and *json*, until very recently.  
+So I was outside looking in.  
+  
 Today I broke the function into small, simpler bits. Separated database
-operations from service interactions, did away with the godforsaken json file
-and put the data in the smallest, cutest, MySQL database ever.  
-Sqlite3 is acting out in my computer, don't judge me!  
-Got a function just for the systemd commands and commented profusely the code, knowing
-now that, in the future Imwon't remember to check this diary for information.  
+operations from service interactions, did away with the godforsaken *json* file
+and put the data in the smallest, cutest, *MySQL* database ever.  
+Got a function just for the *systemd* commands and commented profusely the code, knowing
+now that, in the future I won't remember to check this diary for information.  
 ```python
 # @snoop
 def dbdelunit(selunit):
@@ -265,7 +287,6 @@ def delete():
 if __name__ == "__main__":
     delete()
 ```
-I did something similar to the 'add service' function, that makes this look like
-a minimalist triumph, and rewrote the 'main' function, that, from all things
-that I don't understand, it's the one I don't understand the most.  
-But, conversations to have another time.
+I also rewrote the`'main` function, that,  
+from all things that I don't understand,  
+it's the one I don't understand the most.  

@@ -11,10 +11,11 @@
       font-size: 13pt;
       color: #1a1a1a;
       background-color: #fdfdfd;
+      line-height: 1.5;
     }
     body {
       margin: 0 auto;
-      max-width: 36em;
+      max-width: 45em;
       padding-left: 50px;
       padding-right: 50px;
       padding-top: 50px;
@@ -172,35 +173,32 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Cli Apps Database App. A Bird’s Eye View</h1>
-<p class="date">07-08-2023 07:21</p>
-</header>
+        pre.sourceCode { margin: 1; }</header>
 <p>This is a short post but, I think, an important one.<br />
-At least important to understand the structure of the
-<em>database_app’s</em> logic.<br />
+At least important to understand the <em>database_app’s</em>
+logic.<br />
 As the other posts on this theme tend to delve deep into each of the
-parts of the app, this post aims to explain how they interact and,
-hopefully, elucidate why the app has this structure and not another.
-i</p>
+parts of the app, here I aims to show how they interact and, hopefully,
+explain why the app has this structure and not another.</p>
 <p>As I said in another post, the overarching aim for the app was to
-find a new search paradigm that did more than consume data in database
-approved formats, to one that levers the associative nature of human
+find a new search paradigm, that did more than consume data in database
+approved formats, to one that leverages the syncretic nature of human
 thinking.<br />
 If a database encourages, and quite rightly so, an analytical and
-compartmentalized view of information, we, as humans, revel in free, and
-not so free, associations, explanations tying together improbable and
-foreign bits of data, experimental, failure-prone, iterative processes
-that, in ways dimly comprehended, seem to pry knowledge from an
-agglomeration of half truths, full lies and poorly understood
-aphorisms.<br />
+compartmentalized view of information, we, as humans, think in free, and
+not so free, associations, with explanations binding disparate pieces
+information, using processes that are experimental, failure-prone,
+iterative, but that seem to find knowledge in the midst of
+turbulence.<br />
 In short, the process is messy but fruitful.</p>
-<p>I wanted to create a search method that aided the creation of the
+<p>I wanted to create a method that aided the creation of the
 associative processes that fuel imagination.</p>
 <p>With this in mind, I reached some organizational principles:</p>
 <ol type="1">
 <li><p><strong><em>Everything must connect to
 everything.</em></strong><br />
 Instead of silos, let’s create a linked system, that you can traverse in
-its entirety, just by querying the available data points. This leads me
+its entirety just by querying the available data points. This leads me
 right to the second point, that is:<br />
 </p></li>
 <li><p><strong><em>Information should be combined.</em></strong><br />
@@ -208,24 +206,28 @@ As the ancients from the East have said, time and again, identity is an
 illusion.<br />
 The database model reificates this error of perception, by leading us in
 mistaking the starkly separated, non-fungible, classes needed to catalog
-and store information, as having ontological reality, not letting us see
-them as the mere artefacts of <em>count and store</em> process.</p>
+and store information, as having ontological reality. Not letting us see
+them as the simple artefacts of <em>count</em> and <em>store</em>
+processes that they really are.</p>
 <p>Paraphrasing a poem of <a
 href="https://en.wikipedia.org/wiki/Philip_Larkin">Philip Larkin</a>:
 <em>they don’t mean to; but they do</em>.</p>
-<p>Truth is, at least for me, and I’m the only one here; is that
-information has a deeply transient and context indebted nature, and to
-take it from this rich and dynamic environment, cristallyzes it to
+<p>Truth is,<br />
+at least for me,<br />
+and I’m the only one here;<br />
+is that information has a deeply transient and context-dependent nature.
+To take it from this rich and dynamic environment, cristallyzes it to
 death.<br />
 This is not the database’s fault.<br />
 They were never meant as templates for the architecture of
 thought.<br />
 They are, and rightly so, intent on preserving and protecting
-information. All laudable objectives, but not very amenable to fostering
-use or growth.</p>
-<p>The problems start when the living with these tools, for so long, so
-absent mindedly, so <em>innate</em> is their presence, that we seem them
-as natural occurrences and first principles.<br />
+information.<br />
+All laudable objectives, but not very amenable to fostering use or
+growth.</p>
+<p>The problems come from living with these tools, for so long, so
+absent mindedly, and so <em>innate</em> is their presence, that we seem
+them as natural occurrences and first principles.<br />
 But they’re not. And we must be vigilant to not let ourselves be
 subsumed in the logic of the tool.<br />
 </p></li>
@@ -236,62 +238,59 @@ package dependencies and follow who depends on whom, for as long as the
 thread may run, I should.</p></li>
 </ol>
 <p>To get to the heights of these lofty ideals, I created a structure
-that, around a globally available data source, that I called, with a lot
-of hubris, <code>allinfo</code>, run queries and requests, in the shape
-of function loops that, aided by a group of collectively available
-helper methods, extract information in a dynamic, associative way.<br />
+around a globally available data source, that I called, with a lot of
+hubris, <code>allinfo</code>. Passing through it, are function loops
+that, aided by a group of collectively available helper methods, extract
+information in a dynamic, associative way.<br />
 The structure is composed of the following elements:</p>
 <ol type="1">
-<li><strong><em>Query reception.</em></strong><br />
+<li><p><strong><em>Query reception.</em></strong><br />
 Where we make available, and incentivize its use, several data points,
-heterogeneous in nature.<br />
-</li>
-<li><strong><em>Data management.</em></strong><br />
+heterogeneous in nature.</p></li>
+<li><p><strong><em>Data management.</em></strong><br />
 What I call <em>data management</em> is the still, compartmentalized,
 treatment of each option of the query; with the objectives of:<br />
 2.1. converting it into a <em>SQL</em> expression,<br />
 2.2. clean the output,<br />
 2.3. return a file with its findings.<br />
 For each option there is a specific management module. Although they
-share all important functions.<br />
-</li>
-<li><strong><em>Initial funnel.</em></strong><br />
+share all important functions.</p></li>
+<li><p><strong><em>Initial funnel.</em></strong><br />
 A sequence of functions that:<br />
-3.1. <em>Checks for availability of management information.</em> They
-see if the files that have their output are present. If at least one is,
-a list is made of the available files.<br />
-3.2. <em>Aggregate available information</em>. It’s the birth of
-<code>allinfo</code>. All the information needed during this session is
+3.1. <em>Check for availability of management information.</em> They see
+if the files that have their output are present. If they find at least
+one, a list is made of the files.<br />
+3.2. <em>Aggregate the found information</em>. It’s the birth of
+<code>allinfo</code>. All the information needed during a session is
 here.<br />
-3.3. <em>User’s choice.</em>. Of this retrieved pack of data, the user
+3.3. <em>User’s choice.</em> Of this retrieved pack of data, the user
 will choose what he wants to see. Usually is always a subset.<br />
 3.4. <em>Visualizing the data.</em> The user is presented with the
 content of its choices. Based on this knowledge he’ll be:<br />
-3.5. <em>Asked what he wants to do with it.</em>. At the moment I have
+3.5. <em>Asked what he wants to do with it.</em> At the moment I have
 built two data loops that consume these results. The user can choose one
 or the two, but they’ll always be present in the others loop, making
-cross referencing the two data sources, almost inevitable.<br />
-They are:<br />
-</li>
-<li><strong><em>Dependencies.</em></strong><br />
-This loop will let you scan through package dependencies, for one or
-more packages, drilling into its required files, as deep as the user
-wants. As I said, at any moment this information can be crossed with the
-other loop, that asks:<br />
-</li>
-<li><strong><em>Locations.</em></strong><br />
+cross referencing the two data sources, almost inevitable.</p>
+<p>They are:<br />
+</p></li>
+<li><p><strong><em>Dependencies.</em></strong><br />
+This loop will scan through package dependencies, for one or more
+packages, drilling into its required files, as deep as the user wants.
+As I said, at any moment this information can be crossed with the other
+loop.</p></li>
+<li><p><strong><em>Locations.</em></strong><br />
 If you want to see a package location on the computer. If you say yes,
 it’ll open the directory and ask you if you want to open any file. This
 process can be repeated as many times as you want, or interrupted to
-search for more dependencies.</li>
+search for more dependencies.</p></li>
 </ol>
 <p>The only thing I haven’t mentioned, are the methods that power these
 loops.<br />
 There’s an interesting collection of little, some not so little,
 functions to aid them on their endeavours. Some have proven so useful,
 that I’m thinking in putting them in the <em>reusable_files</em>
-directory, so I can access them whenever I want.<br />
-Anyway, I leave you with a diagram of what I see when I talk about the
+directory, so I can access them whenever I want.</p>
+<p>I leave you with a diagram of what I see when I talk about the
 architecture of this solution:</p>
 <figure>
 <img src="/home/mic/python/cli_diary/cli_diary/imgs/dbapp_diagram.png"

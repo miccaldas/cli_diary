@@ -1,141 +1,141 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>pwd_db_encryption_process</title>
-  <style>
-    html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <title>pwd_db_encryption_process</title>
+        <style>
+html {
+    line-height: 1.5;
+    font-family: Iosevka;
+    font-size: 13px;
+    color: #1a1a1a;
+    background-color: #fdfdfd;
+}
     body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
+        margin: 0 auto;
+        max-width: 45em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
     }
     @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 1em;
-      }
+        body {
+            font-size: 0.9em;
+            padding: 1em;
+        }
     }
     @media print {
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
+        body {
+            background-color: transparent;
+            color: black;
+            font-size: 12pt;
+        }
+        p, h2, h3 {
+            orphans: 3;
+            widows: 3;
+        }
+        h2, h3, h4 {
+            page-break-after: avoid;
+        }
     }
     p {
-      margin: 1em 0;
+        margin: 1em 0;
     }
     a {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     a:visited {
-      color: #1a1a1a;
+        color: #1a1a1a;
     }
     img {
-      max-width: 100%;
+        max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
+        margin-top: 1.4em;
     }
     h5, h6 {
-      font-size: 1em;
-      font-style: italic;
+        font-size: 1em;
+        font-style: italic;
     }
     h6 {
-      font-weight: normal;
+        font-weight: normal;
     }
     ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
+        padding-left: 1.7em;
+        margin-top: 1em;
     }
     li > ol, li > ul {
-      margin-top: 0;
+        margin-top: 0;
     }
     blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
-      font-size: 85%;
-      margin: 0;
+        font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+        font-size: 85%;
+        margin: 0;
     }
     pre {
-      margin: 1em 0;
-      overflow: auto;
+        margin: 1em 0;
+        overflow: auto;
     }
     pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
     }
     .sourceCode {
-     background-color: transparent;
-     overflow: visible;
+        background-color: transparent;
+        overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
+        background-color: #1a1a1a;
+        border: none;
+        height: 1px;
+        margin: 1em 0;
     }
     table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
     }
     table caption {
-      margin-bottom: 0.75em;
+        margin-bottom: 0.75em;
     }
     tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
     }
     th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
     }
     td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
+        padding: 0.125em 0.5em 0.25em 0.5em;
     }
     header {
-      margin-bottom: 4em;
-      text-align: center;
+        margin-bottom: 4em;
+        text-align: center;
     }
     #TOC li {
-      list-style: none;
+        list-style: none;
     }
     #TOC a:not(:hover) {
-      text-decoration: none;
+        text-decoration: none;
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -149,32 +149,32 @@
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
+    pre.sourceCode { margin: 1em; }
     @media screen {
-    div.sourceCode { overflow: auto; }
+        div.sourceCode { overflow: auto; }
     }
     @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
-      { counter-reset: source-line 0; }
+    { counter-reset: source-line 0; }
     pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
+    { position: relative; left: -4em; counter-increment: source-line; }
     pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
+    { content: counter(source-line);
         position: relative; left: -1em; text-align: right; vertical-align: baseline;
         border: none; display: inline-block;
         -webkit-touch-callout: none; -webkit-user-select: none;
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-      }
+    }
     pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #cccccc; background-color: #303030; }
+    { color: #cccccc; background-color: #303030; }
     @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
     code span.al { color: #ffcfaf; } /* Alert */
     code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
@@ -206,140 +206,140 @@
     code span.vs { color: #cc9393; } /* VerbatimString */
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<h1 id="password-database-encryption-process">Password Database Encryption Process</h1>
-<p>26-02-2023 <br> <br> ## UPDATE<br />
-It is now 05/03/23, and since my last update (26/02/23), and everything<br />
-changed. I was very unhappy with the limitations of using MySQL’s own<br />
-encryption mechanisms. In my opinion it had the following foibles:<br />
-1. The encryption key has to be activated at the start of every session.<br />
-User variables are only valid during a session. Because of this, I<br />
-started thinking on how to go around this limitation, like initiating<br />
-it when MySQL service was started; but:<br />
-2. I couldn’t get the key activated at boot.<br />
-There’s not even an option that remotely does something akin to this.<br />
-You can create triggers or tasks for a myriad of events, provided that<br />
-the session has has started. I then thought that I could create a Python<br />
-or Bash script that programmatically would send the activation command<br />
-at the beginning of all db calls. But:<br />
-3. The key activation command doesn’t work though python-mysql-connector.<br />
-I don’t know if this is a flaw or intentional, either way, you can’t do<br />
-it through Python. Also:<br />
-4. The Python connector alters the passwords, making them impossible to<br />
-decode. Python’s connector returns every bytes() stored in the database,<br />
-as a bytesarray. Since what was uploaded was a bytes string, it’s easy<br />
-to understand the decryptor’s confusion. Furthermore:<br />
-5. You can’t export the key from MySQL. It resides only inside it and even<br />
-then, just for the length of a session. This illustrates nicely a<br />
-concern of mine, of a more philosophical nature, but no less worrying;<br />
-that:<br />
-6. Most of the process was totally out of my hands. MySQL will manage the<br />
-entirety of the process, dictate the terms and conditions, and I could<br />
-just take it or leave it.</p>
-<p>Then I remembered that I had Sqlite3 installed. I remembered also that Python<br />
-is much more integrated with it than with MySQL. In fact, it doesn’t need a<br />
-connector, it uses a native package. This could solve, at least, the problem of<br />
-fucking my encrypted passwords values. I also decided that encryption<br />
-process would be my own. I would get a library to encode and decode data, I<br />
-would set it up programmatically through Python’s modules, and take full<br />
-ownership of the project.</p>
-<p>I came up with the following structure:</p>
-<h3 id="data-encryptiondecryption.">DATA ENCRYPTION/DECRYPTION.</h3>
-<p>This is done through <a href="https://docs.cossacklabs.com/themis/">Themis</a>, that is a simple to use, secure and sturdy<br />
-encryption library. To see how it’s implemented, see the template in the<br />
-<a href="./encrypt_decrypt.txt">encrypt_decrypt</a> file.</p>
-<h3 id="sensitive-data-storage.">SENSITIVE DATA STORAGE.</h3>
-<p>It wouldn’t make much sense going to all this trouble and leaving the passwords<br />
-and keys files unguarded.<br />
-So we:<br />
-1. Create a new folder to house sensitive information. The folder and all<br />
-its contents, have a permissions profile of 700. This was as restrictive<br />
-as I could get, before making it impossible for the files to be accessed<br />
-through Python. There is no version control for these folders and files,<br />
-their backup is done to an external disk.<br />
-2. Store each database with encrypted information on its own subfolder, with<br />
-their own set of credentials.<br />
-3. The files location is obfuscated in Python files, through the use of<br />
-environment variables for their paths.<br />
-These are defined in project by project, and stored in a ‘.env’ file<br />
-that’s not monitored by Git.<br />
-4. The main folder is encrypted with <a href="https://github.com/vgough/encfs">Encfs</a>, a virtual filesystem for<br />
-encryption.<br />
-It works by requiring two folders, one with the decrypted documentation,<br />
-and another, completely, empty, that’ll manage the hosting of encrypted<br />
-files:<br />
-1. If you already have a folder with sensitive information and want to<br />
-use its name as mount point, empty it of all files, then create a<br />
-empty folder in the same directory that’ll host the encrypted files.<br />
-2. Create the mount point, using Encfs command ‘mount’.<br />
-3. Put the files you took from the unencrypted folder back inside.<br />
-4. If you look now inside the encrypted folder, there’ll be encrypted<br />
-versions of all documents in the unencrypted one.<br />
-5. After accessing the files through the unencrypted folder, unmount it.<br />
-6. You’ll now see that the unencrypted folder is empty, but the<br />
-encrypted one still has coded versions.<br />
-5. If you want more details of Encfs’ implementation, take a look at the<br />
-<a href="./config.py">config</a> file. Specifically the ‘Efs’ class.</p>
-<h3 id="encryption-workflow.">ENCRYPTION WORKFLOW.</h3>
-<ol type="1">
-<li>The user, on his Python scripts, will access the Encfs password, through<br />
-environment variables, and check if the mount point is active:<br />
-1. Is active. Access the files.<br />
-2. It’s not active. Give the ‘mount’ command and recheck if it’s open.<br />
-</li>
-<li>With access to the folder, get the Themis key correspondent to your<br />
-database.<br />
-</li>
-<li>Use it to encrypt/decrypt data, as the case may be.<br />
-</li>
-<li>After doing whatever you wanted to do, unmount it.<br />
-You can see an example, like many others, of this workflow in practice in<br />
-<a href="/home/mic/python/pwd_encrypted/pwd_encrypted/update.py">update</a>.</li>
-</ol>
-<p>This is the current state of the art. Doesn’t mean that it won’t change in a<br />
-day or two. But, for now, this is where we stand.<br />
-I’ll leave the old updates below this one, for documentation purposes.</p>
-<hr />
-<h2 id="update">UPDATE</h2>
-<p>Apparently the key variable that I made yesterday, today,wasn’t working when I started MySQL.<br />
-A little digging revealed that variables started by ‘@’ ‘, as <span class="citation" data-cites="key_str">@key_str</span> mos certainly is,<br />
-are user variables and exist only in the context of a session. To remedy this, and result of<br />
-not finding a way to make the create key command a system variable, I just went along with the<br />
-next best thing and invoked the key before making a db call through Python. That way it’s<br />
-always on when I need it. You can, and need to if you want to decrypt stuff you did before,<br />
-use the same starting string. That’s what defines the key and that’s the information that<br />
-needs to be kept secret. So as to not write the key initiation string on all my scripts, I<br />
-made a environment variable called ’AES_MYSQL_KEY’, that keeps it. In order to use a<br />
-environment variable in Python, you have to do this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+        </style>
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1 id="password-database-encryption-process">Password Database Encryption Process</h1>
+        <p>26-02-2023 <br> <br> ## UPDATE<br />
+            It is now 05/03/23, and since my last update (26/02/23), and everything<br />
+            changed. I was very unhappy with the limitations of using MySQL’s own<br />
+            encryption mechanisms. In my opinion it had the following foibles:<br />
+            1. The encryption key has to be activated at the start of every session.<br />
+            User variables are only valid during a session. Because of this, I<br />
+            started thinking on how to go around this limitation, like initiating<br />
+            it when MySQL service was started; but:<br />
+            2. I couldn’t get the key activated at boot.<br />
+            There’s not even an option that remotely does something akin to this.<br />
+            You can create triggers or tasks for a myriad of events, provided that<br />
+            the session has has started. I then thought that I could create a Python<br />
+            or Bash script that programmatically would send the activation command<br />
+            at the beginning of all db calls. But:<br />
+            3. The key activation command doesn’t work though python-mysql-connector.<br />
+            I don’t know if this is a flaw or intentional, either way, you can’t do<br />
+            it through Python. Also:<br />
+            4. The Python connector alters the passwords, making them impossible to<br />
+            decode. Python’s connector returns every bytes() stored in the database,<br />
+            as a bytesarray. Since what was uploaded was a bytes string, it’s easy<br />
+            to understand the decryptor’s confusion. Furthermore:<br />
+            5. You can’t export the key from MySQL. It resides only inside it and even<br />
+            then, just for the length of a session. This illustrates nicely a<br />
+            concern of mine, of a more philosophical nature, but no less worrying;<br />
+            that:<br />
+            6. Most of the process was totally out of my hands. MySQL will manage the<br />
+            entirety of the process, dictate the terms and conditions, and I could<br />
+            just take it or leave it.</p>
+        <p>Then I remembered that I had Sqlite3 installed. I remembered also that Python<br />
+            is much more integrated with it than with MySQL. In fact, it doesn’t need a<br />
+            connector, it uses a native package. This could solve, at least, the problem of<br />
+            fucking my encrypted passwords values. I also decided that encryption<br />
+            process would be my own. I would get a library to encode and decode data, I<br />
+            would set it up programmatically through Python’s modules, and take full<br />
+            ownership of the project.</p>
+        <p>I came up with the following structure:</p>
+        <h3 id="data-encryptiondecryption.">DATA ENCRYPTION/DECRYPTION.</h3>
+        <p>This is done through <a href="https://docs.cossacklabs.com/themis/">Themis</a>, that is a simple to use, secure and sturdy<br />
+            encryption library. To see how it’s implemented, see the template in the<br />
+            <a href="./encrypt_decrypt.txt">encrypt_decrypt</a> file.</p>
+        <h3 id="sensitive-data-storage.">SENSITIVE DATA STORAGE.</h3>
+        <p>It wouldn’t make much sense going to all this trouble and leaving the passwords<br />
+            and keys files unguarded.<br />
+            So we:<br />
+            1. Create a new folder to house sensitive information. The folder and all<br />
+            its contents, have a permissions profile of 700. This was as restrictive<br />
+            as I could get, before making it impossible for the files to be accessed<br />
+            through Python. There is no version control for these folders and files,<br />
+            their backup is done to an external disk.<br />
+            2. Store each database with encrypted information on its own subfolder, with<br />
+            their own set of credentials.<br />
+            3. The files location is obfuscated in Python files, through the use of<br />
+            environment variables for their paths.<br />
+            These are defined in project by project, and stored in a ‘.env’ file<br />
+            that’s not monitored by Git.<br />
+            4. The main folder is encrypted with <a href="https://github.com/vgough/encfs">Encfs</a>, a virtual filesystem for<br />
+            encryption.<br />
+            It works by requiring two folders, one with the decrypted documentation,<br />
+            and another, completely, empty, that’ll manage the hosting of encrypted<br />
+            files:<br />
+            1. If you already have a folder with sensitive information and want to<br />
+            use its name as mount point, empty it of all files, then create a<br />
+            empty folder in the same directory that’ll host the encrypted files.<br />
+            2. Create the mount point, using Encfs command ‘mount’.<br />
+            3. Put the files you took from the unencrypted folder back inside.<br />
+            4. If you look now inside the encrypted folder, there’ll be encrypted<br />
+            versions of all documents in the unencrypted one.<br />
+            5. After accessing the files through the unencrypted folder, unmount it.<br />
+            6. You’ll now see that the unencrypted folder is empty, but the<br />
+            encrypted one still has coded versions.<br />
+            5. If you want more details of Encfs’ implementation, take a look at the<br />
+            <a href="./config.py">config</a> file. Specifically the ‘Efs’ class.</p>
+        <h3 id="encryption-workflow.">ENCRYPTION WORKFLOW.</h3>
+        <ol type="1">
+            <li>The user, on his Python scripts, will access the Encfs password, through<br />
+                environment variables, and check if the mount point is active:<br />
+                1. Is active. Access the files.<br />
+                2. It’s not active. Give the ‘mount’ command and recheck if it’s open.<br />
+            </li>
+            <li>With access to the folder, get the Themis key correspondent to your<br />
+                database.<br />
+            </li>
+            <li>Use it to encrypt/decrypt data, as the case may be.<br />
+            </li>
+            <li>After doing whatever you wanted to do, unmount it.<br />
+                You can see an example, like many others, of this workflow in practice in<br />
+                <a href="/home/mic/python/pwd_encrypted/pwd_encrypted/update.py">update</a>.</li>
+        </ol>
+        <p>This is the current state of the art. Doesn’t mean that it won’t change in a<br />
+            day or two. But, for now, this is where we stand.<br />
+            I’ll leave the old updates below this one, for documentation purposes.</p>
+        <hr />
+        <h2 id="update">UPDATE</h2>
+        <p>Apparently the key variable that I made yesterday, today,wasn’t working when I started MySQL.<br />
+            A little digging revealed that variables started by ‘@’ ‘, as <span class="citation" data-cites="key_str">@key_str</span> mos certainly is,<br />
+            are user variables and exist only in the context of a session. To remedy this, and result of<br />
+            not finding a way to make the create key command a system variable, I just went along with the<br />
+            next best thing and invoked the key before making a db call through Python. That way it’s<br />
+            always on when I need it. You can, and need to if you want to decrypt stuff you did before,<br />
+            use the same starting string. That’s what defines the key and that’s the information that<br />
+            needs to be kept secret. So as to not write the key initiation string on all my scripts, I<br />
+            made a environment variable called ’AES_MYSQL_KEY’, that keeps it. In order to use a<br />
+            environment variable in Python, you have to do this:</p>
+        <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>aeskey <span class="op">=</span> os.environ[<span class="st">&quot;AES_MYSQL_KEY&quot;</span>]</span></code></pre></div>
-<p>The MySQL query should always use prepared statements, otherwise MySQL flips with all the characters<br />
-and doesn’t accept the string. The query format I’m currently using is this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">query</span> <span class="op">=</span> <span class="ot">&quot;SET @key_str = SHA2(%s, 512)&quot;</span></span></code></pre></div>
-<p>Then the encryption query for the ‘pwd’ database is this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>query5 <span class="op">=</span> <span class="ot">&quot;UPDATE pwd SET pwd = AES_ENCRYPT(%s, @key_str) WHERE pwdid = %s&quot;</span></span></code></pre></div>
-<p>If you only want to make an encryption/decryption but don’t want to put it anywhere, you can do:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> AES_ENCRYPT(<span class="st">&#39;text_to_encrypt&#39;</span>, @str_key)</span></code></pre></div>
-<p>I’m revisiting again the idea of encrypting the ‘password’ database. Not all of it, mind you, just the specific password value. Although it’s not close to be being finished, I just wanted to jot down some information, so I don’t forget.<br />
-I’m using MySQL’s own AES encryption process, and it works like this: first you create a BLOB or VARBINARY column, to house the encrypted passwords, as they’ll be bytes objects. I created a VARBINARY(8000) column that I called ‘pwd’.<br />
-The encryption and decryption operations are only accessible through a key.<br />
-I created one with the command:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span> @key_str <span class="op">=</span> SHA2(<span class="st">&#39;Zrd</span><span class="ch">&amp;iLnyC31</span><span class="st">._)K&quot;çlk*I9h~&#39;</span>, <span class="dv">512</span>);</span></code></pre></div>
-<p>The key is called ‘key_str’ and is invoked with ‘@’ before it. ‘<span class="citation" data-cites="kill_str">@kill_str</span>’.<br />
-It’s a SHA2 algorithm key, with a length of 512, and the string I generated on<br />
-the ‘password’ app.<br />
-I cloned the ‘passwd’ column, that has the original values in plain text, with this very simple command:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str)</span></code></pre></div>
-<p>If you wanted to just encrypt a specific entry, you could do, for example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str) <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span></span></code></pre></div>
-<p>Now, if you want to decrypt all of columns values, you do:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd;</span></code></pre></div>
-<p>If you only need one value, you could do:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span>;</span></code></pre></div>
-</body>
+            <p>The MySQL query should always use prepared statements, otherwise MySQL flips with all the characters<br />
+                and doesn’t accept the string. The query format I’m currently using is this:</p>
+            <div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">query</span> <span class="op">=</span> <span class="ot">&quot;SET @key_str = SHA2(%s, 512)&quot;</span></span></code></pre></div>
+                <p>Then the encryption query for the ‘pwd’ database is this:</p>
+                <div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>query5 <span class="op">=</span> <span class="ot">&quot;UPDATE pwd SET pwd = AES_ENCRYPT(%s, @key_str) WHERE pwdid = %s&quot;</span></span></code></pre></div>
+                    <p>If you only want to make an encryption/decryption but don’t want to put it anywhere, you can do:</p>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> AES_ENCRYPT(<span class="st">&#39;text_to_encrypt&#39;</span>, @str_key)</span></code></pre></div>
+                        <p>I’m revisiting again the idea of encrypting the ‘password’ database. Not all of it, mind you, just the specific password value. Although it’s not close to be being finished, I just wanted to jot down some information, so I don’t forget.<br />
+                            I’m using MySQL’s own AES encryption process, and it works like this: first you create a BLOB or VARBINARY column, to house the encrypted passwords, as they’ll be bytes objects. I created a VARBINARY(8000) column that I called ‘pwd’.<br />
+                            The encryption and decryption operations are only accessible through a key.<br />
+                            I created one with the command:</p>
+                        <div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span> @key_str <span class="op">=</span> SHA2(<span class="st">&#39;Zrd</span><span class="ch">&amp;iLnyC31</span><span class="st">._)K&quot;çlk*I9h~&#39;</span>, <span class="dv">512</span>);</span></code></pre></div>
+                            <p>The key is called ‘key_str’ and is invoked with ‘@’ before it. ‘<span class="citation" data-cites="kill_str">@kill_str</span>’.<br />
+                                It’s a SHA2 algorithm key, with a length of 512, and the string I generated on<br />
+                                the ‘password’ app.<br />
+                                I cloned the ‘passwd’ column, that has the original values in plain text, with this very simple command:</p>
+                            <div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str)</span></code></pre></div>
+                                <p>If you wanted to just encrypt a specific entry, you could do, for example:</p>
+                                <div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pwd <span class="kw">SET</span> pwd <span class="op">=</span> AES_ENCRYPT(pwd, @key_str) <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span></span></code></pre></div>
+                                    <p>Now, if you want to decrypt all of columns values, you do:</p>
+                                    <div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd;</span></code></pre></div>
+                                        <p>If you only need one value, you could do:</p>
+                                        <div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">CAST</span>(AES_DECRYPT(pwd, @key_str) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">80</span>)) <span class="kw">FROM</span> pwd <span class="kw">WHERE</span> pwdid <span class="op">=</span> <span class="dv">658</span>;</span></code></pre></div>
+    </body>
 </html>

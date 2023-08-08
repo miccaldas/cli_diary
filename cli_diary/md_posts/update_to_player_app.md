@@ -2,7 +2,7 @@
 title: Update to Player App
 date: 21-07-2023 22:03
 mainfont: Iosevka
-fontsize: 15pt
+fontsize: 13pt
 ---
 
 
@@ -23,78 +23,62 @@ The major alterations were:
    a sound server that works as middle layer between ALSA and client
    applications.  
    Both have rudimentary tools to manage sound streaming and, I'm very fond of
-   not installing anything new if the old stuff does the job, I thought that was
-   exactly what I needed. I ended up using ALSA's *alsamixer* tool to manage
+   not installing anything new if the old stuff does the job, I ended up using ALSA's *alsamixer* tool to manage
    audio. The simplicity and depth of working with something at such a basic
-   level, gave a feeling of confidence. I got the commands and created very
-   simple shell scripts with them. Like this:  
+   level, gave me a feeling of confidence. I created very simple shell scripts for he commands.  
+   Like this:  
   
    **Lowering Volume:**  
   
-```console
-    amixer set Master 10%- > /dev/null 2>&1  
-```
-
+`**amixer set Master 10%- > /dev/null 2>&1**`
+  
    **Raising Volume:**  
   
-```console
-    amixer set Master 10%+ > /dev/null 2>&1
-```
+`**amixer set Master 10%+ > /dev/null 2>&1**`
   
    **Mute Volume:**  
 
-```console
-    amixer set Master toggle > /dev/null 2>&1
-```
-
+`**amixer set Master toggle > /dev/null 2>&1**`
+  
    With the scripts built, it was just the case of binding them to a keyboard
-   sequence. Later I created a script to stop the music player. It looks for a
+   sequence.  
+   Later I created a script to stop the music player. It looks for a
    process originated by *player.py* in the *player* folder,and kills it:  
   
-```console
-    cd /home/mic/python/player/player/
-    sudo kill -9 `pgrep -f player.py` > /dev/null 2>&1
-```
+`**cd /home/mic/python/player/player/**`
+`**sudo kill -9 pgrep -f player.py > /dev/null 2>&1**`
   
-   As my shell is [Zsh](https://zsh.sourceforge.io), I used its tool *zsh-edit*, to create the keybinds. I created these:  
+   As my shell is [Zsh](https://zsh.sourceforge.io), I used its tool *zsh-edit*, to create the keybinds:  
 
    **Raising Volume - Keybind 'F6'**  
   
-```console
-    bind '^[[17~' ~/scripts/raisevolume.sh
-```
+`**bind '^[[17~' ~/scripts/raisevolume.sh**`
   
    **Lowering Volume - Keybind 'F7'**  
   
-```console
-    bind '^[[18~' ~/scripts/lowervolumne.sh
-```
+`**bind '^[[18~' ~/scripts/lowervolumne.sh**`
   
    **Mute Sound - Keybind 'F8'**  
   
-```console
-    bind '^[[19~' ~/scripts/mutevolume.sh
-```
+`**bind '^[[19~' ~/scripts/mutevolume.sh**`
   
    **Stop Player - Keybind 'Ctrl-Alt-p'**  
 
-```shell
-    bind '^[^P' ~/scripts/player_pid.sh
-```
+`**bind '^[^P' ~/scripts/player_pid.sh**`
   
    To discover what codes are used by what keys, I used the very useful and
    simple [showkey](https://man7.org/linux/man-pages/man1/showkey.1.html)
-   command. People will suggest other things, like Xev and what have you, but
+   command. People will suggest other things, like *Xev* and what have you, but
    they tend to open unnecessary windows and superfluous information. Stick to
-   showkey and you won't be led astray.  
+   *showkey* and you won't be led astray.  
   
-   <h3>Search.</h3>  
+   <h3>Search</h3>  
    In the old version, to get to the music you wanted, it would get complete
    paths to each album, print them, and the user would need to copy/paste them.
-   Here we tried something more friendly with a *choose.py* module.  
+   Here we tried something more friendly with a `choose.py` module.  
    We're using Blessed to prettify the output and also because it has simple
    ways of interacting with keybinds.  
-   The idea is pretty simple, you're first directed to upper folder where the
+   The idea is pretty basic, you're first directed to upper folder where the
    music collection is. There you choose a musician. This is glued to the rest
    of the path, now with the path for the chosen artist, and fed again to the
    *choose* module, that'll print the content of said folder; consisting mainly
@@ -216,9 +200,9 @@ The major alterations were:
    simple.  
    [Playsound](https://pypi.org/project/playsound/) has only one command, which
    is to play a file. This command has one boolean argument, to use it on
-   blocking mode or not. Has using non-blocking mode doesn't work, that's even
+   blocking mode or not. As using the non-blocking mode doesn't work, that's even
    one less thing to worry about. The other audio libraries are oriented for a
-   type of in-depth use that's not my use case. Add to that an irritating habit
+   type of in-depth use that's not my case. Add to that an irritating habit
    of spewing unneeded output whilst playing a file, and I was looking for
    something much more clean and direct.  
    The only thing I miss that I could have with other players, is the ability to
@@ -250,7 +234,7 @@ The major alterations were:
    I used [Tqdm](https://github.com/tqdm/tqdm), that I had used before, after
    trying a lot of other alternatives, and will use again as it seems the better
    solution for cli progress bars.  
-   The way I used progress bars before, and wanted to still do, was to make them
+   The way I used bars before, and wanted to continue using, was to make them
    loop through the range of the music's duration. But now the player didn't had
    that information to divulge. What to do?  
    I started thinking about metadata on how to extract it and, finally, I
@@ -334,80 +318,4 @@ The major alterations were:
         t2.start()
 ```
   
----
-<h3>UPDATE</h3>  
-Just a few hours have passed but a lot as changed since I last wrote here. I,
-finally tried [FZF](https://github.com/junegunn/fzf), and I was blown away with
-the possibilities of using it in my projects. In this case, it facilitates
-immensely the sorting and finding of posts, since neither *id's* nor timestamps
-seem to appear in order, when gotten from the database. I've tweaked 'fzf' so it
-opens a file when pressing *F1*, so it's a optimal substitution for the modules
-I had for viewing HTML and Markdown files. It's very simple to use too. See
-below the code for the new *search* module:
-  
-```python
-"""
-    Searches Markdown and HTML collections, with the help of 'fzf'.
-    """
-    import os
-    import subprocess
 
-    import questionary
-    import snoop
-    from questionary import Separator, Style
-    from snoop import pp
-
-
-    def type_watch(source, value):
-        return f"type({source})", type(value)
-
-
-    snoop.install(watch_extras=[type_watch])
-
-
-    @snoop
-    def search():
-        """
-        Just calling fzf inside the md and html folders.
-        To open a file, just hover it and press 'F1'.
-        """
-        custom_style_diary = Style(
-            [
-                ("qmark", "fg:#FF6363 bold"),
-                ("question", "fg:#069A8E bold"),
-                ("answer", "fg:#A1E3D8"),
-                ("pointer", "fg:#F8B400 bold"),
-                ("highlighted", "fg:#F7FF93 bold"),
-                ("selected", "fg:#FAF5E4 bold"),
-                ("separator", "fg:#069A8E"),
-                ("instruction", "fg:#A1E3D8"),
-                ("text", "fg:#FAF5E4 bold"),
-            ]
-        )
-
-        selection = questionary.select(
-            "What do you want to search?",
-            qmark=" [X]",
-            pointer="»»",
-            use_indicator=True,
-            style=custom_style_diary,
-            choices=[
-                "HTML Posts",
-                "Markdown Posts",
-                Separator(),
-                "Exit",
-            ],
-        ).ask()
-
-        cmd = "fzf"
-        if selection == "Exit":
-            raise SystemExit
-        if selection == "HTML Posts":
-            subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/html_posts", shell=True)
-        if selection == "Markdown Posts":
-            subprocess.run(cmd, cwd="/home/mic/python/cli_diary/cli_diary/md_posts", shell=True)
-
-
-    if __name__ == "__main__":
-        search()
-```

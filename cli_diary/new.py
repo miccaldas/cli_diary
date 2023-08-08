@@ -60,7 +60,9 @@ def titlename():
     """
     title = input(click.style(" [X] - What is the title of your post? ", fg="bright_green", bold=True))
     low = title.lower()
-    unders = low.replace(" ", "_")
+    ndots = low.replace(".", "")
+    ndash = ndots.replace("-", "_")
+    unders = ndash.replace(" ", "_")
     titles = [title, unders]
 
     with open("titles.bin", "wb") as f:
@@ -109,17 +111,19 @@ def htmlfile():
 
     unders = titles[1]
 
-    cmd = f"pandoc --highlight-style=breezedark -s -o html_posts/{unders}.html md_posts/{unders}.md"
+    cmd = f"pandoc --highlight-style=zenburn -s -o html_posts/{unders}.html md_posts/{unders}.md"
     subprocess.run(cmd, shell=True)
-
     # Reads the html file.
     with open(f"html_posts/{unders}.html", "r") as f:
         content = f.readlines()
     # As 'readlines()' creates a list object, we can use list functions to manipulate it.
     # So, we can put an element in any index position, and all the other elements are
-    # preserved. Here we add, in line 13, a css definition of line-hright.
+    # preserved. Here we add, in line 13, a css definition of line-height.
     content.insert(13, "      line-height: 1.5;\n")
-    content.insert(17, "        max-width: 45em;\n")
+    # It's different with 'max_width', as we are replacing, not inserting a line.
+    content[17] = "      max-width: 45em;\n"
+    # This creates a margin around the code.
+    content[174] = "     pre.sourceCode { margin: 1em; }\n"
     # To rewrite the file with the added line, we use 'writelines()', that writes list objects
     # to a file.
     with open(f"html_posts/{unders}.html", "w") as g:

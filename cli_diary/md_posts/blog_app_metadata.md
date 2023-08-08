@@ -1,5 +1,5 @@
 ---
-title: Auto
+title: Blog App Metada
 mainfont: Iosevka
 ---
 
